@@ -10,6 +10,8 @@ namespace Enlighten
 	{
 		private Enlighten plugin;
 
+
+
 		public UI(Enlighten plugin)
 		{
 			this.plugin = plugin;
