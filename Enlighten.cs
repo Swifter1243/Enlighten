@@ -11,7 +11,7 @@ namespace Enlighten
     [Plugin("Enlighten")]
     public class Enlighten
     {
-        private EventGridContainer events;
+        public EventGridContainer events;
         private UI ui;
 
         [Init]
@@ -24,7 +24,7 @@ namespace Enlighten
         private void SceneLoaded(Scene arg0, LoadSceneMode arg1)
         {
             if (arg0.buildIndex == 3) // Mapping Scene
-			{
+            {
                 events = UnityEngine.Object.FindObjectOfType<EventGridContainer>();
 			}
         }
