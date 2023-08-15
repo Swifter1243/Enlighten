@@ -45,6 +45,7 @@ namespace Enlighten.src.Enlighten.Plugin
 				var component = optionObj.gameObject.AddComponent<EnlightenOption>();
 				component.reload = component.GetComponentInChildren<Button>();
 				component.InitializeParameters(parameterLookup[enumKey]);
+				component.reload.onClick.AddListener(component.ToDefault);
 				optionPanels.Add(enumKey, component);
 			}
 		}

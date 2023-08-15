@@ -20,16 +20,36 @@ namespace Enlighten.src.Enlighten.Plugin
 			{
 				var obj = transform.Find(param.property);
 
-				var sliderComponent = obj.gameObject.AddComponent<SliderParameter>();
-				sliderComponent.min = param.min;
-				sliderComponent.max = param.max;
+				var slider = obj.gameObject.AddComponent<SliderParameter>();
+				slider.min = param.min;
+				slider.max = param.max;
 
-				sliderComponent.slider = sliderComponent.GetComponentInChildren<Slider>();
-				sliderComponent.inputfield = sliderComponent.GetComponentInChildren<InputField>();
-				sliderComponent.defaultVal = sliderComponent.FromSliderValue();
+				slider.option = this;
+				slider.slider = slider.GetComponentInChildren<Slider>();
+				slider.inputfield = slider.GetComponentInChildren<InputField>();
+				slider.defaultValue = slider.FromSliderValue();
+				slider.ToDefault();
 
-				this.parameters.Add(param.property, sliderComponent);
+				slider.inputfield.gameObject.AddComponent<DisableActionsField>();
+				slider.slider.onValueChanged.AddListener(slider.OnSliderChange);
+				slider.inputfield.onValueChanged.AddListener(slider.OnInputFieldChange);
+
+				this.parameters.Add(param.property, slider);
 			}
+		}
+
+		public void ToDefault()
+		{
+			foreach (var val in parameters.Values)
+			{
+				val.ToDefault();
+			}
+		}
+
+		public void CheckDefaultState()
+		{
+			bool changed = parameters.Values.Any(x => !x.IsDefault());
+			reload.gameObject.SetActive(changed);
 		}
 	}
 }

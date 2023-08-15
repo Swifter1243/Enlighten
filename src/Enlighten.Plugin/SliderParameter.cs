@@ -12,15 +12,17 @@ namespace Enlighten.src.Enlighten.Plugin
 	{
 		public Slider slider;
 		public InputField inputfield;
+		public EnlightenOption option;
 
 		public float min;
 		public float max;
-		public float defaultVal;
+		public float defaultValue;
+		public float value;
 		public string property;
 
-		public float FromSliderValue()
+		public float FromSliderValue() => FromSliderValue(slider.value);
+		public float FromSliderValue(float val)
 		{
-			float val = slider.value;
 			val -= slider.minValue;
 			val /= slider.maxValue - slider.minValue;
 			return Mathf.Lerp(min, max, val);
@@ -30,7 +32,46 @@ namespace Enlighten.src.Enlighten.Plugin
 		{
 			val -= min;
 			val /= max - min;
-			slider.value = Mathf.Lerp(slider.minValue, slider.maxValue, val);
+			slider.SetValueWithoutNotify(Mathf.Lerp(slider.minValue, slider.maxValue, val));
+			OnValueChange();
+		}
+
+		public void OnSliderChange(float val)
+		{
+			value = FromSliderValue(val);
+			inputfield.SetTextWithoutNotify(value.ToString());
+			OnValueChange();
+		}
+
+		public void OnInputFieldChange(string val)
+		{
+			if (float.TryParse(val, out float f))
+			{
+				value = f;
+				ToSliderValue(value);
+			}
+		}
+
+		public void OnValueChange()
+		{
+			option.CheckDefaultState();
+		}
+
+		public void SetValue(float val)
+		{
+			value = val;
+			ToSliderValue(value);
+			inputfield.SetTextWithoutNotify(value.ToString());
+		}
+
+		public bool IsDefault()
+		{
+			return Math.Abs(value - defaultValue) < 0.001;
+		}
+
+		public void ToDefault()
+		{
+			SetValue(defaultValue);
 		}
 	}
 
