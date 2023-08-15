@@ -1,21 +1,31 @@
 ManifestFileVersion: 0
-CRC: 3940641675
+CRC: 3361232182
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: b294d5473b0cc85ffbf90e193173b5de
+    Hash: dff9bc2617fece915bc4dbb3ddcf3671
   TypeTreeHash:
     serializedVersion: 2
-    Hash: d51d691b5f40a8e1446956ae65c88f09
+    Hash: d6bc6d306ec24082d90e4b9ed603f1cc
 HashAppended: 0
 ClassTypes:
 - Class: 1
   Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
 - Class: 28
+  Script: {instanceID: 0}
+- Class: 48
   Script: {instanceID: 0}
 - Class: 114
   Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
 - Class: 115
+  Script: {instanceID: 0}
+- Class: 128
   Script: {instanceID: 0}
 - Class: 213
   Script: {instanceID: 0}
@@ -25,5 +35,5 @@ ClassTypes:
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
-- Assets/Enlighten.prefab
+- Assets/EnlightenPanel.prefab
 Dependencies: []

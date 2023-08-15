@@ -8,6 +8,7 @@ using System.Reflection;
 using UnityEngine;
 using Beatmap.Base;
 using System.IO;
+using UnityEngine.UI;
 
 namespace Enlighten
 {
@@ -16,32 +17,38 @@ namespace Enlighten
 		public Enlighten plugin;
 		public GameObject panelAsset;
 		public Transform canvas;
-		public GameObject panel;
+		public EnlightenPanel panel;
 
 		public UI(Enlighten plugin)
 		{
-			panelAsset = plugin.bundle.LoadAsset<GameObject>("Assets/Enlighten.prefab");
 			this.plugin = plugin;
 
+			// Extension Button
 			var button = new ExtensionButton();
 			button.Tooltip = "Enlighten";
 			button.Click = OnPress;
-
 			ExtensionButtons.AddButton(button);
+
+			// UI Setup
+			panelAsset = plugin.bundle.LoadAsset<GameObject>("Assets/EnlightenPanel.prefab");
+			var enlightenPanel = panelAsset.AddComponent<EnlightenPanel>();
+			enlightenPanel.run = panelAsset.transform.Find("Run").GetComponent<Button>();
+		}
+
+		public void OnLoad()
+		{
+			var mapEditorUI = UnityEngine.Object.FindObjectOfType<MapEditorUI>();
+			canvas = mapEditorUI.MainUIGroup[5].transform;
+
+			panel = UnityEngine.Object.Instantiate(panelAsset, canvas).GetComponent<EnlightenPanel>();
+			panel.transform.localScale = new Vector3(1, 1, 1);
+			panel.run.onClick.AddListener(TestProcess);
+			panel.gameObject.SetActive(false);
 		}
 
 		private void OnPress()
 		{
-			if (panel == null)
-			{
-				panel = UnityEngine.Object.Instantiate(panelAsset, canvas);
-				panel.transform.localScale = new Vector3(1, 1, 1);
-			}
-			else
-			{
-				UnityEngine.Object.Destroy(panel);
-				panel = null;
-			}
+			panel.gameObject.SetActive(!panel.isActiveAndEnabled);
 		}
 
 		private void TestProcess()

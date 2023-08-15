@@ -24,6 +24,8 @@ namespace Enlighten
 
             SceneManager.sceneLoaded += SceneLoaded;
             ui = new UI(this);
+
+            bundle.UnloadAsync(false);
         }
 
         private void SceneLoaded(Scene arg0, LoadSceneMode arg1)
@@ -31,9 +33,7 @@ namespace Enlighten
             if (arg0.buildIndex == 3) // Mapping Scene
             {
                 events = UnityEngine.Object.FindObjectOfType<EventGridContainer>();
-
-                var mapEditorUI = UnityEngine.Object.FindObjectOfType<MapEditorUI>();
-                ui.canvas = mapEditorUI.MainUIGroup[5].transform;
+                ui.OnLoad();
             }
         }
     }
