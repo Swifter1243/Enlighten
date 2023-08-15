@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using System.Reflection;
 
-namespace Enlighten
+namespace Enlighten.src.Enlighten.Plugin
 {
     [Plugin("Enlighten")]
     public class Enlighten

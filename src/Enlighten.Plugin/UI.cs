@@ -10,7 +10,7 @@ using Beatmap.Base;
 using System.IO;
 using UnityEngine.UI;
 
-namespace Enlighten
+namespace Enlighten.src.Enlighten.Plugin
 {
 	public class UI
 	{
@@ -42,6 +42,7 @@ namespace Enlighten
 
 			panel = UnityEngine.Object.Instantiate(panelAsset, canvas).GetComponent<EnlightenPanel>();
 			panel.transform.localScale = new Vector3(1, 1, 1);
+			panel.Initialize();
 			panel.run.onClick.AddListener(TestProcess);
 			panel.gameObject.SetActive(false);
 		}
