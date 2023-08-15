@@ -3,17 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
+
 using UnityEngine;
 using Beatmap.Base;
+using System.IO;
 
 namespace Enlighten
 {
-	class UI
+	public class UI
 	{
-		private Enlighten plugin;
+		public Enlighten plugin;
+		public GameObject panelAsset;
+		public Transform canvas;
+		public GameObject panel;
 
 		public UI(Enlighten plugin)
 		{
+			panelAsset = plugin.bundle.LoadAsset<GameObject>("Assets/Enlighten.prefab");
 			this.plugin = plugin;
 
 			var button = new ExtensionButton();
@@ -24,6 +31,20 @@ namespace Enlighten
 		}
 
 		private void OnPress()
+		{
+			if (panel == null)
+			{
+				panel = UnityEngine.Object.Instantiate(panelAsset, canvas);
+				panel.transform.localScale = new Vector3(1, 1, 1);
+			}
+			else
+			{
+				UnityEngine.Object.Destroy(panel);
+				panel = null;
+			}
+		}
+
+		private void TestProcess()
 		{
 			var actions = new List<BeatmapAction>();
 			var events = plugin.events.LoadedObjects.Cast<BaseEvent>();
