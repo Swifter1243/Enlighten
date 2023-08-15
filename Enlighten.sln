@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.33927.289
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enlighten", "Enlighten.csproj", "{C1CC041F-A064-4F3D-A991-AAFC6EE823D0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enlighten.Plugin", "src\Enlighten.Plugin\Enlighten.Plugin.csproj", "{10762061-7A11-4C1B-828F-D75F844ED193}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "src\Enlighten.Unity\Assembly-CSharp.csproj", "{93FB0067-5F10-9EDC-FE96-7B15F1957F91}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C1CC041F-A064-4F3D-A991-AAFC6EE823D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C1CC041F-A064-4F3D-A991-AAFC6EE823D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C1CC041F-A064-4F3D-A991-AAFC6EE823D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C1CC041F-A064-4F3D-A991-AAFC6EE823D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10762061-7A11-4C1B-828F-D75F844ED193}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10762061-7A11-4C1B-828F-D75F844ED193}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10762061-7A11-4C1B-828F-D75F844ED193}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10762061-7A11-4C1B-828F-D75F844ED193}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93FB0067-5F10-9EDC-FE96-7B15F1957F91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93FB0067-5F10-9EDC-FE96-7B15F1957F91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93FB0067-5F10-9EDC-FE96-7B15F1957F91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93FB0067-5F10-9EDC-FE96-7B15F1957F91}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

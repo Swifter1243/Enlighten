@@ -36,6 +36,15 @@ namespace Enlighten
 			{
 				panel = UnityEngine.Object.Instantiate(panelAsset, canvas);
 				panel.transform.localScale = new Vector3(1, 1, 1);
+
+				var enlightenPanel = panel.GetComponent<EnlightenPanel>();
+
+				if (enlightenPanel == null)
+				{
+					Debug.Log("pain" + enlightenPanel);
+				}
+
+				enlightenPanel.button.onClick.AddListener(TestProcess);
 			}
 			else
 			{
