@@ -15,6 +15,8 @@ namespace Enlighten.src.Enlighten.Plugin
 		public Button exitGradient;
 		public Button gradientStart;
 		public Button gradientEnd;
+		public Image gradientStartImage;
+		public Image gradientEndImage;
 		public Button run;
 
 		public Dictionary<OptionNames, OptionPanel> optionPanels = new Dictionary<OptionNames, OptionPanel>();
@@ -45,6 +47,7 @@ namespace Enlighten.src.Enlighten.Plugin
 		public Dictionary<string, float> endOptions = new Dictionary<string, float>();
 		public Dictionary<string, float> currentOptions;
 		public bool isGradient = false;
+		public bool onStart = true;
 
 		public void WriteToValues(Dictionary<string, float> vals)
 		{
@@ -68,13 +71,30 @@ namespace Enlighten.src.Enlighten.Plugin
 			}
 		}
 
+		public void SwitchToValues(Dictionary<string, float> vals)
+		{
+			WriteToValues(currentOptions);
+			currentOptions = vals;
+			LoadValues(currentOptions);
+		}
+
 		public void Initialize()
 		{
+			// Initialize Buttons
+			gradientStartImage = gradientStart.GetComponent<Image>();
+			gradientEndImage = gradientEnd.GetComponent<Image>();
+			UpdateGradientTab();
+
 			gradient.onClick.AddListener(() =>
 			{
 				isGradient = true;
 				gradientPanel.SetActive(true);
 				gradient.gameObject.SetActive(false);
+
+				if (!onStart)
+				{
+					SwitchToValues(endOptions);
+				}
 			});
 
 			exitGradient.onClick.AddListener(() =>
@@ -82,9 +102,25 @@ namespace Enlighten.src.Enlighten.Plugin
 				isGradient = false;
 				gradientPanel.SetActive(false);
 				gradient.gameObject.SetActive(true);
-				WriteToValues(currentOptions);
-				currentOptions = startOptions;
-				LoadValues(currentOptions);
+				SwitchToValues(startOptions);
+			});
+
+			gradientStart.onClick.AddListener(() =>
+			{
+				if (onStart) return;
+
+				onStart = true;
+				SwitchToValues(startOptions);
+				UpdateGradientTab();
+			});
+
+			gradientEnd.onClick.AddListener(() =>
+			{
+				if (!onStart) return;
+
+				onStart = false;
+				SwitchToValues(endOptions);
+				UpdateGradientTab();
 			});
 
 			currentOptions = startOptions;
@@ -120,6 +156,12 @@ namespace Enlighten.src.Enlighten.Plugin
 				button.SetVisibility(false);
 				optionButtons.Add(enumKey, button);
 			}
+		}
+
+		public void UpdateGradientTab()
+		{
+			gradientStartImage.color = onStart ? Color.gray : Color.white;
+			gradientEndImage.color = !onStart ? Color.gray : Color.white;
 		}
 	}
 }
