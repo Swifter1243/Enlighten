@@ -29,7 +29,7 @@ namespace Enlighten.src.Enlighten.Plugin
 				new SliderParameterInitializer("Offset", -1, 1)
 			}},
 			{ OptionNames.Flutter, new SliderParameterInitializer[]{
-				new SliderParameterInitializer("Scalar", 0, 2),
+				new SliderParameterInitializer("Intensity", 0, 2),
 				new SliderParameterInitializer("Turbulence", -1, 1)
 			}},
 		};
