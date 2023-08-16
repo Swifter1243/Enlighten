@@ -18,6 +18,12 @@ namespace Enlighten.src.Enlighten.Plugin
 		public Button button;
 		public Image buttonImage;
 
+		public void Clear()
+		{
+			SetVisibility(false);
+			panel.ToDefault();
+		}
+
 		public void Toggle()
 		{
 			SetVisibility(!on);

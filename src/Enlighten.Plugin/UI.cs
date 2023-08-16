@@ -51,6 +51,9 @@ namespace Enlighten.src.Enlighten.Plugin
 			panel.Initialize();
 			panel.run.onClick.AddListener(Test);
 			panel.gameObject.SetActive(false);
+
+			//var rect = ((RectTransform)panel.transform);
+			//rect.offsetMax = new Vector2(-780, rect.offsetMax.y);
 		}
 
 		private void Test()
