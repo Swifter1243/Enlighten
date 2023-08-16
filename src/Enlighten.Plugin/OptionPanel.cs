@@ -12,6 +12,7 @@ namespace Enlighten.src.Enlighten.Plugin
 	public class OptionPanel : MonoBehaviour
 	{
 		public Button reload;
+		public Button delete;
 		public string optionName;
 		public Dictionary<string, SliderParameter> parameters = new Dictionary<string, SliderParameter>();
 

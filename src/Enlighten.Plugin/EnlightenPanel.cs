@@ -101,7 +101,8 @@ namespace Enlighten.src.Enlighten.Plugin
 				var panelObj = panelsObj.Find(name);
 				var panel = panelObj.gameObject.AddComponent<OptionPanel>();
 				panel.optionName = name;
-				panel.reload = panel.GetComponentInChildren<Button>();
+				panel.reload = panel.transform.Find("Reload").GetComponent<Button>();
+				panel.delete = panel.transform.Find("Delete").GetComponent<Button>();
 				panel.reload.onClick.AddListener(panel.ToDefault);
 				panel.InitializeParameters(parameterLookup[enumKey]);
 				optionPanels.Add(enumKey, panel);
@@ -115,6 +116,7 @@ namespace Enlighten.src.Enlighten.Plugin
 				button.button = button.GetComponent<Button>();
 				button.buttonImage = button.GetComponent<Image>();
 				button.button.onClick.AddListener(button.Toggle);
+				panel.delete.onClick.AddListener(button.Toggle);
 				button.SetVisibility(false);
 				optionButtons.Add(enumKey, button);
 			}
