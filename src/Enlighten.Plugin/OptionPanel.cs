@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Enlighten.src.Enlighten.Plugin
 {
-	public class EnlightenOption : MonoBehaviour
+	public class OptionPanel : MonoBehaviour
 	{
 		public Button reload;
 		public string optionName;
@@ -52,7 +52,10 @@ namespace Enlighten.src.Enlighten.Plugin
 		{
 			foreach (var param in parameters.Values)
 			{
-				param.SetValue(vals[param.GetValueName()]);
+				if (vals.TryGetValue(param.GetValueName(), out float value))
+				{
+					param.SetValue(value);
+				}
 			}
 		}
 

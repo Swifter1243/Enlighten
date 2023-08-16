@@ -65,8 +65,9 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\Enlighten.Plugin\Enlighten.cs" />
-    <Compile Include="src\Enlighten.Plugin\EnlightenOption.cs" />
+    <Compile Include="src\Enlighten.Plugin\OptionPanel.cs" />
     <Compile Include="src\Enlighten.Plugin\EnlightenPanel.cs" />
+    <Compile Include="src\Enlighten.Plugin\OptionButton.cs" />
     <Compile Include="src\Enlighten.Plugin\OptionNames.cs" />
     <Compile Include="src\Enlighten.Plugin\SliderParameter.cs" />
     <Compile Include="src\Enlighten.Plugin\UI.cs" />

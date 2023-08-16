@@ -12,7 +12,7 @@ namespace Enlighten.src.Enlighten.Plugin
 	{
 		public Slider slider;
 		public InputField inputfield;
-		public EnlightenOption option;
+		public OptionPanel option;
 
 		public float min;
 		public float max;

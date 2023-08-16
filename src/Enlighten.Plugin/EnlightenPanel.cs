@@ -17,7 +17,8 @@ namespace Enlighten.src.Enlighten.Plugin
 		public Button gradientEnd;
 		public Button run;
 
-		public Dictionary<OptionNames, EnlightenOption> optionPanels = new Dictionary<OptionNames, EnlightenOption>();
+		public Dictionary<OptionNames, OptionPanel> optionPanels = new Dictionary<OptionNames, OptionPanel>();
+		public Dictionary<OptionNames, OptionButton> optionButtons = new Dictionary<OptionNames, OptionButton>();
 
 		public static IReadOnlyDictionary<OptionNames, SliderParameterInitializer[]> parameterLookup =
 			new Dictionary<OptionNames, SliderParameterInitializer[]>()
@@ -40,24 +41,30 @@ namespace Enlighten.src.Enlighten.Plugin
 			}},
 		};
 
-		public Dictionary<string, float> startVals = new Dictionary<string, float>();
-		public Dictionary<string, float> endVals = new Dictionary<string, float>();
-		public Dictionary<string, float> currVals;
+		public Dictionary<string, float> startOptions = new Dictionary<string, float>();
+		public Dictionary<string, float> endOptions = new Dictionary<string, float>();
+		public Dictionary<string, float> currentOptions;
 		public bool isGradient = false;
 
 		public void WriteToValues(Dictionary<string, float> vals)
 		{
-			foreach (var param in optionPanels.Values)
+			vals.Clear();
+
+			foreach (var button in optionButtons.Values)
 			{
-				param.WriteToValues(vals);
+				if (button.on)
+				{
+					button.panel.WriteToValues(vals);
+				}
 			}
 		}
 
 		public void LoadValues(Dictionary<string, float> vals)
 		{
-			foreach (var param in optionPanels.Values)
+			foreach (var button in optionButtons.Values)
 			{
-				param.LoadValues(vals);
+				button.LoadValues(vals);
+				button.panel.LoadValues(vals);
 			}
 		}
 
@@ -75,24 +82,41 @@ namespace Enlighten.src.Enlighten.Plugin
 				isGradient = false;
 				gradientPanel.SetActive(false);
 				gradient.gameObject.SetActive(true);
-				currVals = startVals;
-				LoadValues(currVals);
+				WriteToValues(currentOptions);
+				currentOptions = startOptions;
+				LoadValues(currentOptions);
 			});
 
-			currVals = startVals;
+			currentOptions = startOptions;
 
-			var panelsObj = transform.Find("Option Panels");
+			// Hooking up UI
+			var panelsObj = transform.Find("OptionPanels");
+			var buttonsObj = transform.Find("OptionButtons");
 
 			foreach (var name in Enum.GetNames(typeof(OptionNames)))
 			{
 				var enumKey = (OptionNames)Enum.Parse(typeof(OptionNames), name);
-				var optionObj = panelsObj.Find(name + "Panel");
-				var component = optionObj.gameObject.AddComponent<EnlightenOption>();
-				component.optionName = name;
-				component.reload = component.GetComponentInChildren<Button>();
-				component.InitializeParameters(parameterLookup[enumKey]);
-				component.reload.onClick.AddListener(component.ToDefault);
-				optionPanels.Add(enumKey, component);
+
+				// Option Panels
+				var panelObj = panelsObj.Find(name);
+				var panel = panelObj.gameObject.AddComponent<OptionPanel>();
+				panel.optionName = name;
+				panel.reload = panel.GetComponentInChildren<Button>();
+				panel.reload.onClick.AddListener(panel.ToDefault);
+				panel.InitializeParameters(parameterLookup[enumKey]);
+				optionPanels.Add(enumKey, panel);
+
+				// Option Buttons
+				var buttonObj = buttonsObj.Find(name);
+				var button = buttonObj.gameObject.AddComponent<OptionButton>();
+				button.optionName = name;
+				button.panel = panel;
+				button.image = button.GetComponentInChildren<RawImage>();
+				button.button = button.GetComponent<Button>();
+				button.buttonImage = button.GetComponent<Image>();
+				button.button.onClick.AddListener(button.Toggle);
+				button.SetVisibility(false);
+				optionButtons.Add(enumKey, button);
 			}
 		}
 	}

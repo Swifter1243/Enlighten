@@ -55,9 +55,9 @@ namespace Enlighten.src.Enlighten.Plugin
 
 		private void Test()
 		{
-			panel.WriteToValues(panel.currVals);
+			panel.WriteToValues(panel.currentOptions);
 			
-			foreach (var thing in panel.currVals)
+			foreach (var thing in panel.currentOptions)
 			{
 				Debug.Log(thing.Key + ": " + thing.Value);
 			}
