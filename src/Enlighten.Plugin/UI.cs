@@ -32,7 +32,13 @@ namespace Enlighten.src.Enlighten.Plugin
 			// UI Setup
 			panelAsset = plugin.bundle.LoadAsset<GameObject>("Assets/EnlightenPanel.prefab");
 			var enlightenPanel = panelAsset.AddComponent<EnlightenPanel>();
+
 			enlightenPanel.run = panelAsset.transform.Find("Run").GetComponent<Button>();
+			enlightenPanel.gradient = panelAsset.transform.Find("Gradient").GetComponent<Button>();
+			enlightenPanel.gradientPanel = panelAsset.transform.Find("GradientPanel").gameObject;
+			enlightenPanel.gradientStart = enlightenPanel.gradientPanel.transform.Find("Start").GetComponent<Button>();
+			enlightenPanel.gradientEnd = enlightenPanel.gradientPanel.transform.Find("End").GetComponent<Button>();
+			enlightenPanel.exitGradient = enlightenPanel.gradientPanel.transform.Find("ExitGradient").GetComponent<Button>();
 		}
 
 		public void OnLoad()

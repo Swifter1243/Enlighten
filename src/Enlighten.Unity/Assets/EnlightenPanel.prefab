@@ -911,7 +911,7 @@ GameObject:
   - component: {fileID: 688192824}
   - component: {fileID: 688192823}
   m_Layer: 5
-  m_Name: GradientSettings
+  m_Name: GradientPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1637,7 +1637,7 @@ GameObject:
   - component: {fileID: 1679501195}
   - component: {fileID: 1679501194}
   m_Layer: 5
-  m_Name: X
+  m_Name: ExitGradient
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

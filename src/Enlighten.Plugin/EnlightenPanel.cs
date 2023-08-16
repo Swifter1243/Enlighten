@@ -10,7 +10,13 @@ namespace Enlighten.src.Enlighten.Plugin
 {
 	public class EnlightenPanel : MonoBehaviour
 	{
+		public Button gradient;
+		public GameObject gradientPanel;
+		public Button exitGradient;
+		public Button gradientStart;
+		public Button gradientEnd;
 		public Button run;
+
 		public Dictionary<OptionNames, EnlightenOption> optionPanels = new Dictionary<OptionNames, EnlightenOption>();
 
 		public static IReadOnlyDictionary<OptionNames, SliderParameterInitializer[]> parameterLookup =
@@ -37,6 +43,7 @@ namespace Enlighten.src.Enlighten.Plugin
 		public Dictionary<string, float> startVals = new Dictionary<string, float>();
 		public Dictionary<string, float> endVals = new Dictionary<string, float>();
 		public Dictionary<string, float> currVals;
+		public bool isGradient = false;
 
 		public void WriteToValues(Dictionary<string, float> vals)
 		{
@@ -56,7 +63,24 @@ namespace Enlighten.src.Enlighten.Plugin
 
 		public void Initialize()
 		{
+			gradient.onClick.AddListener(() =>
+			{
+				isGradient = true;
+				gradientPanel.SetActive(true);
+				gradient.gameObject.SetActive(false);
+			});
+
+			exitGradient.onClick.AddListener(() =>
+			{
+				isGradient = false;
+				gradientPanel.SetActive(false);
+				gradient.gameObject.SetActive(true);
+				currVals = startVals;
+				LoadValues(currVals);
+			});
+
 			currVals = startVals;
+
 			var panelsObj = transform.Find("Option Panels");
 
 			foreach (var name in Enum.GetNames(typeof(OptionNames)))
