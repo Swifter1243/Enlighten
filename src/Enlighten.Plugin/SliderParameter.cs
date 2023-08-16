@@ -73,6 +73,8 @@ namespace Enlighten.src.Enlighten.Plugin
 		{
 			SetValue(defaultValue);
 		}
+
+		public string GetValueName() => option.optionName + property;
 	}
 
 	public class SliderParameterInitializer

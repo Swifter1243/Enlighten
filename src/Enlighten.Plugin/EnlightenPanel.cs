@@ -34,8 +34,29 @@ namespace Enlighten.src.Enlighten.Plugin
 			}},
 		};
 
+		public Dictionary<string, float> startVals = new Dictionary<string, float>();
+		public Dictionary<string, float> endVals = new Dictionary<string, float>();
+		public Dictionary<string, float> currVals;
+
+		public void WriteToValues(Dictionary<string, float> vals)
+		{
+			foreach (var param in optionPanels.Values)
+			{
+				param.WriteToValues(vals);
+			}
+		}
+
+		public void LoadValues(Dictionary<string, float> vals)
+		{
+			foreach (var param in optionPanels.Values)
+			{
+				param.LoadValues(vals);
+			}
+		}
+
 		public void Initialize()
 		{
+			currVals = startVals;
 			var panelsObj = transform.Find("Option Panels");
 
 			foreach (var name in Enum.GetNames(typeof(OptionNames)))
@@ -43,6 +64,7 @@ namespace Enlighten.src.Enlighten.Plugin
 				var enumKey = (OptionNames)Enum.Parse(typeof(OptionNames), name);
 				var optionObj = panelsObj.Find(name + "Panel");
 				var component = optionObj.gameObject.AddComponent<EnlightenOption>();
+				component.optionName = name;
 				component.reload = component.GetComponentInChildren<Button>();
 				component.InitializeParameters(parameterLookup[enumKey]);
 				component.reload.onClick.AddListener(component.ToDefault);

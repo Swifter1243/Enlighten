@@ -43,8 +43,18 @@ namespace Enlighten.src.Enlighten.Plugin
 			panel = UnityEngine.Object.Instantiate(panelAsset, canvas).GetComponent<EnlightenPanel>();
 			panel.transform.localScale = new Vector3(1, 1, 1);
 			panel.Initialize();
-			panel.run.onClick.AddListener(TestProcess);
+			panel.run.onClick.AddListener(Test);
 			panel.gameObject.SetActive(false);
+		}
+
+		private void Test()
+		{
+			panel.WriteToValues(panel.currVals);
+			
+			foreach (var thing in panel.currVals)
+			{
+				Debug.Log(thing.Key + ": " + thing.Value);
+			}
 		}
 
 		private void OnPress()

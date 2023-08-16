@@ -12,6 +12,7 @@ namespace Enlighten.src.Enlighten.Plugin
 	public class EnlightenOption : MonoBehaviour
 	{
 		public Button reload;
+		public string optionName;
 		public Dictionary<string, SliderParameter> parameters = new Dictionary<string, SliderParameter>();
 
 		public void InitializeParameters(SliderParameterInitializer[] parameters)
@@ -23,6 +24,7 @@ namespace Enlighten.src.Enlighten.Plugin
 				var slider = obj.gameObject.AddComponent<SliderParameter>();
 				slider.min = param.min;
 				slider.max = param.max;
+				slider.property = param.property;
 
 				slider.option = this;
 				slider.slider = slider.GetComponentInChildren<Slider>();
@@ -35,6 +37,22 @@ namespace Enlighten.src.Enlighten.Plugin
 				slider.inputfield.onValueChanged.AddListener(slider.OnInputFieldChange);
 
 				this.parameters.Add(param.property, slider);
+			}
+		}
+
+		public void WriteToValues(Dictionary<string, float> vals)
+		{
+			foreach (var param in parameters.Values)
+			{
+				vals[param.GetValueName()] = param.value;
+			}
+		}
+
+		public void LoadValues(Dictionary<string, float> vals)
+		{
+			foreach (var param in parameters.Values)
+			{
+				param.SetValue(vals[param.GetValueName()]);
 			}
 		}
 
