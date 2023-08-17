@@ -228,10 +228,10 @@ namespace Enlighten.src.Enlighten.Plugin
 			bool flutterOn = IsOptionOn(OptionName.Flutter);
 			var flutterIntensity = GetParameter(OptionName.Flutter, "Intensity");
 			var flutterTurbulence = GetParameter(OptionName.Flutter, "Turbulence");
+			BaseObject lastEvent = null;
 
-			for (int i = 0; i < events.Count(); i++)
+			foreach (var e in events)
 			{
-				var e = events.ElementAt(i);
 				if (!(e.CustomColor is Color color)) continue;
 
 				var t = (e.JsonTime - minTime) / dist;
@@ -247,9 +247,9 @@ namespace Enlighten.src.Enlighten.Plugin
 				var modifyAction = new BeatmapObjectModifiedAction(e, e, original, "Modified with Enlighten", true);
 				actions.Add(modifyAction);
 
-				if (flutterOn && original.JsonTime != maxTime)
+				if (flutterOn && original.JsonTime != minTime)
 				{
-					var time = (e.JsonTime + events.ElementAt(i + 1).JsonTime) / 2;
+					var time = (e.JsonTime + lastEvent.JsonTime) / 2;
 					t = (time - minTime) / dist;
 
 					var intensity = GetParameterValue(flutterIntensity, t);
@@ -271,6 +271,8 @@ namespace Enlighten.src.Enlighten.Plugin
 					plugin.events.SpawnObject(eventCopy, out var conflicting, true, true, true);
 					totalConflicting.AddRange(conflicting);
 				}
+
+				lastEvent = e;
 			}
 
 			if (flutterOn)
