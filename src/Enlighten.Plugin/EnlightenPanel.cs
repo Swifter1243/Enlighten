@@ -39,7 +39,7 @@ namespace Enlighten.src.Enlighten.Plugin
 			}},
 			{ OptionName.Flutter, new SliderParameterInitializer[]{
 				new SliderParameterInitializer("Intensity", 0, 2),
-				new SliderParameterInitializer("Turbulence", -1, 1)
+				new SliderParameterInitializer("Turbulence", 0, 1)
 			}},
 		};
 
