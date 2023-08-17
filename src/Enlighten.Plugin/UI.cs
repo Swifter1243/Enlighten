@@ -38,7 +38,15 @@ namespace Enlighten.src.Enlighten.Plugin
 			enlightenPanel.gradientPanel = panelAsset.transform.Find("GradientPanel").gameObject;
 			enlightenPanel.gradientStart = enlightenPanel.gradientPanel.transform.Find("Start").GetComponent<Button>();
 			enlightenPanel.gradientEnd = enlightenPanel.gradientPanel.transform.Find("End").GetComponent<Button>();
+			enlightenPanel.gradientEasing = enlightenPanel.gradientPanel.transform.Find("Easings").GetComponent<Dropdown>();
 			enlightenPanel.exitGradient = enlightenPanel.gradientPanel.transform.Find("ExitGradient").GetComponent<Button>();
+
+			enlightenPanel.gradientEasing.ClearOptions();
+
+			foreach (var key in Easing.DisplayNameToInternalName.Keys)
+			{
+				enlightenPanel.gradientEasing.options.Add(new Dropdown.OptionData(key));
+			}
 		}
 
 		public void OnLoad()
@@ -229,12 +237,20 @@ namespace Enlighten.src.Enlighten.Plugin
 			var flutterIntensity = GetParameter(OptionName.Flutter, "Intensity");
 			var flutterTurbulence = GetParameter(OptionName.Flutter, "Turbulence");
 			BaseObject lastEvent = null;
+			var easingName = panel.gradientEasing.options.ElementAt(panel.gradientEasing.value).text;
+			var easing = Easing.ByName[Easing.DisplayNameToInternalName[easingName]];
 
 			foreach (var e in events)
 			{
 				if (!(e.CustomColor is Color color)) continue;
 
 				var t = (e.JsonTime - minTime) / dist;
+
+				if (panel.isGradient)
+				{
+					t = easing(t);
+				}
+
 				var original = (BaseObject)e.Clone();
 
 				foreach (var process in colorProcess)

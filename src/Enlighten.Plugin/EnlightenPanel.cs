@@ -17,6 +17,7 @@ namespace Enlighten.src.Enlighten.Plugin
 		public Button gradientEnd;
 		public Image gradientStartImage;
 		public Image gradientEndImage;
+		public Dropdown gradientEasing;
 		public Button run;
 
 		public Dictionary<OptionName, OptionPanel> optionPanels = new Dictionary<OptionName, OptionPanel>();
