@@ -88,6 +88,8 @@ namespace Enlighten.src.Enlighten.Plugin
 
 		private SliderParameter GetParameter(OptionName option, string parameter)
 		{
+			if (!panel.optionPanels[option].parameters.ContainsKey(parameter)) return null;
+
 			return panel.optionPanels[option].parameters[parameter];
 		}
 
@@ -217,32 +219,67 @@ namespace Enlighten.src.Enlighten.Plugin
 			var minTime = events.First().JsonTime;
 			var maxTime = events.Last().JsonTime;
 			var dist = maxTime - minTime;
+
 			var actions = new List<BeatmapAction>();
+			var totalConflicting = new List<BaseObject>();
+			var totalAdded = new List<BaseObject>();
 
 			var colorProcess = MakeColorProcess();
+			bool flutterOn = IsOptionOn(OptionName.Flutter);
+			var flutterIntensity = GetParameter(OptionName.Flutter, "Intensity");
+			var flutterTurbulence = GetParameter(OptionName.Flutter, "Turbulence");
 
-			Debug.Log(colorProcess.Count);
-
-			foreach (var e in events)
+			for (int i = 0; i < events.Count(); i++)
 			{
+				var e = events.ElementAt(i);
 				if (!(e.CustomColor is Color color)) continue;
 
 				var t = (e.JsonTime - minTime) / dist;
 				var original = (BaseObject)e.Clone();
 
 				foreach (var process in colorProcess)
-{
-    color = process.Invoke(color, t);
-}
+				{
+					color = process.Invoke(color, t);
+				}
 
 				e.CustomColor = color;
 				e.WriteCustom();
+				var modifyAction = new BeatmapObjectModifiedAction(e, e, original, "Modified with Enlighten", true);
+				actions.Add(modifyAction);
 
-				var action = new BeatmapObjectModifiedAction(e, e, original, "Modified with Enlighten.", true);
-				actions.Add(action);
+				if (flutterOn && original.JsonTime != maxTime)
+				{
+					var time = (e.JsonTime + events.ElementAt(i + 1).JsonTime) / 2;
+					t = (time - minTime) / dist;
+
+					var intensity = GetParameterValue(flutterIntensity, t);
+					var turbulence = GetParameterValue(flutterTurbulence, t);
+
+					var value = intensity + UnityEngine.Random.Range(-turbulence, turbulence);
+
+					var eventCopy = (BaseObject)e.Clone();
+					var colorCopy = (Color)eventCopy.CustomColor;
+
+					colorCopy.r *= value;
+					colorCopy.g *= value;
+					colorCopy.b *= value;
+
+					eventCopy.JsonTime = time;
+					eventCopy.CustomColor = colorCopy;
+
+					totalAdded.Add(eventCopy);
+					plugin.events.SpawnObject(eventCopy, out var conflicting, true, true, true);
+					totalConflicting.AddRange(conflicting);
+				}
 			}
 
-			var allActions = new ActionCollectionAction(actions, false, false, "Modified with Enlighten.");
+			if (flutterOn)
+			{
+				actions.Add(new BeatmapObjectPlacementAction(totalAdded, totalConflicting, "Added with Enlighten"));
+				plugin.events.DoPostObjectsSpawnedWorkflow();
+			}
+
+			var allActions = new ActionCollectionAction(actions, false, false, "Enlighten");
 			BeatmapActionContainer.AddAction(allActions);
 
 			plugin.events.RefreshEventsAppearance(events);
