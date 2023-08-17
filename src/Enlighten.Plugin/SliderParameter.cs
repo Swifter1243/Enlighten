@@ -54,6 +54,7 @@ namespace Enlighten.src.Enlighten.Plugin
 
 		public void OnValueChange()
 		{
+			option.WriteToValues(option.enlightenPanel.optionValues);
 			option.CheckDefaultState();
 		}
 
@@ -74,7 +75,7 @@ namespace Enlighten.src.Enlighten.Plugin
 			SetValue(defaultValue);
 		}
 
-		public string GetValueName() => option.optionName + property;
+		public string GetValueName() => Enlighten.OptionToString(option.optionName) + property;
 	}
 
 	public class SliderParameterInitializer

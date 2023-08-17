@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Enlighten.src.Enlighten.Plugin
 {
-	public enum OptionNames
+	public enum OptionName
 	{
 		Brightness,
 		Alpha,

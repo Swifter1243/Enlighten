@@ -36,5 +36,15 @@ namespace Enlighten.src.Enlighten.Plugin
                 ui.OnLoad();
             }
         }
+
+        public static string OptionToString(OptionName option)
+        {
+            return Enum.GetName(typeof(OptionName), option);
+        }
+
+        public static OptionName StringToOption(string option)
+		{
+            return (OptionName)Enum.Parse(typeof(OptionName), option);
+        }
     }
 }

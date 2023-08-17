@@ -13,10 +13,11 @@ namespace Enlighten.src.Enlighten.Plugin
 	{
 		public bool on = true;
 		public RawImage image;
-		public string optionName;
+		public OptionName optionName;
 		public OptionPanel panel;
 		public Button button;
 		public Image buttonImage;
+		public EnlightenPanel enlightenPanel;
 
 		public void Clear()
 		{
@@ -29,7 +30,7 @@ namespace Enlighten.src.Enlighten.Plugin
 			SetVisibility(!on);
 		}
 
-		public void SetVisibility(bool visible)
+		public void SetVisibility(bool visible, bool write = true)
 		{
 			if (visible == on) return;
 
@@ -37,12 +38,24 @@ namespace Enlighten.src.Enlighten.Plugin
 			image.color = on ? Color.white : Color.gray;
 			buttonImage.color = on ? Color.white : Color.black;
 			panel.gameObject.SetActive(on);
+
+			if (write)
+			{
+				if (on)
+				{
+					enlightenPanel.enabledOptions.Add(optionName);
+				}
+				else
+				{
+					enlightenPanel.enabledOptions.Remove(optionName);
+				}
+			}
 		}
 
-		public void LoadValues(Dictionary<string, float> vals)
+		public void LoadVisibility(HashSet<OptionName> enabledOptions)
 		{
-			var isPresent = vals.Keys.Any(x => x.Contains(optionName));
-			SetVisibility(isPresent);
+			var isPresent = enabledOptions.Contains(optionName);
+			SetVisibility(isPresent, false);
 		}
 	}
 }

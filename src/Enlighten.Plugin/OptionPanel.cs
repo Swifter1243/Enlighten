@@ -13,8 +13,9 @@ namespace Enlighten.src.Enlighten.Plugin
 	{
 		public Button reload;
 		public Button delete;
-		public string optionName;
+		public OptionName optionName;
 		public Dictionary<string, SliderParameter> parameters = new Dictionary<string, SliderParameter>();
+		public EnlightenPanel enlightenPanel;
 
 		public void InitializeParameters(SliderParameterInitializer[] parameters)
 		{
@@ -56,6 +57,10 @@ namespace Enlighten.src.Enlighten.Plugin
 				if (vals.TryGetValue(param.GetValueName(), out float value))
 				{
 					param.SetValue(value);
+				}
+				else
+				{
+					param.SetValue(param.defaultValue);
 				}
 			}
 		}

@@ -19,33 +19,38 @@ namespace Enlighten.src.Enlighten.Plugin
 		public Image gradientEndImage;
 		public Button run;
 
-		public Dictionary<OptionNames, OptionPanel> optionPanels = new Dictionary<OptionNames, OptionPanel>();
-		public Dictionary<OptionNames, OptionButton> optionButtons = new Dictionary<OptionNames, OptionButton>();
+		public Dictionary<OptionName, OptionPanel> optionPanels = new Dictionary<OptionName, OptionPanel>();
+		public Dictionary<OptionName, OptionButton> optionButtons = new Dictionary<OptionName, OptionButton>();
 
-		public static IReadOnlyDictionary<OptionNames, SliderParameterInitializer[]> parameterLookup =
-			new Dictionary<OptionNames, SliderParameterInitializer[]>()
+		public static IReadOnlyDictionary<OptionName, SliderParameterInitializer[]> parameterLookup =
+			new Dictionary<OptionName, SliderParameterInitializer[]>()
 		{
-			{ OptionNames.Brightness, new SliderParameterInitializer[]{
+			{ OptionName.Brightness, new SliderParameterInitializer[]{
 				new SliderParameterInitializer("Amount", 0, 2)
 			}},
-			{ OptionNames.Alpha, new SliderParameterInitializer[]{
+			{ OptionName.Alpha, new SliderParameterInitializer[]{
 				new SliderParameterInitializer("Amount", 0, 2)
 			}},
-			{ OptionNames.Hue, new SliderParameterInitializer[]{
+			{ OptionName.Hue, new SliderParameterInitializer[]{
 				new SliderParameterInitializer("Offset", -1, 1)
 			}},
-			{ OptionNames.Saturation, new SliderParameterInitializer[]{
+			{ OptionName.Saturation, new SliderParameterInitializer[]{
 				new SliderParameterInitializer("Offset", -1, 1)
 			}},
-			{ OptionNames.Flutter, new SliderParameterInitializer[]{
+			{ OptionName.Flutter, new SliderParameterInitializer[]{
 				new SliderParameterInitializer("Intensity", 0, 2),
 				new SliderParameterInitializer("Turbulence", -1, 1)
 			}},
 		};
 
-		public Dictionary<string, float> startOptions = new Dictionary<string, float>();
-		public Dictionary<string, float> endOptions = new Dictionary<string, float>();
-		public Dictionary<string, float> currentOptions;
+		public Dictionary<string, float> startOptionValues = new Dictionary<string, float>();
+		public Dictionary<string, float> endOptionValues = new Dictionary<string, float>();
+		public Dictionary<string, float> optionValues;
+
+		public HashSet<OptionName> startEnabledOptions = new HashSet<OptionName>();
+		public HashSet<OptionName> endEnabledOptions = new HashSet<OptionName>();
+		public HashSet<OptionName> enabledOptions;
+
 		public bool isGradient = false;
 		public bool onStart = true;
 
@@ -66,16 +71,16 @@ namespace Enlighten.src.Enlighten.Plugin
 		{
 			foreach (var button in optionButtons.Values)
 			{
-				button.LoadValues(vals);
+				button.LoadVisibility(enabledOptions);
 				button.panel.LoadValues(vals);
 			}
 		}
 
-		public void SwitchToValues(Dictionary<string, float> vals)
+		public void SwitchToValues(Dictionary<string, float> vals, HashSet<OptionName> enabled)
 		{
-			WriteToValues(currentOptions);
-			currentOptions = vals;
-			LoadValues(currentOptions);
+			enabledOptions = enabled;
+			optionValues = vals;
+			LoadValues(optionValues);
 		}
 
 		public void Initialize()
@@ -93,7 +98,7 @@ namespace Enlighten.src.Enlighten.Plugin
 
 				if (!onStart)
 				{
-					SwitchToValues(endOptions);
+					SwitchToValues(endOptionValues, endEnabledOptions);
 				}
 			});
 
@@ -102,7 +107,7 @@ namespace Enlighten.src.Enlighten.Plugin
 				isGradient = false;
 				gradientPanel.SetActive(false);
 				gradient.gameObject.SetActive(true);
-				SwitchToValues(startOptions);
+				SwitchToValues(startOptionValues, startEnabledOptions);
 			});
 
 			gradientStart.onClick.AddListener(() =>
@@ -110,7 +115,7 @@ namespace Enlighten.src.Enlighten.Plugin
 				if (onStart) return;
 
 				onStart = true;
-				SwitchToValues(startOptions);
+				SwitchToValues(startOptionValues, startEnabledOptions);
 				UpdateGradientTab();
 			});
 
@@ -119,24 +124,26 @@ namespace Enlighten.src.Enlighten.Plugin
 				if (!onStart) return;
 
 				onStart = false;
-				SwitchToValues(endOptions);
+				SwitchToValues(endOptionValues, endEnabledOptions);
 				UpdateGradientTab();
 			});
 
-			currentOptions = startOptions;
+			optionValues = startOptionValues;
+			enabledOptions = startEnabledOptions;
 
 			// Hooking up UI
 			var panelsObj = transform.Find("OptionPanels");
 			var buttonsObj = transform.Find("OptionButtons");
 
-			foreach (var name in Enum.GetNames(typeof(OptionNames)))
+			foreach (var name in Enum.GetNames(typeof(OptionName)))
 			{
-				var enumKey = (OptionNames)Enum.Parse(typeof(OptionNames), name);
+				var enumKey = Enlighten.StringToOption(name);
 
 				// Option Panels
 				var panelObj = panelsObj.Find(name);
 				var panel = panelObj.gameObject.AddComponent<OptionPanel>();
-				panel.optionName = name;
+				panel.enlightenPanel = this;
+				panel.optionName = enumKey;
 				panel.reload = panel.transform.Find("Reload").GetComponent<Button>();
 				panel.delete = panel.transform.Find("Delete").GetComponent<Button>();
 				panel.reload.onClick.AddListener(panel.ToDefault);
@@ -146,7 +153,8 @@ namespace Enlighten.src.Enlighten.Plugin
 				// Option Buttons
 				var buttonObj = buttonsObj.Find(name);
 				var button = buttonObj.gameObject.AddComponent<OptionButton>();
-				button.optionName = name;
+				button.enlightenPanel = this;
+				button.optionName = enumKey;
 				button.panel = panel;
 				button.image = button.GetComponentInChildren<RawImage>();
 				button.button = button.GetComponent<Button>();
