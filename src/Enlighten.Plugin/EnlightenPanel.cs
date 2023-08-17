@@ -133,7 +133,7 @@ namespace Enlighten.src.Enlighten.Plugin
 			enabledOptions = startEnabledOptions;
 
 			// Hooking up UI
-			var panelsObj = transform.Find("OptionPanels");
+			var panelsObj = transform.Find("OptionPanels").Find("Content");
 			var buttonsObj = transform.Find("OptionButtons");
 
 			foreach (var name in Enum.GetNames(typeof(OptionName)))
@@ -142,6 +142,7 @@ namespace Enlighten.src.Enlighten.Plugin
 
 				// Option Panels
 				var panelObj = panelsObj.Find(name);
+				Debug.Log(panelObj);
 				var panel = panelObj.gameObject.AddComponent<OptionPanel>();
 				panel.enlightenPanel = this;
 				panel.optionName = enumKey;
