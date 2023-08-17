@@ -12,6 +12,7 @@ namespace Enlighten.src.Enlighten.Plugin
 		Alpha,
 		Hue,
 		Saturation,
-		Flutter
+		Flutter,
+		Pulse
 	}
 }
