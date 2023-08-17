@@ -91,6 +91,106 @@ namespace Enlighten.src.Enlighten.Plugin
 			return panel.optionPanels[option].parameters[parameter];
 		}
 
+		private float GetParameterValue(SliderParameter param, float t)
+		{
+			var value = param.value;
+
+			if (panel.isGradient)
+			{
+				var key = param.GetValueName();
+				var defaultValue = param.defaultValue;
+
+				bool onInStart =
+					panel.startEnabledOptions.Contains(param.option.optionName);
+
+				bool onInEnd =
+					panel.endEnabledOptions.Contains(param.option.optionName);
+
+				var startAmount = onInStart ? panel.startOptionValues[key] : defaultValue;
+				var endAmount = onInEnd ? panel.endOptionValues[key] : defaultValue;
+
+				value = Mathf.Lerp(startAmount, endAmount, t);
+			}
+
+			return value;
+		}
+
+		private List<Func<Color, float, Color>> MakeColorProcess()
+		{
+			var colorProcess = new List<Func<Color, float, Color>>();
+
+			if (IsOptionOn(OptionName.Brightness))
+			{
+				colorProcess.Add((Color color, float t) =>
+				{
+					var param = GetParameter(OptionName.Brightness, "Amount");
+					var value = GetParameterValue(param, t);
+
+					color.r *= value;
+					color.g *= value;
+					color.b *= value;
+
+					return color;
+				});
+			}
+
+			if (IsOptionOn(OptionName.Alpha))
+			{
+				colorProcess.Add((Color color, float t) =>
+				{
+					var param = GetParameter(OptionName.Alpha, "Amount");
+					var value = GetParameterValue(param, t);
+
+					color.a *= value;
+
+					return color;
+				});
+			}
+
+			if (IsOptionOn(OptionName.Hue))
+			{
+				colorProcess.Add((Color color, float t) =>
+				{
+					var param = GetParameter(OptionName.Hue, "Offset");
+					var value = GetParameterValue(param, t);
+
+					Color.RGBToHSV(color, out float H, out float S, out float V);
+
+					H = (H + value) % 1;
+
+					if ((H < 0 && 1 > 0) || (H > 0 && 1 < 0))
+					{
+						H += 1;
+					}
+
+					var col = Color.HSVToRGB(H, S, V);
+					col.a = color.a;
+
+					return col;
+				});
+			}
+
+			if (IsOptionOn(OptionName.Saturation))
+			{
+				colorProcess.Add((Color color, float t) =>
+				{
+					var param = GetParameter(OptionName.Saturation, "Offset");
+					var value = GetParameterValue(param, t);
+
+					Color.RGBToHSV(color, out float H, out float S, out float V);
+
+					S = Mathf.Clamp01(S + value);
+
+					var col = Color.HSVToRGB(H, S, V);
+					col.a = color.a;
+
+					return col;
+				});
+			}
+
+			return colorProcess;
+		}
+
 		private void Run()
 		{
 			var events = SelectionController.SelectedObjects.OfType<BaseEvent>();
@@ -119,6 +219,10 @@ namespace Enlighten.src.Enlighten.Plugin
 			var dist = maxTime - minTime;
 			var actions = new List<BeatmapAction>();
 
+			var colorProcess = MakeColorProcess();
+
+			Debug.Log(colorProcess.Count);
+
 			foreach (var e in events)
 			{
 				if (!(e.CustomColor is Color color)) continue;
@@ -126,62 +230,16 @@ namespace Enlighten.src.Enlighten.Plugin
 				var t = (e.JsonTime - minTime) / dist;
 				var original = (BaseObject)e.Clone();
 
-				if (IsOptionOn(OptionName.Brightness))
-				{
-					var param = GetParameter(OptionName.Brightness, "Amount");
-					var amount = param.value;
-
-					if (panel.isGradient)
-					{
-						var key = param.GetValueName();
-						var defaultValue = param.defaultValue;
-
-						bool onInStart =
-							panel.startEnabledOptions.Contains(OptionName.Brightness);
-
-						bool onInEnd =
-							panel.endEnabledOptions.Contains(OptionName.Brightness);
-
-						var startAmount = onInStart ? panel.startOptionValues[key] : defaultValue;
-						var endAmount = onInEnd ? panel.endOptionValues[key] : defaultValue;
-
-						amount = Mathf.Lerp(startAmount, endAmount, t);
-					}
-
-					color.r *= amount;
-					color.g *= amount;
-					color.b *= amount;
-				}
+				foreach (var process in colorProcess)
+{
+    color = process.Invoke(color, t);
+}
 
 				e.CustomColor = color;
 				e.WriteCustom();
 
 				var action = new BeatmapObjectModifiedAction(e, e, original, "Modified with Enlighten.", true);
 				actions.Add(action);
-			}
-
-			var allActions = new ActionCollectionAction(actions, false, false, "Modified with Enlighten.");
-			BeatmapActionContainer.AddAction(allActions);
-
-			plugin.events.RefreshEventsAppearance(events);
-		}
-
-		private void TestProcess()
-		{
-			var actions = new List<BeatmapAction>();
-			var events = plugin.events.LoadedObjects.Cast<BaseEvent>();
-
-			foreach (var light in events)
-			{
-				if (light.CustomColor != null)
-				{
-					var original = (BaseObject)light.Clone();
-					light.CustomColor *= 3;
-					light.WriteCustom();
-
-					var action = new BeatmapObjectModifiedAction(light, light, original, "Modified with Enlighten.", true);
-					actions.Add(action);
-				}
 			}
 
 			var allActions = new ActionCollectionAction(actions, false, false, "Modified with Enlighten.");

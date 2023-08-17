@@ -161,9 +161,10 @@ namespace Enlighten.src.Enlighten.Plugin
 				button.buttonImage = button.GetComponent<Image>();
 				button.button.onClick.AddListener(button.Toggle);
 				panel.delete.onClick.AddListener(button.Clear);
-				button.SetVisibility(false);
 				optionButtons.Add(enumKey, button);
 			}
+
+			LoadValues(optionValues);
 		}
 
 		public void UpdateGradientTab()
