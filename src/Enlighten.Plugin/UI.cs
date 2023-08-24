@@ -244,6 +244,15 @@ namespace Enlighten.src.Enlighten.Plugin
 			return colorProcess;
 		}
 
+		private Color ClampColor(Color color)
+		{
+			if (color.r < 0) color.r = 0;
+			if (color.g < 0) color.g = 0;
+			if (color.b < 0) color.b = 0;
+			if (color.a < 0) color.a = 0;
+			return color;
+		}
+
 		private void Run()
 		{
 			var events = SelectionController.SelectedObjects.OfType<BaseEvent>();
@@ -301,7 +310,7 @@ namespace Enlighten.src.Enlighten.Plugin
 					color = process.Invoke(color, t);
 				}
 
-				e.CustomColor = color;
+				e.CustomColor = ClampColor(color);
 				e.WriteCustom();
 				var modifyAction = new BeatmapObjectModifiedAction(e, e, original, "Modified with Enlighten", true);
 				actions.Add(modifyAction);
@@ -324,7 +333,7 @@ namespace Enlighten.src.Enlighten.Plugin
 					colorCopy.b *= value;
 
 					eventCopy.JsonTime = time;
-					eventCopy.CustomColor = colorCopy;
+					eventCopy.CustomColor = ClampColor(colorCopy);
 
 					totalAdded.Add(eventCopy);
 					plugin.events.SpawnObject(eventCopy, out var conflicting, true, true, true);
