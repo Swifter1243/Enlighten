@@ -3042,6 +3042,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pulse
       objectReference: {fileID: 0}
+    - target: {fileID: 2021397144021734587, guid: 58a2bf5b56b6f9d4c859a358639125a7, type: 3}
+      propertyPath: m_Value
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2021397144132512250, guid: 58a2bf5b56b6f9d4c859a358639125a7, type: 3}
       propertyPath: m_Text
       value: Intensity

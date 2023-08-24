@@ -131,9 +131,10 @@ namespace Enlighten.src.Enlighten.Plugin
 
 			if (IsOptionOn(OptionName.Brightness))
 			{
+				var param = GetParameter(OptionName.Brightness, "Amount");
+
 				colorProcess.Add((Color color, float t) =>
 				{
-					var param = GetParameter(OptionName.Brightness, "Amount");
 					var value = GetParameterValue(param, t);
 
 					color.r *= value;
@@ -146,9 +147,10 @@ namespace Enlighten.src.Enlighten.Plugin
 
 			if (IsOptionOn(OptionName.Alpha))
 			{
+				var param = GetParameter(OptionName.Alpha, "Amount");
+
 				colorProcess.Add((Color color, float t) =>
 				{
-					var param = GetParameter(OptionName.Alpha, "Amount");
 					var value = GetParameterValue(param, t);
 
 					color.a *= value;
@@ -159,9 +161,10 @@ namespace Enlighten.src.Enlighten.Plugin
 
 			if (IsOptionOn(OptionName.Hue))
 			{
+				var param = GetParameter(OptionName.Hue, "Offset");
+
 				colorProcess.Add((Color color, float t) =>
 				{
-					var param = GetParameter(OptionName.Hue, "Offset");
 					var value = GetParameterValue(param, t);
 
 					Color.RGBToHSV(color, out float H, out float S, out float V);
@@ -182,9 +185,10 @@ namespace Enlighten.src.Enlighten.Plugin
 
 			if (IsOptionOn(OptionName.Saturation))
 			{
+				var param = GetParameter(OptionName.Saturation, "Offset");
+
 				colorProcess.Add((Color color, float t) =>
 				{
-					var param = GetParameter(OptionName.Saturation, "Offset");
 					var value = GetParameterValue(param, t);
 
 					Color.RGBToHSV(color, out float H, out float S, out float V);
@@ -196,6 +200,45 @@ namespace Enlighten.src.Enlighten.Plugin
 
 					return col;
 				});
+			}
+
+			if (IsOptionOn(OptionName.Pulse))
+			{
+				var intensityParam = GetParameter(OptionName.Pulse, "Intensity");
+				var cyclesParam = GetParameter(OptionName.Pulse, "Cycles");
+
+				var startValue = GetParameterValue(cyclesParam, 0);
+				var endValue = GetParameterValue(cyclesParam, 1);
+
+				Func<Color, float, float, Color> process = (Color color, float t, float period) =>
+				{
+					var intensity = GetParameterValue(intensityParam, t);
+					var val = Mathf.Sin(period * t * (float)Math.PI * 2) * intensity;
+
+					color.r += val;
+					color.g += val;
+					color.b += val;
+
+					return color;
+				};
+
+				if (panel.isGradient && startValue > endValue)
+				{
+					colorProcess.Add((Color color, float t) =>
+					{
+						var period = Mathf.Lerp(endValue, startValue, 1 - t);
+						return process(color, t, period);
+					});
+				}
+				else
+				{
+
+					colorProcess.Add((Color color, float t) =>
+					{
+						var period = GetParameterValue(cyclesParam, t);
+						return process(color, t, period);
+					});
+				}
 			}
 
 			return colorProcess;
