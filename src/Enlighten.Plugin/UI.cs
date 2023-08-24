@@ -213,7 +213,8 @@ namespace Enlighten.src.Enlighten.Plugin
 				Func<Color, float, float, Color> process = (Color color, float t, float period) =>
 				{
 					var intensity = GetParameterValue(intensityParam, t);
-					var val = Mathf.Sin(period * t * (float)Math.PI * 2) * intensity;
+					var x = period * (t - 0.25f / period) * (float)Math.PI * 2;
+					var val = (Mathf.Sin(x) * 0.5f + 0.5f) * intensity;
 
 					color.r += val;
 					color.g += val;
