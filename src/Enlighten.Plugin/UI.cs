@@ -131,7 +131,7 @@ namespace Enlighten.src.Enlighten.Plugin
 
 			if (IsOptionOn(OptionName.Brightness))
 			{
-				var param = GetParameter(OptionName.Brightness, "Amount");
+				var param = GetParameter(OptionName.Brightness, "Multiplier");
 
 				colorProcess.Add((Color color, float t) =>
 				{
@@ -147,7 +147,7 @@ namespace Enlighten.src.Enlighten.Plugin
 
 			if (IsOptionOn(OptionName.Alpha))
 			{
-				var param = GetParameter(OptionName.Alpha, "Amount");
+				var param = GetParameter(OptionName.Alpha, "Multiplier");
 
 				colorProcess.Add((Color color, float t) =>
 				{
@@ -277,7 +277,7 @@ namespace Enlighten.src.Enlighten.Plugin
 
 			var colorProcess = MakeColorProcess();
 			bool flutterOn = IsOptionOn(OptionName.Flutter);
-			var flutterIntensity = GetParameter(OptionName.Flutter, "Intensity");
+			var flutterMultiplier = GetParameter(OptionName.Flutter, "Multiplier");
 			var flutterTurbulence = GetParameter(OptionName.Flutter, "Turbulence");
 			BaseObject lastEvent = null;
 			var easingName = panel.gradientEasing.options.ElementAt(panel.gradientEasing.value).text;
@@ -311,10 +311,10 @@ namespace Enlighten.src.Enlighten.Plugin
 					var time = (e.JsonTime + lastEvent.JsonTime) / 2;
 					t = (time - minTime) / dist;
 
-					var intensity = GetParameterValue(flutterIntensity, t);
+					var multiplier = GetParameterValue(flutterMultiplier, t);
 					var turbulence = GetParameterValue(flutterTurbulence, t);
 
-					var value = intensity + UnityEngine.Random.Range(-turbulence, turbulence);
+					var value = multiplier + UnityEngine.Random.Range(-turbulence, turbulence);
 
 					var eventCopy = (BaseObject)e.Clone();
 					var colorCopy = (Color)eventCopy.CustomColor;

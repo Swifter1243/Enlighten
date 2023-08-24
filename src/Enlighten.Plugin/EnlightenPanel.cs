@@ -27,10 +27,10 @@ namespace Enlighten.src.Enlighten.Plugin
 			new Dictionary<OptionName, SliderParameterInitializer[]>()
 		{
 			{ OptionName.Brightness, new SliderParameterInitializer[]{
-				new SliderParameterInitializer("Amount", 0, 2)
+				new SliderParameterInitializer("Multiplier", 0, 2)
 			}},
 			{ OptionName.Alpha, new SliderParameterInitializer[]{
-				new SliderParameterInitializer("Amount", 0, 2)
+				new SliderParameterInitializer("Multiplier", 0, 2)
 			}},
 			{ OptionName.Hue, new SliderParameterInitializer[]{
 				new SliderParameterInitializer("Offset", -1, 1)
@@ -39,7 +39,7 @@ namespace Enlighten.src.Enlighten.Plugin
 				new SliderParameterInitializer("Offset", -1, 1)
 			}},
 			{ OptionName.Flutter, new SliderParameterInitializer[]{
-				new SliderParameterInitializer("Intensity", 0, 2),
+				new SliderParameterInitializer("Multiplier", 0, 2),
 				new SliderParameterInitializer("Turbulence", 0, 1)
 			}},
 			{ OptionName.Pulse, new SliderParameterInitializer[]{
