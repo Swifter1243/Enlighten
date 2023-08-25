@@ -125,15 +125,15 @@ namespace Enlighten.src.Enlighten.Plugin
 			return value;
 		}
 
-		private List<Func<Color, float, Color>> MakeColorProcess()
+		private List<Func<Color, float, float, Color>> MakeColorProcess()
 		{
-			var colorProcess = new List<Func<Color, float, Color>>();
+			var colorProcess = new List<Func<Color, float, float, Color>>();
 
 			if (IsOptionOn(OptionName.Brightness))
 			{
 				var param = GetParameter(OptionName.Brightness, "Multiplier");
 
-				colorProcess.Add((Color color, float t) =>
+				colorProcess.Add((Color color, float t, float tOriginal) =>
 				{
 					var value = GetParameterValue(param, t);
 
@@ -149,7 +149,7 @@ namespace Enlighten.src.Enlighten.Plugin
 			{
 				var param = GetParameter(OptionName.Alpha, "Multiplier");
 
-				colorProcess.Add((Color color, float t) =>
+				colorProcess.Add((Color color, float t, float tOriginal) =>
 				{
 					var value = GetParameterValue(param, t);
 
@@ -163,7 +163,7 @@ namespace Enlighten.src.Enlighten.Plugin
 			{
 				var param = GetParameter(OptionName.Hue, "Offset");
 
-				colorProcess.Add((Color color, float t) =>
+				colorProcess.Add((Color color, float t, float tOriginal) =>
 				{
 					var value = GetParameterValue(param, t);
 
@@ -187,7 +187,7 @@ namespace Enlighten.src.Enlighten.Plugin
 			{
 				var param = GetParameter(OptionName.Saturation, "Offset");
 
-				colorProcess.Add((Color color, float t) =>
+				colorProcess.Add((Color color, float t, float tOriginal) =>
 				{
 					var value = GetParameterValue(param, t);
 
@@ -210,12 +210,12 @@ namespace Enlighten.src.Enlighten.Plugin
 				var startValue = GetParameterValue(cyclesParam, 0);
 				var endValue = GetParameterValue(cyclesParam, 1);
 
-				colorProcess.Add((Color color, float t) =>
+				colorProcess.Add((Color color, float t, float tOriginal) =>
 				{
 					var intensity = GetParameterValue(intensityParam, t);
 
 					bool isReverse = panel.isGradient && startValue > endValue;
-					var periodTime = isReverse ? 1 - t : t;
+					var periodTime = isReverse ? 1 - tOriginal : tOriginal;
 					var period = isReverse ?
 						Mathf.Lerp(endValue, startValue, periodTime)
 						: GetParameterValue(cyclesParam, periodTime);
@@ -287,6 +287,7 @@ namespace Enlighten.src.Enlighten.Plugin
 				if (!(e.CustomColor is Color color)) continue;
 
 				var t = (e.JsonTime - minTime) / dist;
+				var tOriginal = t;
 
 				if (panel.isGradient)
 				{
@@ -297,7 +298,7 @@ namespace Enlighten.src.Enlighten.Plugin
 
 				foreach (var process in colorProcess)
 				{
-					color = process.Invoke(color, t);
+					color = process.Invoke(color, t, tOriginal);
 				}
 
 				e.CustomColor = ClampColor(color);
