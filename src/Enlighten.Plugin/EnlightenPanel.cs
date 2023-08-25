@@ -22,6 +22,8 @@ namespace Enlighten.src.Enlighten.Plugin
 		public Button gradientSwap;
 		public Button gradientParallel;
 		public Button gradientClone;
+		public Button deleteAll;
+		public Button reloadAll;
 
 		public Dictionary<OptionName, OptionPanel> optionPanels = new Dictionary<OptionName, OptionPanel>();
 		public Dictionary<OptionName, OptionButton> optionButtons = new Dictionary<OptionName, OptionButton>();
@@ -159,6 +161,8 @@ namespace Enlighten.src.Enlighten.Plugin
 				SwitchToValues(optionValues, enabledOptions);
 			});
 
+			reloadAll.onClick.AddListener(DefaultAll);
+
 			optionValues = startOptionValues;
 			enabledOptions = startEnabledOptions;
 
@@ -216,6 +220,22 @@ namespace Enlighten.src.Enlighten.Plugin
 		{
 			var canClone = optionPanels.Values.Any(x => x.CanReflect());
 			gradientClone.gameObject.SetActive(canClone);
+		}
+
+		public void CheckDefaultAll()
+		{
+			var canDefault = optionPanels.Values.Any(x => !x.IsDefault());
+			reloadAll.gameObject.SetActive(canDefault);
+		}
+
+		public void DefaultAll()
+		{
+			foreach (var panel in optionPanels.Values)
+			{
+				panel.ToDefault();
+			}
+
+			reloadAll.gameObject.SetActive(false);
 		}
 	}
 }

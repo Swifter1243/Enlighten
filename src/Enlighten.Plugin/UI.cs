@@ -44,6 +44,9 @@ namespace Enlighten.src.Enlighten.Plugin
 			enlightenPanel.gradientSwap = FindAndName(gradientPanel, "Swap", "Swap Gradient Ends").GetComponent<Button>();
 			enlightenPanel.gradientParallel = FindAndName(gradientPanel, "Parallel", "Run Light Groups Individually").GetComponent<Button>();
 			enlightenPanel.gradientClone = FindAndName(gradientPanel, "Clone", "Apply All To Other End").GetComponent<Button>();
+			var buttonsObj = enlightenPanel.transform.Find("MainButtons");
+			enlightenPanel.deleteAll = FindAndName(buttonsObj, "Delete", "Delete All").GetComponent<Button>();
+			enlightenPanel.reloadAll = FindAndName(buttonsObj, "Reload", "Default All").GetComponent<Button>();
 
 			enlightenPanel.gradientEasing.ClearOptions();
 

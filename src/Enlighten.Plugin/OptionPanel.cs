@@ -93,6 +93,7 @@ namespace Enlighten.src.Enlighten.Plugin
 		public void CheckDefaultState()
 		{
 			reload.gameObject.SetActive(!IsDefault());
+			enlightenPanel.CheckDefaultAll();
 		}
 
 		public bool CanReflect()
