@@ -13,6 +13,8 @@ namespace Enlighten.src.Enlighten.Plugin
 	{
 		public Button reload;
 		public Button delete;
+		public Button hide;
+		public Button reflect;
 		public OptionName optionName;
 		public Dictionary<string, SliderParameter> parameters = new Dictionary<string, SliderParameter>();
 		public EnlightenPanel enlightenPanel;
