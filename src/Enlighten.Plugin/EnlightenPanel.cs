@@ -107,11 +107,9 @@ namespace Enlighten.src.Enlighten.Plugin
 			gradient.onClick.AddListener(() =>
 			{
 				isGradient = true;
-				onStart = true;
-				UpdateGradientTab();
 				gradientPanel.SetActive(true);
 				gradient.gameObject.SetActive(false);
-				SwitchToValues(startOptionValues, startEnabledOptions);
+				SwitchToValues(optionValues, enabledOptions);
 			});
 
 			exitGradient.onClick.AddListener(() =>
@@ -119,7 +117,7 @@ namespace Enlighten.src.Enlighten.Plugin
 				isGradient = false;
 				gradientPanel.SetActive(false);
 				gradient.gameObject.SetActive(true);
-				SwitchToValues(startOptionValues, startEnabledOptions);
+				SwitchToValues(optionValues, enabledOptions);
 			});
 
 			gradientStart.onClick.AddListener(() =>
