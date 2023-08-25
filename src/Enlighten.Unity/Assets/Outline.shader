@@ -2,6 +2,7 @@ Shader "Unlit/Outline"
 {
     Properties
     {
+        _MainTex("Texture", 2D) = "white" {}
         _Dimensions ("Dimensions", Vector) = (10,10,0,0)
         _OutlinePos ("Outline Position", Float) = 1
         _Roundness ("Roundness", Float) = 3
@@ -36,6 +37,9 @@ Shader "Unlit/Outline"
             float _OutlinePos;
             float _Roundness;
             float _Thin;
+
+            sampler2D _MainTex;
+            float4 _MainTex_ST;
 
             v2f vert (appdata v)
             {

@@ -2,6 +2,7 @@ Shader "Unlit/PanelBackground"
 {
     Properties
     {
+        _MainTex("Texture", 2D) = "white" {}
         _Dimensions ("Dimensions", Vector) = (0,0,0,0)
         _Roundness ("Roundness", Float) = 3
         _Brightness ("Brightness", Float) = 1
@@ -34,6 +35,9 @@ Shader "Unlit/PanelBackground"
             float4 _Dimensions;
             float _Roundness;
             float _Brightness;
+
+            sampler2D _MainTex;
+            float4 _MainTex_ST;
 
             v2f vert (appdata v)
             {
