@@ -71,7 +71,7 @@ Shader "Unlit/PanelBackground"
                 
                 float dist = 1.;
                 
-                float offset = (1. - pow(1. - (sin(time * 0.3) * 0.5 + 0.5), 1.)) * 0.5 * 0.5 + 0.25;
+                float offset = (1. - pow(1. - (sin(time * 0.3) * 0.5 + 0.5), 1.)) * 0.5;
                 
                 for (int x = 0; x <= 1; x++) {
                     for (int y = 0; y <= 1; y++) {

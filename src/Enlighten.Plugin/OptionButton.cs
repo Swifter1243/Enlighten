@@ -30,13 +30,15 @@ namespace Enlighten.src.Enlighten.Plugin
 			SetVisibility(!on);
 		}
 
+		public static Color DARK_GREY = new Color(0.2f, 0.2f, 0.2f);
+
 		public void SetVisibility(bool visible, bool write = true)
 		{
 			if (visible == on) return;
 
 			on = visible;
 			image.color = on ? Color.white : Color.gray;
-			buttonImage.color = on ? Color.white : Color.black;
+			buttonImage.color = on ? Color.white : DARK_GREY;
 			panel.gameObject.SetActive(on);
 
 			if (write)
