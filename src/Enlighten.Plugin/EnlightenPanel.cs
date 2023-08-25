@@ -158,17 +158,17 @@ namespace Enlighten.src.Enlighten.Plugin
 				panel.enlightenPanel = this;
 				panel.optionName = enumKey;
 				var panelButtons = panel.transform.Find("Buttons");
-				panel.reload = panelButtons.Find("Reload").GetComponent<Button>();
-				panel.delete = panelButtons.Find("Delete").GetComponent<Button>();
-				panel.hide = panelButtons.Find("Hide").GetComponent<Button>();
-				panel.reflect = panelButtons.Find("Reflect").GetComponent<Button>();
+				panel.reload = FindAndName(panelButtons, "Reload", "Return to Defaults").GetComponent<Button>();
+				panel.delete = FindAndName(panelButtons, "Delete").GetComponent<Button>();
+				panel.hide = FindAndName(panelButtons, "Hide", "Disable").GetComponent<Button>();
+				panel.reflect = FindAndName(panelButtons, "Reflect", "Apply to Other End").GetComponent<Button>();
 				panel.reload.onClick.AddListener(panel.Reload);
 				panel.reflect.onClick.AddListener(panel.Reflect);
 				panel.InitializeParameters(parameterLookup[enumKey]);
 				optionPanels.Add(enumKey, panel);
 
 				// Option Buttons
-				var buttonObj = buttonsObj.Find(name);
+				var buttonObj = FindAndName(buttonsObj, name);
 				var button = buttonObj.gameObject.AddComponent<OptionButton>();
 				button.enlightenPanel = this;
 				button.optionName = enumKey;
@@ -185,6 +185,13 @@ namespace Enlighten.src.Enlighten.Plugin
 			LoadValues(optionValues);
 			WriteToValues(startOptionValues, false);
 			WriteToValues(endOptionValues, false);
+		}
+
+		private Transform FindAndName(Transform baseObj, string name, string tooltip = null)
+		{
+			var obj = baseObj.Find(name);
+			UI.AddTooltip(obj.gameObject, tooltip ?? name);
+			return obj;
 		}
 
 		public void UpdateGradientTab()

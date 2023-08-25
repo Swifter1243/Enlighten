@@ -42,6 +42,10 @@ namespace Enlighten.src.Enlighten.Plugin
 			enlightenPanel.exitGradient = enlightenPanel.gradientPanel.transform.Find("ExitGradient").GetComponent<Button>();
 
 			enlightenPanel.gradientEasing.ClearOptions();
+			AddTooltip(enlightenPanel.run.gameObject, "Run");
+			AddTooltip(enlightenPanel.gradient.gameObject, "Enable Gradient Mode");
+			AddTooltip(enlightenPanel.gradientStart.gameObject, "Start of Selection");
+			AddTooltip(enlightenPanel.gradientEnd.gameObject, "End of Selection");
 
 			foreach (var key in Easing.DisplayNameToInternalName.Keys)
 			{
@@ -344,6 +348,12 @@ namespace Enlighten.src.Enlighten.Plugin
 			BeatmapActionContainer.AddAction(allActions);
 
 			plugin.events.RefreshEventsAppearance(events);
+		}
+
+		public static void AddTooltip(GameObject gameObject, string tooltip)
+		{
+			var component = gameObject.AddComponent<Tooltip>();
+			component.TooltipOverride = tooltip;
 		}
 	}
 }
