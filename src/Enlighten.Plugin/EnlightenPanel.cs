@@ -154,7 +154,9 @@ namespace Enlighten.src.Enlighten.Plugin
 				panel.reload = panelButtons.Find("Reload").GetComponent<Button>();
 				panel.delete = panelButtons.Find("Delete").GetComponent<Button>();
 				panel.hide = panelButtons.Find("Hide").GetComponent<Button>();
+				panel.reflect = panelButtons.Find("Reflect").GetComponent<Button>();
 				panel.reload.onClick.AddListener(panel.ToDefault);
+				panel.reflect.onClick.AddListener(panel.Reflect);
 				panel.InitializeParameters(parameterLookup[enumKey]);
 				optionPanels.Add(enumKey, panel);
 

@@ -82,5 +82,39 @@ namespace Enlighten.src.Enlighten.Plugin
 			bool changed = parameters.Values.Any(x => !x.IsDefault());
 			reload.gameObject.SetActive(changed);
 		}
+
+		public void CheckReflect()
+		{
+			bool canReflect = enlightenPanel.isGradient;
+
+			if (canReflect)
+			{
+				canReflect = parameters.Values.Any(x =>
+				{
+					var key = x.GetValueName();
+					var diff = enlightenPanel.startOptionValues[key] - enlightenPanel.endOptionValues[key];
+					return Math.Abs(diff) > 0.001;
+				});
+			}
+
+			reflect.gameObject.SetActive(canReflect);
+		}
+
+		public void Reflect()
+		{
+			var opposite = enlightenPanel.onStart ? 
+				enlightenPanel.endOptionValues : enlightenPanel.startOptionValues;
+
+			foreach (var param in parameters.Values)
+			{
+				var key = param.GetValueName();
+				opposite[key] = enlightenPanel.optionValues[key];
+			}
+
+			enlightenPanel.startEnabledOptions.Add(optionName);
+			enlightenPanel.endEnabledOptions.Add(optionName);
+
+			reflect.gameObject.SetActive(false);
+		}
 	}
 }

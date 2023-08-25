@@ -65,6 +65,7 @@ namespace Enlighten.src.Enlighten.Plugin
 			}
 
 			option.CheckDefaultState();
+			option.CheckReflect();
 		}
 
 		public void SetValue(float val)
