@@ -54,6 +54,8 @@ namespace Enlighten.src.Enlighten.Plugin
 		{
 			foreach (var param in parameters.Values)
 			{
+				param.skipWrite = true;
+
 				if (vals.TryGetValue(param.GetValueName(), out float value))
 				{
 					param.SetValue(value);

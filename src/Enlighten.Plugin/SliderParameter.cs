@@ -19,6 +19,7 @@ namespace Enlighten.src.Enlighten.Plugin
 		public float defaultValue;
 		public float value;
 		public string property;
+		public bool skipWrite;
 
 		public float FromSliderValue() => FromSliderValue(slider.value);
 		public float FromSliderValue(float val)
@@ -54,7 +55,15 @@ namespace Enlighten.src.Enlighten.Plugin
 
 		public void OnValueChange()
 		{
-			option.WriteToValues(option.enlightenPanel.optionValues);
+			if (skipWrite)
+			{
+				skipWrite = false;
+			}
+			else
+			{
+				option.WriteToValues(option.enlightenPanel.optionValues);
+			}
+
 			option.CheckDefaultState();
 		}
 
