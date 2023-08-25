@@ -76,8 +76,8 @@ namespace Enlighten.src.Enlighten.Plugin
 		{
 			foreach (var button in optionButtons.Values)
 			{
-				button.LoadVisibility(enabledOptions);
 				button.panel.LoadValues(vals);
+				button.LoadVisibility(enabledOptions);
 			}
 		}
 

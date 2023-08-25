@@ -77,10 +77,11 @@ namespace Enlighten.src.Enlighten.Plugin
 			}
 		}
 
+		public bool IsDefault() => !parameters.Values.Any(x => !x.IsDefault());
+
 		public void CheckDefaultState()
 		{
-			bool changed = parameters.Values.Any(x => !x.IsDefault());
-			reload.gameObject.SetActive(changed);
+			reload.gameObject.SetActive(!IsDefault());
 		}
 
 		public void CheckReflect()

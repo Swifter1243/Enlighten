@@ -21,8 +21,8 @@ namespace Enlighten.src.Enlighten.Plugin
 
 		public void Clear()
 		{
-			SetVisibility(false);
 			panel.ToDefault();
+			SetVisibility(false);
 		}
 
 		public void Toggle()
@@ -31,14 +31,19 @@ namespace Enlighten.src.Enlighten.Plugin
 		}
 
 		public static Color DARK_GREY = new Color(0.2f, 0.2f, 0.2f);
+		public static Color GRAY_BLUE = new Color(0.71f, 0.87f, 0.97f);
 
 		public void SetVisibility(bool visible, bool write = true)
 		{
-			if (visible == on) return;
-
 			on = visible;
 			image.color = on ? Color.white : Color.gray;
 			buttonImage.color = on ? Color.white : DARK_GREY;
+
+			if (!on && !panel.IsDefault())
+			{
+				buttonImage.color = GRAY_BLUE;
+			}
+
 			panel.gameObject.SetActive(on);
 
 			if (write)
