@@ -210,10 +210,17 @@ namespace Enlighten.src.Enlighten.Plugin
 				var startValue = GetParameterValue(cyclesParam, 0);
 				var endValue = GetParameterValue(cyclesParam, 1);
 
-				Func<Color, float, float, Color> process = (Color color, float t, float period) =>
+				colorProcess.Add((Color color, float t) =>
 				{
 					var intensity = GetParameterValue(intensityParam, t);
-					var x = period * (t - 0.25f / period) * (float)Math.PI * 2;
+
+					bool isReverse = panel.isGradient && startValue > endValue;
+					var periodTime = isReverse ? 1 - t : t;
+					var period = isReverse ?
+						Mathf.Lerp(endValue, startValue, periodTime)
+						: GetParameterValue(cyclesParam, periodTime);
+					var x = period * (periodTime - 0.25f / period) * (float)Math.PI * 2;
+
 					var val = (Mathf.Sin(x) * 0.5f + 0.5f) * intensity;
 
 					color.r += val;
@@ -221,25 +228,7 @@ namespace Enlighten.src.Enlighten.Plugin
 					color.b += val;
 
 					return color;
-				};
-
-				if (panel.isGradient && startValue > endValue)
-				{
-					colorProcess.Add((Color color, float t) =>
-					{
-						var period = Mathf.Lerp(endValue, startValue, 1 - t);
-						return process(color, t, period);
-					});
-				}
-				else
-				{
-
-					colorProcess.Add((Color color, float t) =>
-					{
-						var period = GetParameterValue(cyclesParam, t);
-						return process(color, t, period);
-					});
-				}
+				});
 			}
 
 			return colorProcess;

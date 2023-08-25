@@ -43,7 +43,7 @@ namespace Enlighten.src.Enlighten.Plugin
 				new SliderParameterInitializer("Turbulence", 0, 1)
 			}},
 			{ OptionName.Pulse, new SliderParameterInitializer[]{
-				new SliderParameterInitializer("Intensity", 0, 2),
+				new SliderParameterInitializer("Intensity", -1, 1),
 				new SliderParameterInitializer("Cycles", 1, 10)
 			}},
 		};
