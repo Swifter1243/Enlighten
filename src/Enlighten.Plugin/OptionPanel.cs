@@ -69,11 +69,22 @@ namespace Enlighten.src.Enlighten.Plugin
 			}
 		}
 
-		public void ToDefault()
+		public void Reload()
+		{
+			ToDefault(false);
+		}
+
+		public void ToDefault(bool both = false)
 		{
 			foreach (var val in parameters.Values)
 			{
 				val.ToDefault();
+
+				if (both)
+				{
+					var key = val.GetValueName();
+					enlightenPanel.oppositeOptionValues[key] = enlightenPanel.optionValues[key];
+				}
 			}
 		}
 
@@ -103,8 +114,7 @@ namespace Enlighten.src.Enlighten.Plugin
 
 		public void Reflect()
 		{
-			var opposite = enlightenPanel.onStart ? 
-				enlightenPanel.endOptionValues : enlightenPanel.startOptionValues;
+			var opposite = enlightenPanel.oppositeOptionValues;
 
 			foreach (var param in parameters.Values)
 			{

@@ -19,6 +19,25 @@ namespace Enlighten.src.Enlighten.Plugin
 		public Image buttonImage;
 		public EnlightenPanel enlightenPanel;
 
+		public void ClickHide()
+		{
+			var both = Input.GetKey(KeyCode.LeftShift);
+			SetVisibility(false, true, both);
+		}
+
+		public void ClickDelete()
+		{
+			var both = Input.GetKey(KeyCode.LeftShift);
+			panel.ToDefault(both);
+			ClickHide();
+		}
+
+		public void ClickToggle()
+		{
+			var both = Input.GetKey(KeyCode.LeftShift);
+			SetVisibility(!on, true, both);
+		}
+
 		public void Clear()
 		{
 			panel.ToDefault();
@@ -33,7 +52,7 @@ namespace Enlighten.src.Enlighten.Plugin
 		public static Color DARK_GREY = new Color(0.2f, 0.2f, 0.2f);
 		public static Color GRAY_BLUE = new Color(0.71f, 0.87f, 0.97f);
 
-		public void SetVisibility(bool visible, bool write = true)
+		public void SetVisibility(bool visible, bool write = true, bool bothSides = false)
 		{
 			on = visible;
 			image.color = on ? Color.white : Color.gray;
@@ -48,14 +67,24 @@ namespace Enlighten.src.Enlighten.Plugin
 
 			if (write)
 			{
-				if (on)
-				{
-					enlightenPanel.enabledOptions.Add(optionName);
-				}
-				else
-				{
-					enlightenPanel.enabledOptions.Remove(optionName);
-				}
+				WriteEnable(on, bothSides);
+			}
+		}
+
+		public void WriteEnable(bool enable, bool bothSides = false)
+		{
+			var start = bothSides ? enlightenPanel.startEnabledOptions : enlightenPanel.enabledOptions;
+			var end = bothSides ? enlightenPanel.endEnabledOptions : enlightenPanel.enabledOptions;
+
+			if (enable)
+			{
+				start.Add(optionName);
+				if (bothSides) end.Add(optionName);
+			}
+			else
+			{
+				start.Remove(optionName);
+				if (bothSides) end.Remove(optionName);
 			}
 		}
 

@@ -59,6 +59,15 @@ namespace Enlighten.src.Enlighten.Plugin
 		public bool isGradient = false;
 		public bool onStart = true;
 
+		public Dictionary<string, float> oppositeOptionValues
+		{
+			get => onStart ? endOptionValues : startOptionValues;
+		}
+		public HashSet<OptionName> oppositeEnabledOptions
+		{
+			get => onStart ? endEnabledOptions : startEnabledOptions;
+		}
+
 		public void WriteToValues(Dictionary<string, float> vals, bool onOnly = true)
 		{
 			vals.Clear();
@@ -153,7 +162,7 @@ namespace Enlighten.src.Enlighten.Plugin
 				panel.delete = panelButtons.Find("Delete").GetComponent<Button>();
 				panel.hide = panelButtons.Find("Hide").GetComponent<Button>();
 				panel.reflect = panelButtons.Find("Reflect").GetComponent<Button>();
-				panel.reload.onClick.AddListener(panel.ToDefault);
+				panel.reload.onClick.AddListener(panel.Reload);
 				panel.reflect.onClick.AddListener(panel.Reflect);
 				panel.InitializeParameters(parameterLookup[enumKey]);
 				optionPanels.Add(enumKey, panel);
@@ -167,9 +176,9 @@ namespace Enlighten.src.Enlighten.Plugin
 				button.image = button.GetComponentInChildren<RawImage>();
 				button.button = button.GetComponent<Button>();
 				button.buttonImage = button.GetComponent<Image>();
-				button.button.onClick.AddListener(button.Toggle);
-				panel.delete.onClick.AddListener(button.Clear);
-				panel.hide.onClick.AddListener(button.Toggle);
+				button.button.onClick.AddListener(button.ClickToggle);
+				panel.delete.onClick.AddListener(button.ClickDelete);
+				panel.hide.onClick.AddListener(button.ClickHide);
 				optionButtons.Add(enumKey, button);
 			}
 
