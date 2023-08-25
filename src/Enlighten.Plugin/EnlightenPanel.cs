@@ -59,13 +59,13 @@ namespace Enlighten.src.Enlighten.Plugin
 		public bool isGradient = false;
 		public bool onStart = true;
 
-		public void WriteToValues(Dictionary<string, float> vals)
+		public void WriteToValues(Dictionary<string, float> vals, bool onOnly = true)
 		{
 			vals.Clear();
 
 			foreach (var button in optionButtons.Values)
 			{
-				if (button.on)
+				if (button.on || !onOnly)
 				{
 					button.panel.WriteToValues(vals);
 				}
@@ -171,6 +171,8 @@ namespace Enlighten.src.Enlighten.Plugin
 			}
 
 			LoadValues(optionValues);
+			WriteToValues(startOptionValues, false);
+			WriteToValues(endOptionValues, false);
 		}
 
 		public void UpdateGradientTab()
