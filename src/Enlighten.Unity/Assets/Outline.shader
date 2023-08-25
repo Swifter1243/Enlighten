@@ -1,14 +1,16 @@
-Shader "Unlit/PanelBackground"
+Shader "Unlit/Outline"
 {
     Properties
     {
-        _Dimensions ("Dimensions", Vector) = (0,0,0,0)
+        _Dimensions ("Dimensions", Vector) = (10,10,0,0)
+        _OutlinePos ("Outline Position", Float) = 1
         _Roundness ("Roundness", Float) = 3
+        _Thin ("Thin-ness", Float) = 4
     }
     SubShader
     {
         Tags { "RenderType"="Opaque" }
-        Blend SrcAlpha OneMinusSrcAlpha
+        Blend OneMinusDstColor One, OneMinusDstColor OneMinusSrcAlpha
 
         Pass
         {
@@ -31,7 +33,9 @@ Shader "Unlit/PanelBackground"
             };
 
             float4 _Dimensions;
+            float _OutlinePos;
             float _Roundness;
+            float _Thin;
 
             v2f vert (appdata v)
             {
@@ -51,50 +55,34 @@ Shader "Unlit/PanelBackground"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                float2 uv = i.uv * _Dimensions.xy;
-                float time = _Time.y * 0.1;
-                
+                float2 res = _Dimensions.xy;
+                float2 pixelCoord = i.uv * res;
+
+                float2 toCenter = pixelCoord - res / 2;
+                float dist = -sdRoundedBox(toCenter, res / 2, _Roundness + _OutlinePos);
+
+                float2 uv = i.uv;
+                float time = _Time.y * 1.2;
                 float angle = time * 0.1;
-                
-                uv += 1.;
                 
                 uv = float2(
                 (uv.x * cos(angle)) - (uv.y * sin(angle)),
                 (uv.x * sin(angle)) + (uv.y * cos(angle))
                 );
                 
+                float centerDot = dot(normalize(toCenter), float2(cos(angle), sin(angle)));
+                centerDot = centerDot * 0.5 + 0.5;
+
+                float f = abs(dist - _OutlinePos) * _Thin;
+                f = smoothstep(0, 1, saturate(pow(1 - f, 5)));
+                f *= centerDot * 1.5;
+                
                 uv.x += sin(time * 0.75) * 0.1;
                 uv.y *= cos(angle) + sin(uv.x);
-                
-                float2 currPoint = uv * (5 + cos(time * 0.3));
-                float2 flooredPoint = floor(currPoint);
-                
-                float dist = 1.;
-                
-                float offset = (1. - pow(1. - (sin(time * 0.3) * 0.5 + 0.5), 1.)) * 0.5 * 0.5 + 0.25;
-                
-                for (int x = 0; x <= 1; x++) {
-                    for (int y = 0; y <= 1; y++) {
-                        float2 p = flooredPoint + float2(x, y);
-                        p.x += p.y % 2. < 0.5 ? 0. : offset;
-                        dist = min(dist, length(currPoint - p));
-                    }
-                }
-                
-                float f = dist * 1.6 + abs(cos(_Time)) * 0.2;
-                f = smoothstep(0,2,f);
-                f = saturate(f);
-                float3 col = f * cos(float3(3,uv.y * 0.5,sin(time * 0.2) + 2.) * uv.x * 0.4 + time);
-                col += i.uv.x * 0.2;
 
-                float2 res = _Dimensions.xy;
-                float2 pixelCoord = i.uv * res;
+                float3 col = f * (clamp(cos(float3(5,uv.y * 0.5 + 0.5,sin(time) + 2.) * uv.x * 0.8 + time), 0, 1) + 1);
 
-                float alpha = 1;
-                float boxDist = -sdRoundedBox(pixelCoord - res / 2, res / 2, _Roundness);
-                if (boxDist < 0) alpha = 0;
-
-                return float4(col, alpha);
+                return float4(col,1.0);
             }
             ENDCG
         }

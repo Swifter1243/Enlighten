@@ -7,13 +7,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PanelBackground
-  m_Shader: {fileID: 4800000, guid: 6d53cf53c38731b4b9dc536122014151, type: 3}
+  m_Name: PanelOutline
+  m_Shader: {fileID: 4800000, guid: 7d1a481adc35953439413ecefa3c0b8d, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 4000
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -61,28 +61,23 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _EdgeDist: -0.6
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _OutlinePos: 0
+    - _OutlinePos: 0.38
     - _Parallax: 0.02
-    - _Resolution: 1
-    - _Roundness: 0.03
+    - _Roundness: 0.28
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Stencil: 0
+    - _Thin: 1.99
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Dimensions: {r: 1, g: 1, b: 0, a: 0}
+    - _Dimensions: {r: 11.41, g: 11.08, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _HighColor: {r: 0.886, g: 0.557, b: 0.886, a: 1}
-    - _LowColor: {r: 0.45899993, g: 0.788, b: 0.863, a: 1}
-    - _Offset: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
