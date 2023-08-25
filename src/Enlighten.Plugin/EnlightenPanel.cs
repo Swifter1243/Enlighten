@@ -98,13 +98,11 @@ namespace Enlighten.src.Enlighten.Plugin
 			gradient.onClick.AddListener(() =>
 			{
 				isGradient = true;
+				onStart = true;
+				UpdateGradientTab();
 				gradientPanel.SetActive(true);
 				gradient.gameObject.SetActive(false);
-
-				if (!onStart)
-				{
-					SwitchToValues(endOptionValues, endEnabledOptions);
-				}
+				SwitchToValues(startOptionValues, startEnabledOptions);
 			});
 
 			exitGradient.onClick.AddListener(() =>
