@@ -33,19 +33,19 @@ namespace Enlighten.src.Enlighten.Plugin
 			panelAsset = plugin.bundle.LoadAsset<GameObject>("Assets/EnlightenPanel.prefab");
 			var enlightenPanel = panelAsset.AddComponent<EnlightenPanel>();
 
-			enlightenPanel.run = panelAsset.transform.Find("Run").GetComponent<Button>();
-			enlightenPanel.gradient = panelAsset.transform.Find("Gradient").GetComponent<Button>();
+			enlightenPanel.run = FindAndName(panelAsset.transform, "Run").GetComponent<Button>();
+			enlightenPanel.gradient = FindAndName(panelAsset.transform, "Gradient", "Enable Gradient Mode").GetComponent<Button>();
 			enlightenPanel.gradientPanel = panelAsset.transform.Find("GradientPanel").gameObject;
-			enlightenPanel.gradientStart = enlightenPanel.gradientPanel.transform.Find("Start").GetComponent<Button>();
-			enlightenPanel.gradientEnd = enlightenPanel.gradientPanel.transform.Find("End").GetComponent<Button>();
-			enlightenPanel.gradientEasing = enlightenPanel.gradientPanel.transform.Find("Easings").GetComponent<Dropdown>();
-			enlightenPanel.exitGradient = enlightenPanel.gradientPanel.transform.Find("ExitGradient").GetComponent<Button>();
+			var gradientPanel = enlightenPanel.gradientPanel.transform;
+			enlightenPanel.gradientStart = FindAndName(gradientPanel, "Start", "Start of Selection").GetComponent<Button>();
+			enlightenPanel.gradientEnd = FindAndName(gradientPanel, "End", "End of Selection").GetComponent<Button>();
+			enlightenPanel.gradientEasing = gradientPanel.Find("Easings").GetComponent<Dropdown>();
+			enlightenPanel.exitGradient = gradientPanel.Find("ExitGradient").GetComponent<Button>();
+			enlightenPanel.gradientSwap = FindAndName(gradientPanel, "Swap", "Swap Gradient Ends").GetComponent<Button>();
+			enlightenPanel.gradientParallel = FindAndName(gradientPanel, "Parallel", "Run Light Groups Individually").GetComponent<Button>();
+			enlightenPanel.gradientClone = FindAndName(gradientPanel, "Clone", "Apply All To Other End").GetComponent<Button>();
 
 			enlightenPanel.gradientEasing.ClearOptions();
-			AddTooltip(enlightenPanel.run.gameObject, "Run");
-			AddTooltip(enlightenPanel.gradient.gameObject, "Enable Gradient Mode");
-			AddTooltip(enlightenPanel.gradientStart.gameObject, "Start of Selection");
-			AddTooltip(enlightenPanel.gradientEnd.gameObject, "End of Selection");
 
 			foreach (var key in Easing.DisplayNameToInternalName.Keys)
 			{
@@ -111,10 +111,10 @@ namespace Enlighten.src.Enlighten.Plugin
 				var defaultValue = param.defaultValue;
 
 				bool onInStart =
-					panel.startEnabledOptions.Contains(param.option.optionName);
+					panel.startEnabledOptions.Contains(param.optionPanel.optionName);
 
 				bool onInEnd =
-					panel.endEnabledOptions.Contains(param.option.optionName);
+					panel.endEnabledOptions.Contains(param.optionPanel.optionName);
 
 				var startAmount = onInStart ? panel.startOptionValues[key] : defaultValue;
 				var endAmount = onInEnd ? panel.endOptionValues[key] : defaultValue;
@@ -355,6 +355,13 @@ namespace Enlighten.src.Enlighten.Plugin
 		{
 			var component = gameObject.AddComponent<Tooltip>();
 			component.TooltipOverride = tooltip;
+		}
+
+		public static Transform FindAndName(Transform baseObj, string name, string tooltip = null)
+		{
+			var obj = baseObj.Find(name);
+			UI.AddTooltip(obj.gameObject, tooltip ?? name);
+			return obj;
 		}
 	}
 }

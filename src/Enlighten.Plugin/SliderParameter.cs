@@ -11,8 +11,8 @@ namespace Enlighten.src.Enlighten.Plugin
 	public class SliderParameter : MonoBehaviour
 	{
 		public Slider slider;
-		public InputField inputfield;
-		public OptionPanel option;
+		public InputField inputField;
+		public OptionPanel optionPanel;
 
 		public float min;
 		public float max;
@@ -40,7 +40,7 @@ namespace Enlighten.src.Enlighten.Plugin
 		public void OnSliderChange(float val)
 		{
 			value = FromSliderValue(val);
-			inputfield.SetTextWithoutNotify(value.ToString());
+			inputField.SetTextWithoutNotify(value.ToString());
 			OnValueChange();
 		}
 
@@ -61,18 +61,18 @@ namespace Enlighten.src.Enlighten.Plugin
 			}
 			else
 			{
-				option.WriteToValues(option.enlightenPanel.optionValues);
+				optionPanel.WriteToValues(optionPanel.enlightenPanel.optionValues);
 			}
 
-			option.CheckDefaultState();
-			option.CheckReflect();
+			optionPanel.CheckDefaultState();
+			optionPanel.CheckReflect();
 		}
 
 		public void SetValue(float val)
 		{
 			value = val;
 			ToSliderValue(value);
-			inputfield.SetTextWithoutNotify(value.ToString());
+			inputField.SetTextWithoutNotify(value.ToString());
 		}
 
 		public bool IsDefault()
@@ -85,7 +85,7 @@ namespace Enlighten.src.Enlighten.Plugin
 			SetValue(defaultValue);
 		}
 
-		public string GetValueName() => Enlighten.OptionToString(option.optionName) + property;
+		public string GetValueName() => Enlighten.OptionToString(optionPanel.optionName) + property;
 	}
 
 	public class SliderParameterInitializer

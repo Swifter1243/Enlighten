@@ -30,15 +30,15 @@ namespace Enlighten.src.Enlighten.Plugin
 				slider.max = param.max;
 				slider.property = param.property;
 
-				slider.option = this;
+				slider.optionPanel = this;
 				slider.slider = slider.GetComponentInChildren<Slider>();
-				slider.inputfield = slider.GetComponentInChildren<InputField>();
+				slider.inputField = slider.GetComponentInChildren<InputField>();
 				slider.defaultValue = slider.FromSliderValue();
 				slider.ToDefault();
 
-				slider.inputfield.gameObject.AddComponent<DisableActionsField>();
+				slider.inputField.gameObject.AddComponent<DisableActionsField>();
 				slider.slider.onValueChanged.AddListener(slider.OnSliderChange);
-				slider.inputfield.onValueChanged.AddListener(slider.OnInputFieldChange);
+				slider.inputField.onValueChanged.AddListener(slider.OnInputFieldChange);
 
 				this.parameters.Add(param.property, slider);
 			}
@@ -95,7 +95,7 @@ namespace Enlighten.src.Enlighten.Plugin
 			reload.gameObject.SetActive(!IsDefault());
 		}
 
-		public void CheckReflect()
+		public bool CanReflect()
 		{
 			bool canReflect = enlightenPanel.isGradient;
 
@@ -107,9 +107,22 @@ namespace Enlighten.src.Enlighten.Plugin
 					var diff = enlightenPanel.startOptionValues[key] - enlightenPanel.endOptionValues[key];
 					return Math.Abs(diff) > 0.001;
 				});
+
+				if (!canReflect)
+				{
+					canReflect =
+						enlightenPanel.startEnabledOptions.Contains(optionName) ==
+						!enlightenPanel.endEnabledOptions.Contains(optionName);
+				}
 			}
 
-			reflect.gameObject.SetActive(canReflect);
+			return canReflect;
+		}
+
+		public void CheckReflect()
+		{
+			reflect.gameObject.SetActive(CanReflect());
+			enlightenPanel.CheckClone();
 		}
 
 		public void Reflect()
@@ -126,6 +139,7 @@ namespace Enlighten.src.Enlighten.Plugin
 			enlightenPanel.endEnabledOptions.Add(optionName);
 
 			reflect.gameObject.SetActive(false);
+			enlightenPanel.CheckClone();
 		}
 	}
 }

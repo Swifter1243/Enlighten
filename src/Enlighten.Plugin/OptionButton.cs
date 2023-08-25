@@ -69,6 +69,8 @@ namespace Enlighten.src.Enlighten.Plugin
 			{
 				WriteEnable(on, bothSides);
 			}
+
+			panel.CheckReflect();
 		}
 
 		public void WriteEnable(bool enable, bool bothSides = false)

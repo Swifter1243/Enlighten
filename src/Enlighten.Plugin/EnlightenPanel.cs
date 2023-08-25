@@ -19,6 +19,9 @@ namespace Enlighten.src.Enlighten.Plugin
 		public Image gradientEndImage;
 		public Dropdown gradientEasing;
 		public Button run;
+		public Button gradientSwap;
+		public Button gradientParallel;
+		public Button gradientClone;
 
 		public Dictionary<OptionName, OptionPanel> optionPanels = new Dictionary<OptionName, OptionPanel>();
 		public Dictionary<OptionName, OptionButton> optionButtons = new Dictionary<OptionName, OptionButton>();
@@ -58,6 +61,7 @@ namespace Enlighten.src.Enlighten.Plugin
 
 		public bool isGradient = false;
 		public bool onStart = true;
+		public bool parallel = false;
 
 		public Dictionary<string, float> oppositeOptionValues
 		{
@@ -138,6 +142,23 @@ namespace Enlighten.src.Enlighten.Plugin
 				UpdateGradientTab();
 			});
 
+			gradientClone.onClick.AddListener(() =>
+			{
+				var oppositeEnabledOptions = this.oppositeEnabledOptions;
+				var oppositeOptionValues = this.oppositeOptionValues;
+
+				oppositeEnabledOptions.Clear();
+				oppositeEnabledOptions.UnionWith(enabledOptions);
+				oppositeOptionValues.Clear();
+
+				foreach (var kvp in optionValues)
+				{
+					oppositeOptionValues.Add(kvp.Key, kvp.Value);
+				}
+
+				SwitchToValues(optionValues, enabledOptions);
+			});
+
 			optionValues = startOptionValues;
 			enabledOptions = startEnabledOptions;
 
@@ -156,17 +177,17 @@ namespace Enlighten.src.Enlighten.Plugin
 				panel.enlightenPanel = this;
 				panel.optionName = enumKey;
 				var panelButtons = panel.transform.Find("Buttons");
-				panel.reload = FindAndName(panelButtons, "Reload", "Return to Defaults").GetComponent<Button>();
-				panel.delete = FindAndName(panelButtons, "Delete").GetComponent<Button>();
-				panel.hide = FindAndName(panelButtons, "Hide", "Disable").GetComponent<Button>();
-				panel.reflect = FindAndName(panelButtons, "Reflect", "Apply to Other End").GetComponent<Button>();
+				panel.reload = UI.FindAndName(panelButtons, "Reload", "Return to Defaults").GetComponent<Button>();
+				panel.delete = UI.FindAndName(panelButtons, "Delete").GetComponent<Button>();
+				panel.hide = UI.FindAndName(panelButtons, "Hide", "Disable").GetComponent<Button>();
+				panel.reflect = UI.FindAndName(panelButtons, "Reflect", "Apply to Other End").GetComponent<Button>();
 				panel.reload.onClick.AddListener(panel.Reload);
 				panel.reflect.onClick.AddListener(panel.Reflect);
 				panel.InitializeParameters(parameterLookup[enumKey]);
 				optionPanels.Add(enumKey, panel);
 
 				// Option Buttons
-				var buttonObj = FindAndName(buttonsObj, name);
+				var buttonObj = UI.FindAndName(buttonsObj, name);
 				var button = buttonObj.gameObject.AddComponent<OptionButton>();
 				button.enlightenPanel = this;
 				button.optionName = enumKey;
@@ -185,17 +206,16 @@ namespace Enlighten.src.Enlighten.Plugin
 			WriteToValues(endOptionValues, false);
 		}
 
-		private Transform FindAndName(Transform baseObj, string name, string tooltip = null)
-		{
-			var obj = baseObj.Find(name);
-			UI.AddTooltip(obj.gameObject, tooltip ?? name);
-			return obj;
-		}
-
 		public void UpdateGradientTab()
 		{
 			gradientStartImage.color = onStart ? Color.gray : Color.white;
 			gradientEndImage.color = !onStart ? Color.gray : Color.white;
+		}
+
+		public void CheckClone()
+		{
+			var canClone = optionPanels.Values.Any(x => x.CanReflect());
+			gradientClone.gameObject.SetActive(canClone);
 		}
 	}
 }
