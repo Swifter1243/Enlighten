@@ -137,7 +137,7 @@ namespace Enlighten.src.Enlighten.Plugin
 			enabledOptions = startEnabledOptions;
 
 			// Hooking up UI
-			var panelsObj = transform.Find("OptionPanels").Find("Content");
+			var panelsObj = transform.Find("OptionPanels").Find("Viewport").Find("Content");
 			var buttonsObj = transform.Find("OptionButtons");
 
 			foreach (var name in Enum.GetNames(typeof(OptionName)))
