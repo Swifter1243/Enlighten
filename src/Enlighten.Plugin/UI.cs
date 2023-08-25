@@ -306,6 +306,11 @@ namespace Enlighten.src.Enlighten.Plugin
 					var time = (e.JsonTime + lastEvent.JsonTime) / 2;
 					t = (time - minTime) / dist;
 
+					if (panel.isGradient)
+					{
+						t = easing(t);
+					}
+
 					var multiplier = GetParameterValue(flutterMultiplier, t);
 					var turbulence = GetParameterValue(flutterTurbulence, t);
 
