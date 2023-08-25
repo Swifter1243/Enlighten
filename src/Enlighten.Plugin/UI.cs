@@ -55,13 +55,9 @@ namespace Enlighten.src.Enlighten.Plugin
 			canvas = mapEditorUI.MainUIGroup[5].transform;
 
 			panel = UnityEngine.Object.Instantiate(panelAsset, canvas).GetComponent<EnlightenPanel>();
-			panel.transform.localScale = new Vector3(1, 1, 1);
 			panel.Initialize();
 			panel.run.onClick.AddListener(Run);
 			panel.gameObject.SetActive(false);
-
-			var rect = ((RectTransform)panel.transform);
-			rect.offsetMax = new Vector2(-850, rect.offsetMax.y);
 		}
 
 		private void OnPress()
