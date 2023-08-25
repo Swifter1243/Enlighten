@@ -4,6 +4,7 @@ Shader "Unlit/PanelBackground"
     {
         _Dimensions ("Dimensions", Vector) = (0,0,0,0)
         _Roundness ("Roundness", Float) = 3
+        _Brightness ("Brightness", Float) = 1
     }
     SubShader
     {
@@ -32,6 +33,7 @@ Shader "Unlit/PanelBackground"
 
             float4 _Dimensions;
             float _Roundness;
+            float _Brightness;
 
             v2f vert (appdata v)
             {
@@ -94,7 +96,7 @@ Shader "Unlit/PanelBackground"
                 float boxDist = -sdRoundedBox(pixelCoord - res / 2, res / 2, _Roundness);
                 if (boxDist < 0) alpha = 0;
 
-                return float4(col, alpha);
+                return float4(col * _Brightness, alpha);
             }
             ENDCG
         }
