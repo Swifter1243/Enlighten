@@ -4513,11 +4513,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4437809266276235736, guid: 6324e4b4f57e8354e9704dd1af55aad1, type: 3}
       propertyPath: m_Value
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4437809266276235736, guid: 6324e4b4f57e8354e9704dd1af55aad1, type: 3}
       propertyPath: m_MaxValue
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437809266276235736, guid: 6324e4b4f57e8354e9704dd1af55aad1, type: 3}
+      propertyPath: m_MinValue
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4437809266574218628, guid: 6324e4b4f57e8354e9704dd1af55aad1, type: 3}
       propertyPath: m_AnchoredPosition.x
