@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2344624854
+CRC: 3088496836
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 66e9bc58bc472387490391b349d97046
+    Hash: 388a805978418e691d646d107d191a4b
   TypeTreeHash:
     serializedVersion: 2
     Hash: 87839cd43a621b9e3a723d891c04a400
@@ -58,4 +58,5 @@ ClassTypes:
 SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/EnlightenPanel.prefab
+- Assets/Images/icon.png
 Dependencies: []

@@ -27,6 +27,7 @@ namespace Enlighten.src.Enlighten.Plugin
 			var button = new ExtensionButton();
 			button.Tooltip = "Enlighten";
 			button.Click = OnPress;
+			button.Icon = plugin.bundle.LoadAsset<Sprite>("Assets/Images/icon.png");
 			ExtensionButtons.AddButton(button);
 
 			// UI Setup
