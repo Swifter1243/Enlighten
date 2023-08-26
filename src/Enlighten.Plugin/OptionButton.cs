@@ -71,6 +71,7 @@ namespace Enlighten.src.Enlighten.Plugin
 			}
 
 			panel.CheckReflect();
+			enlightenPanel.CheckDeleteAll();
 		}
 
 		public void WriteEnable(bool enable, bool bothSides = false)

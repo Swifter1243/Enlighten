@@ -162,6 +162,7 @@ namespace Enlighten.src.Enlighten.Plugin
 			});
 
 			reloadAll.onClick.AddListener(DefaultAll);
+			deleteAll.onClick.AddListener(DeleteAll);
 
 			optionValues = startOptionValues;
 			enabledOptions = startEnabledOptions;
@@ -236,6 +237,22 @@ namespace Enlighten.src.Enlighten.Plugin
 			}
 
 			reloadAll.gameObject.SetActive(false);
+		}
+
+		public void CheckDeleteAll()
+		{
+			var canDelete = enabledOptions.Count > 0;
+			deleteAll.gameObject.SetActive(canDelete);
+		}
+
+		public void DeleteAll()
+		{
+			foreach (var button in optionButtons.Values)
+			{
+				button.Clear();
+			}
+
+			deleteAll.gameObject.SetActive(false);
 		}
 	}
 }
