@@ -123,7 +123,7 @@ namespace Enlighten.src.Enlighten.Plugin
 		public void CheckReflect()
 		{
 			reflect.gameObject.SetActive(CanReflect());
-			enlightenPanel.CheckClone();
+			enlightenPanel.CheckEndSimilarity();
 		}
 
 		public void Reflect()
@@ -140,7 +140,7 @@ namespace Enlighten.src.Enlighten.Plugin
 			enlightenPanel.endEnabledOptions.Add(optionName);
 
 			reflect.gameObject.SetActive(false);
-			enlightenPanel.CheckClone();
+			enlightenPanel.CheckEndSimilarity();
 		}
 	}
 }

@@ -68,10 +68,19 @@ namespace Enlighten.src.Enlighten.Plugin
 		public Dictionary<string, float> oppositeOptionValues
 		{
 			get => onStart ? endOptionValues : startOptionValues;
+			set {
+				if (onStart) endOptionValues = value;
+				else startOptionValues = value;
+			}
 		}
+
 		public HashSet<OptionName> oppositeEnabledOptions
 		{
 			get => onStart ? endEnabledOptions : startEnabledOptions;
+			set {
+				if (onStart) endEnabledOptions = value;
+				else startEnabledOptions = value;
+			}
 		}
 
 		public void WriteToValues(Dictionary<string, float> vals, bool onOnly = true)
@@ -161,6 +170,39 @@ namespace Enlighten.src.Enlighten.Plugin
 				SwitchToValues(optionValues, enabledOptions);
 			});
 
+			gradientSwap.onClick.AddListener(() =>
+			{
+				var oppositeEnabledOptions = this.oppositeEnabledOptions;
+				var oppositeOptionValues = this.oppositeOptionValues;
+
+				// Swap values
+				var tempDir = new Dictionary<string, float>();
+				foreach (var kvp in optionValues)
+				{
+					tempDir.Add(kvp.Key, kvp.Value);
+				}
+				optionValues.Clear();
+				foreach (var kvp in oppositeOptionValues)
+				{
+					optionValues.Add(kvp.Key, kvp.Value);
+				}
+				oppositeOptionValues.Clear();
+				foreach (var kvp in tempDir)
+				{
+					oppositeOptionValues.Add(kvp.Key, kvp.Value);
+				}
+
+				// Swap enabled
+				var tempSet = new HashSet<OptionName>();
+				tempSet.UnionWith(enabledOptions);
+				enabledOptions.Clear();
+				enabledOptions.UnionWith(oppositeEnabledOptions);
+				oppositeEnabledOptions.Clear();
+				oppositeEnabledOptions.UnionWith(tempSet);
+
+				SwitchToValues(optionValues, enabledOptions);
+			});
+
 			reloadAll.onClick.AddListener(DefaultAll);
 			deleteAll.onClick.AddListener(DeleteAll);
 
@@ -217,10 +259,11 @@ namespace Enlighten.src.Enlighten.Plugin
 			gradientEndImage.color = !onStart ? Color.gray : Color.white;
 		}
 
-		public void CheckClone()
+		public void CheckEndSimilarity()
 		{
-			var canClone = optionPanels.Values.Any(x => x.CanReflect());
-			gradientClone.gameObject.SetActive(canClone);
+			var notSimilar = optionPanels.Values.Any(x => x.CanReflect());
+			gradientClone.gameObject.SetActive(notSimilar);
+			gradientSwap.gameObject.SetActive(notSimilar);
 		}
 
 		public void CheckDefaultAll()
