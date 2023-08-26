@@ -203,6 +203,15 @@ namespace Enlighten.src.Enlighten.Plugin
 				SwitchToValues(optionValues, enabledOptions);
 			});
 
+			var parallelIcon = gradientParallel.GetComponentInChildren<RawImage>();
+
+			gradientParallel.onClick.AddListener(() =>
+			{
+				parallel = !parallel;
+				gradientParallel.image.color = parallel ? Color.gray : Color.white;
+				parallelIcon.color = parallel ? Color.white : new Color(0, 0, 0, 0.8f);
+			});
+
 			reloadAll.onClick.AddListener(DefaultAll);
 			deleteAll.onClick.AddListener(DeleteAll);
 

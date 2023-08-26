@@ -249,9 +249,9 @@ namespace Enlighten.src.Enlighten.Plugin
 
 		private void Run()
 		{
-			var events = SelectionController.SelectedObjects.OfType<BaseEvent>();
+			var allEvents = SelectionController.SelectedObjects.OfType<BaseEvent>();
 
-			if (events.Count() == 0)
+			if (allEvents.Count() == 0)
 			{
 				Dialogue("There are no events selected!");
 				return;
@@ -268,11 +268,7 @@ namespace Enlighten.src.Enlighten.Plugin
 				return;
 			}
 
-			events = events.OrderBy(x => x.JsonTime);
-
-			var minTime = events.First().JsonTime;
-			var maxTime = events.Last().JsonTime;
-			var dist = maxTime - minTime;
+			allEvents = allEvents.OrderBy(x => x.JsonTime);
 
 			var actions = new List<BeatmapAction>();
 			var totalConflicting = new List<BaseObject>();
@@ -286,61 +282,95 @@ namespace Enlighten.src.Enlighten.Plugin
 			var easingName = panel.gradientEasing.options.ElementAt(panel.gradientEasing.value).text;
 			var easing = Easing.ByName[Easing.DisplayNameToInternalName[easingName]];
 
-			foreach (var e in events)
+			Action<IEnumerable<BaseEvent>, float, float> doProcess = (IEnumerable<BaseEvent> events, float minTime, float maxTime) =>
 			{
-				if (!(e.CustomColor is Color color)) continue;
+				var dist = maxTime - minTime;
 
-				var t = (e.JsonTime - minTime) / dist;
-				var tOriginal = t;
-
-				if (panel.isGradient)
+				foreach (var e in events)
 				{
-					t = easing(t);
-				}
+					if (!(e.CustomColor is Color color)) continue;
 
-				var original = (BaseObject)e.Clone();
-
-				foreach (var process in colorProcess)
-				{
-					color = process.Invoke(color, t, tOriginal);
-				}
-
-				e.CustomColor = ClampColor(color);
-				e.WriteCustom();
-				var modifyAction = new BeatmapObjectModifiedAction(e, e, original, "Modified with Enlighten", true);
-				actions.Add(modifyAction);
-
-				if (flutterOn && original.JsonTime != minTime)
-				{
-					var time = (e.JsonTime + lastEvent.JsonTime) / 2;
-					t = (time - minTime) / dist;
+					var t = (e.JsonTime - minTime) / dist;
+					var tOriginal = t;
 
 					if (panel.isGradient)
 					{
 						t = easing(t);
 					}
 
-					var multiplier = GetParameterValue(flutterMultiplier, t);
-					var turbulence = GetParameterValue(flutterTurbulence, t);
+					var original = (BaseObject)e.Clone();
 
-					var value = multiplier + UnityEngine.Random.Range(-turbulence, turbulence);
+					foreach (var process in colorProcess)
+					{
+						color = process.Invoke(color, t, tOriginal);
+					}
 
-					var eventCopy = (BaseObject)e.Clone();
-					var colorCopy = (Color)eventCopy.CustomColor;
+					e.CustomColor = ClampColor(color);
+					e.WriteCustom();
+					var modifyAction = new BeatmapObjectModifiedAction(e, e, original, "Modified with Enlighten", true);
+					actions.Add(modifyAction);
 
-					colorCopy.r *= value;
-					colorCopy.g *= value;
-					colorCopy.b *= value;
+					if (flutterOn && original.JsonTime != minTime)
+					{
+						var time = (e.JsonTime + lastEvent.JsonTime) / 2;
+						t = (time - minTime) / dist;
 
-					eventCopy.JsonTime = time;
-					eventCopy.CustomColor = ClampColor(colorCopy);
+						if (panel.isGradient)
+						{
+							t = easing(t);
+						}
 
-					totalAdded.Add(eventCopy);
-					plugin.events.SpawnObject(eventCopy, out var conflicting, true, true, true);
-					totalConflicting.AddRange(conflicting);
+						var multiplier = GetParameterValue(flutterMultiplier, t);
+						var turbulence = GetParameterValue(flutterTurbulence, t);
+
+						var value = multiplier + UnityEngine.Random.Range(-turbulence, turbulence);
+
+						var eventCopy = (BaseObject)e.Clone();
+						var colorCopy = (Color)eventCopy.CustomColor;
+
+						colorCopy.r *= value;
+						colorCopy.g *= value;
+						colorCopy.b *= value;
+
+						eventCopy.JsonTime = time;
+						eventCopy.CustomColor = ClampColor(colorCopy);
+
+						totalAdded.Add(eventCopy);
+						plugin.events.SpawnObject(eventCopy, out var conflicting, true, true, true);
+						totalConflicting.AddRange(conflicting);
+					}
+
+					lastEvent = e;
+				}
+			};
+
+			if (panel.parallel && panel.isGradient)
+			{
+				var groups = new Dictionary<int, List<BaseEvent>>();
+
+				foreach (var eventObj in allEvents)
+				{
+					if (!groups.ContainsKey(eventObj.Type))
+					{
+						var group = new List<BaseEvent>();
+						groups[eventObj.Type] = group;
+					}
+
+					groups[eventObj.Type].Add(eventObj);
 				}
 
-				lastEvent = e;
+				foreach (var group in groups.Values)
+				{
+					var minTime = group.First().JsonTime;
+					var maxTime = group.Last().JsonTime;
+					doProcess(group, minTime, maxTime);
+				}
+			}
+			else
+			{
+				var minTime = allEvents.First().JsonTime;
+				var maxTime = allEvents.Last().JsonTime;
+				doProcess(allEvents, minTime, maxTime);
 			}
 
 			if (flutterOn)
@@ -352,7 +382,7 @@ namespace Enlighten.src.Enlighten.Plugin
 			var allActions = new ActionCollectionAction(actions, false, false, "Enlighten");
 			BeatmapActionContainer.AddAction(allActions);
 
-			plugin.events.RefreshEventsAppearance(events);
+			plugin.events.RefreshEventsAppearance(allEvents);
 		}
 
 		public static void AddTooltip(GameObject gameObject, string tooltip)
