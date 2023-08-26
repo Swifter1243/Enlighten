@@ -32,24 +32,24 @@ namespace Enlighten.src.Enlighten.Plugin
 			new Dictionary<OptionName, SliderParameterInitializer[]>()
 		{
 			{ OptionName.Brightness, new SliderParameterInitializer[]{
-				new SliderParameterInitializer("Multiplier", 0, 2)
+				new SliderParameterInitializer("Multiplier", "Multiplies Event Brightness", 0, 2)
 			}},
 			{ OptionName.Alpha, new SliderParameterInitializer[]{
-				new SliderParameterInitializer("Multiplier", 0, 2)
+				new SliderParameterInitializer("Multiplier", "Multiplies Event Alpha", 0, 2)
 			}},
 			{ OptionName.Hue, new SliderParameterInitializer[]{
-				new SliderParameterInitializer("Offset", -1, 1)
+				new SliderParameterInitializer("Offset", "Adds to Event Hue", -1, 1)
 			}},
 			{ OptionName.Saturation, new SliderParameterInitializer[]{
-				new SliderParameterInitializer("Offset", -1, 1)
+				new SliderParameterInitializer("Offset", "Adds to Event Saturation", -1, 1)
 			}},
 			{ OptionName.Flutter, new SliderParameterInitializer[]{
-				new SliderParameterInitializer("Multiplier", 0, 2),
-				new SliderParameterInitializer("Turbulence", 0, 1)
+				new SliderParameterInitializer("Multiplier", "Multiplies Flicker Brightness", 0, 2),
+				new SliderParameterInitializer("Turbulence", "Randomly Varies Flicker Brightness", 0, 1)
 			}},
 			{ OptionName.Pulse, new SliderParameterInitializer[]{
-				new SliderParameterInitializer("Intensity", -1, 1),
-				new SliderParameterInitializer("Cycles", 1, 10)
+				new SliderParameterInitializer("Intensity", "Brightness of Pulse", -1, 1),
+				new SliderParameterInitializer("Cycles", "Amount of Pulses", 1, 10)
 			}},
 		};
 

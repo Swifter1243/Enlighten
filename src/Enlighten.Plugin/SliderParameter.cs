@@ -93,10 +93,12 @@ namespace Enlighten.src.Enlighten.Plugin
 		public float min;
 		public float max;
 		public string property;
+		public string tooltip;
 
-		public SliderParameterInitializer(string property, float min, float max)
+		public SliderParameterInitializer(string property, string tooltip, float min, float max)
 		{
 			this.property = property;
+			this.tooltip = tooltip;
 			this.min = min;
 			this.max = max;
 		}

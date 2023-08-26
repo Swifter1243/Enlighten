@@ -40,6 +40,8 @@ namespace Enlighten.src.Enlighten.Plugin
 				slider.slider.onValueChanged.AddListener(slider.OnSliderChange);
 				slider.inputField.onValueChanged.AddListener(slider.OnInputFieldChange);
 
+				UI.AddTooltip(slider.inputField.gameObject, param.tooltip);
+
 				this.parameters.Add(param.property, slider);
 			}
 		}
