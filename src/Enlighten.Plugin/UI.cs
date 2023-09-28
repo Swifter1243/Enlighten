@@ -335,6 +335,7 @@ namespace Enlighten.src.Enlighten.Plugin
 
 						eventCopy.JsonTime = time;
 						eventCopy.CustomColor = ClampColor(colorCopy);
+						eventCopy.WriteCustom();
 
 						totalAdded.Add(eventCopy);
 						plugin.events.SpawnObject(eventCopy, out var conflicting, true, true, true);
