@@ -230,7 +230,6 @@ namespace Enlighten.src.Enlighten.Plugin
 				var panelObj = panelsObj.Find(name);
 				Debug.Log(panelObj);
 				var panel = panelObj.gameObject.AddComponent<OptionPanel>();
-				panel.enlightenPanel = this;
 				panel.optionName = enumKey;
 				var panelButtons = panel.transform.Find("Buttons");
 				panel.reload = UI.FindAndName(panelButtons, "Reload", "Return to Defaults").GetComponent<Button>();

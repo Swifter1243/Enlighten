@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Enlighten.src.Enlighten.Plugin.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ using UnityEngine.Events;
 
 namespace Enlighten.src.Enlighten.Plugin
 {
-	public abstract class OptionParameter<T> : MonoBehaviour
+	public abstract class TypedOptionParameter<T> : OptionParameter
 	{
 		public UnityEvent<T> onValueChanged;
 
@@ -20,11 +21,8 @@ namespace Enlighten.src.Enlighten.Plugin
 		}
 
 		public T defaultValue;
-		public string propertyName;
-		public string description;
 
-		public abstract bool IsDefault();
-		public void ToDefault()
+		public override void ToDefault()
 		{
 			propertyValue = defaultValue;
 		}
@@ -32,5 +30,15 @@ namespace Enlighten.src.Enlighten.Plugin
 		{
 			_propertyValue = value;
 		}
+	}
+
+
+	public abstract class OptionParameter : MonoBehaviour
+	{
+		public abstract bool IsDefault();
+		public abstract void ToDefault();
+
+		public abstract void ReadData(OptionParameterData data);
+		public abstract void WriteData(OptionParameterData data);
 	}
 }
