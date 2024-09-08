@@ -69,19 +69,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\Enlighten.Plugin\Data\OptionInitializer.cs" />
-    <Compile Include="src\Enlighten.Plugin\Data\OptionData.cs" />
-    <Compile Include="src\Enlighten.Plugin\Enlighten.cs" />
-    <Compile Include="src\Enlighten.Plugin\OptionPanel.cs" />
-    <Compile Include="src\Enlighten.Plugin\EnlightenPanel.cs" />
-    <Compile Include="src\Enlighten.Plugin\OptionButton.cs" />
-    <Compile Include="src\Enlighten.Plugin\OptionName.cs" />
-    <Compile Include="src\Enlighten.Plugin\Option\OptionParameter.cs" />
-    <Compile Include="src\Enlighten.Plugin\Option\SliderParameter.cs" />
-    <Compile Include="src\Enlighten.Plugin\UI.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="enlighten_bundle" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\Enlighten.Plugin\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
