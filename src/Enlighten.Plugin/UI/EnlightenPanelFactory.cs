@@ -9,21 +9,15 @@ namespace Enlighten.src.Enlighten.Plugin
 {
 	internal class EnlightenPanelFactory
 	{
-		private EnlightenPanel prefab;
+		private GameObject prefab;
 
 		public EnlightenPanelFactory(AssetBundle bundle) {
-			prefab = MakePrefab(bundle);
-		}
-
-		private EnlightenPanel MakePrefab(AssetBundle bundle)
-		{
-			GameObject panelPrefab = bundle.LoadAsset<GameObject>("Assets/EnlightenPanel.prefab");
-			return panelPrefab.AddComponent<EnlightenPanel>();
+			prefab = bundle.LoadAsset<GameObject>("Assets/EnlightenPanel.prefab");
 		}
 
 		public EnlightenPanel Create(Transform parent)
 		{
-			return UnityEngine.Object.Instantiate(prefab, parent);
+			return UnityEngine.Object.Instantiate(prefab, parent).AddComponent<EnlightenPanel>();
 		}
 	}
 }
