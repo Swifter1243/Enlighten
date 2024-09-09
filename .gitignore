@@ -446,3 +446,6 @@ sysinfo.txt
 # Temporary auto-generated Android Assets
 /src/Enlighten.Unity/[Aa]ssets/[Ss]treamingAssets/aa.meta
 /src/Enlighten.Unity/[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Local Properties
+local.props
