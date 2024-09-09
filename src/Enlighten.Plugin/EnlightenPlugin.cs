@@ -20,19 +20,14 @@ namespace Enlighten.src.Enlighten.Plugin
 		{
 			SceneManager.sceneLoaded += SceneLoaded;
 
-			AssetBundle bundle = LoadBundle();
+			BundleResource bundleResource = new BundleResource();
+			AssetBundle bundle = bundleResource.Load();
+
 			ui = new UI(bundle);
 			extensionButton = MakeExtensionButton(bundle);
 			extensionButton.Click += () => ui.OnExtensionButtonPressed();
-			bundle.UnloadAsync(false);
-		}
 
-		private AssetBundle LoadBundle()
-		{
-			System.IO.Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Enlighten.enlighten_bundle");
-			AssetBundle assetBundle = AssetBundle.LoadFromStream(stream);
-			stream.Close();
-			return assetBundle;
+			bundleResource.Dispose();
 		}
 
 		private ExtensionButton MakeExtensionButton(AssetBundle bundle)
