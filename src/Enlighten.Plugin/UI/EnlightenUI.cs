@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Enlighten.src.Enlighten.Plugin
+namespace Enlighten.src.Enlighten.Plugin.UI
 {
 
-	internal class UI
+	internal class EnlightenUI
 	{
 		private MappingSceneUIFactory mappingSceneUIFactory;
 		private MappingSceneUI mappingSceneUI;
 
-		public UI(AssetBundle bundle)
+		public EnlightenUI(AssetBundle bundle)
 		{
 			mappingSceneUIFactory = new MappingSceneUIFactory(bundle);
 		}

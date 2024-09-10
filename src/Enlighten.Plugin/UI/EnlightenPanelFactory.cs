@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Enlighten.src.Enlighten.Plugin
+namespace Enlighten.src.Enlighten.Plugin.UI
 {
 	internal class EnlightenPanelFactory
 	{
@@ -17,7 +17,12 @@ namespace Enlighten.src.Enlighten.Plugin
 
 		public EnlightenPanel Create(Transform parent)
 		{
-			return UnityEngine.Object.Instantiate(prefab, parent).AddComponent<EnlightenPanel>();
+			GameObject prefabInstance = UnityEngine.Object.Instantiate(prefab, parent);
+			prefabInstance.SetActive(false);
+
+			EnlightenPanel enlightenPanel = prefabInstance.AddComponent<EnlightenPanel>();
+			enlightenPanel.Hookup();
+			return enlightenPanel;
 		}
 	}
 }

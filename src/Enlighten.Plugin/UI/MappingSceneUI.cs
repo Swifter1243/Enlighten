@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Enlighten.src.Enlighten.Plugin
+namespace Enlighten.src.Enlighten.Plugin.UI
 {
 	internal class MappingSceneUI
 	{

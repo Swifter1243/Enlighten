@@ -6,13 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using Enlighten.src.Enlighten.Plugin.UI;
 
 namespace Enlighten.src.Enlighten.Plugin
 {
 	[Plugin("Enlighten")]
 	public class EnlightenPlugin
 	{
-		private UI ui;
+		private EnlightenUI enlightenUI;
 		private ExtensionButton extensionButton;
 
 		[Init]
@@ -23,9 +24,9 @@ namespace Enlighten.src.Enlighten.Plugin
 			BundleResource bundleResource = new BundleResource();
 			AssetBundle bundle = bundleResource.Load();
 
-			ui = new UI(bundle);
+			enlightenUI = new EnlightenUI(bundle);
 			extensionButton = MakeExtensionButton(bundle);
-			extensionButton.Click += () => ui.OnExtensionButtonPressed();
+			extensionButton.Click += () => enlightenUI.OnExtensionButtonPressed();
 
 			bundleResource.Dispose();
 		}
@@ -45,7 +46,7 @@ namespace Enlighten.src.Enlighten.Plugin
 		{
 			if (arg0.buildIndex == 3) // Mapping Scene
 			{
-				ui.OnMappingSceneLoaded();
+				enlightenUI.OnMappingSceneLoaded();
 			}
 		}
 	}
