@@ -67,17 +67,18 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _OutlinePos: 0.42
+    - _OutlinePos: 9.13
     - _Parallax: 0.02
-    - _Roundness: 0.33
+    - _Roundness: 8.41
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Thin: 6.9
+    - _Thin: 0.2
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Dimensions: {r: 11.41, g: 11.08, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _TopRightCorner: {r: 137.3672, g: 124.8851, b: 0, a: 0}
   m_BuildTextureStacks: []

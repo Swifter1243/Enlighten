@@ -3,7 +3,6 @@ Shader "Unlit/Outline"
     Properties
     {
         _MainTex("Texture", 2D) = "white" {}
-        _Dimensions ("Dimensions", Vector) = (10,10,0,0)
         _OutlinePos ("Outline Position", Float) = 1
         _Roundness ("Roundness", Float) = 3
         _Thin ("Thin-ness", Float) = 4
@@ -11,7 +10,7 @@ Shader "Unlit/Outline"
     SubShader
     {
         Tags { "RenderType"="Opaque" }
-        Blend OneMinusDstColor One, OneMinusDstColor OneMinusSrcAlpha
+        Blend SrcAlpha OneMinusSrcAlpha
 
         Pass
         {
@@ -29,14 +28,16 @@ Shader "Unlit/Outline"
 
             struct v2f
             {
-                float2 uv : TEXCOORD0;
                 float4 vertex : SV_POSITION;
+                float2 localPos : TEXCOORD1;
+                float2 uv : TEXCOORD2;
             };
 
-            float4 _Dimensions;
             float _OutlinePos;
             float _Roundness;
             float _Thin;
+
+            float2 _TopRightCorner;
 
             sampler2D _MainTex;
             float4 _MainTex_ST;
@@ -45,6 +46,9 @@ Shader "Unlit/Outline"
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
+
+                float2 uv = v.uv * 2 - 1;
+                o.localPos = uv * _TopRightCorner;
                 o.uv = v.uv;
                 return o;
             }
@@ -59,34 +63,30 @@ Shader "Unlit/Outline"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                float2 res = _Dimensions.xy;
-                float2 pixelCoord = i.uv * res;
-
-                float2 toCenter = pixelCoord - res / 2;
-                float dist = -sdRoundedBox(toCenter, res / 2, _Roundness + _OutlinePos);
+                float dist = -sdRoundedBox(i.localPos, _TopRightCorner, _Roundness + _OutlinePos);
 
                 float2 uv = i.uv;
                 float time = _Time.y * 1.2;
                 float angle = time * 0.1;
-                
+
                 uv = float2(
                 (uv.x * cos(angle)) - (uv.y * sin(angle)),
                 (uv.x * sin(angle)) + (uv.y * cos(angle))
                 );
-                
-                float centerDot = dot(normalize(toCenter), float2(cos(angle), sin(angle)));
+
+                float centerDot = dot(normalize(i.localPos), float2(cos(angle), sin(angle)));
                 centerDot = centerDot * 0.5 + 0.5;
 
                 float f = abs(dist - _OutlinePos) * _Thin;
                 f = smoothstep(0, 1, saturate(pow(1 - f, 5)));
                 f *= centerDot * 1.5;
-                
+
                 uv.x += sin(time * 0.75) * 0.1;
                 uv.y *= cos(angle) + sin(uv.x);
 
                 float3 col = f * (clamp(cos(float3(5,uv.y * 0.5 + 0.5,sin(time) + 2.) * uv.x * 0.8 + time), 0, 1) + 1);
 
-                return float4(col,1.0);
+                return float4(col, f);
             }
             ENDCG
         }
