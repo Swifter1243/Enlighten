@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5215792222164453263}
   - component: {fileID: 5215792222164453262}
   m_Layer: 5
-  m_Name: OptionButton
+  m_Name: EffectEnabledButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
