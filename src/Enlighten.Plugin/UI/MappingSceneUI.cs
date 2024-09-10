@@ -10,13 +10,13 @@ namespace Enlighten.src.Enlighten.Plugin.UI
 {
 	internal class MappingSceneUI
 	{
-		public Transform sceneCanvas;
+		public RectTransform sceneCanvas;
 		public EnlightenPanel enlightenPanel;
 
 		public MappingSceneUI(MappingSceneUIFactory factory)
 		{
 			MapEditorUI mapEditorUI = UnityEngine.Object.FindObjectOfType<MapEditorUI>();
-			sceneCanvas = mapEditorUI.MainUIGroup[5].transform;
+			sceneCanvas = mapEditorUI.MainUIGroup[5].transform.GetComponent<RectTransform>();
 			enlightenPanel = factory.enlightenPanelFactory.Create(sceneCanvas);
 		}
 	}

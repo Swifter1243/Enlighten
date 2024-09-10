@@ -12,16 +12,16 @@ namespace Enlighten.src.Enlighten.Plugin.UI
 		private GameObject prefab;
 
 		public EnlightenPanelFactory(AssetBundle bundle) {
-			prefab = bundle.LoadAsset<GameObject>("Assets/EnlightenPanel.prefab");
+			prefab = bundle.LoadAsset<GameObject>("Assets/Prefabs/EnlightenPanel.prefab");
 		}
 
-		public EnlightenPanel Create(Transform parent)
+		public EnlightenPanel Create(RectTransform canvas)
 		{
-			GameObject prefabInstance = UnityEngine.Object.Instantiate(prefab, parent);
+			GameObject prefabInstance = UnityEngine.Object.Instantiate(prefab, canvas);
 			prefabInstance.SetActive(false);
 
 			EnlightenPanel enlightenPanel = prefabInstance.AddComponent<EnlightenPanel>();
-			enlightenPanel.Hookup();
+			enlightenPanel.Hookup(canvas);
 			return enlightenPanel;
 		}
 	}

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Enlighten.src.Enlighten.Plugin.UI
 {
 	internal interface IFunctionalUI
 	{
-		void Hookup();
+		void Hookup(RectTransform canvas);
 	}
 }

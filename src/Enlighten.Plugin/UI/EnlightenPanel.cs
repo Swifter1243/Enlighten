@@ -10,9 +10,13 @@ namespace Enlighten.src.Enlighten.Plugin.UI
 {
 	internal class EnlightenPanel : MonoBehaviour, IFunctionalUI
 	{
-		public void Hookup()
+		public void Hookup(RectTransform canvas)
 		{
-			throw new NotImplementedException();
+			RectTransform rectTransform = GetComponent<RectTransform>();
+			Transform insideContent = transform.Find("InsideContent");
+
+			Draggable notchDraggable = insideContent.Find("Notch").gameObject.AddComponent<Draggable>();
+			notchDraggable.Initialize(rectTransform, canvas);
 		}
 	}
 }
