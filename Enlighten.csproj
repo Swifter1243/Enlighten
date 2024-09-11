@@ -80,6 +80,7 @@
     <Compile Include="src\Enlighten.Plugin\UI\MappingSceneUI.cs" />
     <Compile Include="src\Enlighten.Plugin\UI\EnlightenUI.cs" />
     <Compile Include="src\Enlighten.Plugin\UI\MappingSceneUIFactory.cs" />
+    <Compile Include="src\Enlighten.Plugin\UI\RectTransformHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="enlighten_bundle" />
