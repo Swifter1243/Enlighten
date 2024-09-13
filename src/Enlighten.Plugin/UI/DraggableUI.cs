@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 
 namespace Enlighten.src.Enlighten.Plugin.UI
 {
-	internal class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler
+	internal class DraggableUI : MonoBehaviour, IDragHandler, IBeginDragHandler
 	{
 		private RectTransform targetTransform;
 		private RectTransform bounds;

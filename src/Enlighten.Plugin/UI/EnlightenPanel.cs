@@ -15,8 +15,11 @@ namespace Enlighten.src.Enlighten.Plugin.UI
 			RectTransform rectTransform = GetComponent<RectTransform>();
 			Transform insideContent = transform.Find("InsideContent");
 
-			Draggable notchDraggable = insideContent.Find("Notch").gameObject.AddComponent<Draggable>();
+			GameObject notch = insideContent.Find("Notch").gameObject;
+			DraggableUI notchDraggable = notch.AddComponent<DraggableUI>();
 			notchDraggable.Initialize(rectTransform, canvas);
+
+
 		}
 	}
 }

@@ -72,7 +72,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\Enlighten.Plugin\BundleResource.cs" />
-    <Compile Include="src\Enlighten.Plugin\UI\Draggable.cs" />
+    <Compile Include="src\Enlighten.Plugin\UI\DraggableUI.cs" />
     <Compile Include="src\Enlighten.Plugin\UI\EnlightenPanel.cs" />
     <Compile Include="src\Enlighten.Plugin\UI\EnlightenPanelFactory.cs" />
     <Compile Include="src\Enlighten.Plugin\EnlightenPlugin.cs" />
@@ -81,6 +81,7 @@
     <Compile Include="src\Enlighten.Plugin\UI\EnlightenUI.cs" />
     <Compile Include="src\Enlighten.Plugin\UI\MappingSceneUIFactory.cs" />
     <Compile Include="src\Enlighten.Plugin\UI\RectTransformHelper.cs" />
+    <Compile Include="src\Enlighten.Plugin\UI\ResizeableUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="enlighten_bundle" />
