@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\Enlighten.Plugin\BundleResource.cs" />
+    <Compile Include="src\Enlighten.Plugin\UI\Graphics\ResizeHandleVisuals.cs" />
     <Compile Include="src\Enlighten.Plugin\UI\Utility\DraggableUI.cs" />
     <Compile Include="src\Enlighten.Plugin\UI\Graphics\OutlineUpdater.cs" />
     <Compile Include="src\Enlighten.Plugin\UI\EnlightenPanel.cs" />

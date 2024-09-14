@@ -7,6 +7,7 @@ Shader "Unlit/ResizeHandle"
         _Roundness ("Roundness", Float) = 1
         _Blur ("Blur", Float) = 0
         _EdgeBlur ("Edge Blur", Float) = 0
+        _Color ("Color", Color) = (1,1,1)
     }
     SubShader
     {
@@ -14,7 +15,7 @@ Shader "Unlit/ResizeHandle"
             "RenderType"="Transparent"
             "Queue"="Transparent+1"
         }
-        Blend One OneMinusSrcColor
+        Blend One OneMinusSrcAlpha
 
         Pass
         {
@@ -41,6 +42,7 @@ Shader "Unlit/ResizeHandle"
             float _Width;
             float _Blur;
             float _EdgeBlur;
+            float3 _Color;
 
             float sdRoundedBox(float2 p, float2 b, float4 r )
             {
@@ -69,7 +71,7 @@ Shader "Unlit/ResizeHandle"
                 float edgeDist = min(i.uv.x, i.uv.y);
                 f *= smoothstep(0, _EdgeBlur, edgeDist);
 
-                return f;
+                return float4(f * _Color, f);
             }
             ENDCG
         }

@@ -1,4 +1,5 @@
 ﻿using Enlighten.src.Enlighten.Plugin.UI;
+using Enlighten.src.Enlighten.Plugin.UI.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace Enlighten.src.Enlighten.Plugin.UI
 			draggable.Initialize(rectTransform, canvas);
 
 			GameObject resizeHandle = transform.Find("ResizeHandle").gameObject;
+			resizeHandle.AddComponent<ResizeHandleVisuals>();
 			ResizeableUI resizeable = resizeHandle.AddComponent<ResizeableUI>();
 			resizeable.Initialize(rectTransform, canvas, minSize);
 
