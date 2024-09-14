@@ -9,7 +9,7 @@ Shader "Unlit/PanelBackground"
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+        Tags { "RenderType"="Transparent" }
         Blend SrcAlpha OneMinusSrcAlpha
 
         Pass
@@ -59,26 +59,26 @@ Shader "Unlit/PanelBackground"
             {
                 float2 uv = i.uv * _Dimensions.xy;
                 float time = _Time.y * 0.1;
-                
+
                 float angle = time * 0.1;
-                
+
                 uv += 1.;
-                
+
                 uv = float2(
                 (uv.x * cos(angle)) - (uv.y * sin(angle)),
                 (uv.x * sin(angle)) + (uv.y * cos(angle))
                 );
-                
+
                 uv.x += sin(time * 0.75) * 0.1;
                 uv.y *= cos(angle) + sin(uv.x);
-                
+
                 float2 currPoint = uv * (5 + cos(time * 0.3));
                 float2 flooredPoint = floor(currPoint);
-                
+
                 float dist = 1.;
-                
+
                 float offset = (1. - pow(1. - (sin(time * 0.3) * 0.5 + 0.5), 1.)) * 0.5;
-                
+
                 for (int x = 0; x <= 1; x++) {
                     for (int y = 0; y <= 1; y++) {
                         float2 p = flooredPoint + float2(x, y);
@@ -86,7 +86,7 @@ Shader "Unlit/PanelBackground"
                         dist = min(dist, length(currPoint - p));
                     }
                 }
-                
+
                 float f = dist * 1.6 + abs(cos(_Time)) * 0.2;
                 f = smoothstep(0,2,f);
                 f = saturate(f);

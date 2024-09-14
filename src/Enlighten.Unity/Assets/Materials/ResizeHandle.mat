@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PanelOutline
-  m_Shader: {fileID: 4800000, guid: 7d1a481adc35953439413ecefa3c0b8d, type: 3}
+  m_Name: ResizeHandle
+  m_Shader: {fileID: 4800000, guid: 548d8727af77b7346adb3e4b8ddcbce4, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -55,30 +55,36 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SpecGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Blur: 0.01
     - _BumpScale: 1
+    - _CornerScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _EdgeBlur: 0.27
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _Inset: 1.21
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _OutlinePos: 9.13
     - _Parallax: 0.02
-    - _Roundness: 8.41
+    - _Roundness: 0.5
+    - _Scale: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Thin: 0.2
     - _UVSec: 0
+    - _Width: 0.11
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Dimensions: {r: 11.41, g: 11.08, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _TopRightCorner: {r: 137.3672, g: 124.8851, b: 0, a: 0}
   m_BuildTextureStacks: []

@@ -9,7 +9,10 @@ Shader "Unlit/Outline"
     }
     SubShader
     {
-        Tags { "RenderType"="Transparent" "Queue"="Transparent" }
+        Tags {
+            "RenderType"="Transparent"
+            "Queue"="Transparent"
+        }
         Blend SrcAlpha OneMinusSrcAlpha
 
         Pass
