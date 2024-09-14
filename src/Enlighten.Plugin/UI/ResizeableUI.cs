@@ -15,8 +15,8 @@ namespace Enlighten.src.Enlighten.Plugin.UI
 		private RectTransform bounds;
 		private Vector2 minSize;
 		private Vector2 _startCursorLocalPosition;
-		private float _beginRight;
-		private float _beginBottom;
+		private float _startOffsetMinY;
+		private float _startOffsetMaxX;
 
 		public void Initialize(RectTransform targetTransform, RectTransform bounds, Vector2 minSize)
 		{
@@ -29,32 +29,27 @@ namespace Enlighten.src.Enlighten.Plugin.UI
 		{
 			RectTransformUtility.ScreenPointToLocalPointInRectangle(bounds, eventData.position, eventData.pressEventCamera, out Vector2 localCursor);
 			_startCursorLocalPosition = localCursor;
-			_beginRight = targetTransform.GetRight();
-			_beginBottom = targetTransform.GetBottom();
+			_startOffsetMaxX = targetTransform.offsetMax.x;
+			_startOffsetMinY = targetTransform.offsetMin.y;
 		}
 
 		public void OnDrag(PointerEventData eventData)
 		{
-			// Convert the initial cursor position to local canvas space as well
 			RectTransformUtility.ScreenPointToLocalPointInRectangle(bounds, eventData.position, eventData.pressEventCamera, out Vector2 localCursor);
-
-			// Calculate the mouse movement delta in local canvas space
 			Vector2 localDelta = localCursor - _startCursorLocalPosition;
 
 			Rect boundsRect = bounds.rect;
 			float boundsWidth = boundsRect.width;
 			float boundsHeight = boundsRect.height;
 
-			// Adjust the right and bottom values based on the local movement
-			float newRight = _beginRight - localDelta.x;
-			float rightAtLeft = boundsWidth - targetTransform.GetLeft();
-			//newRight = Mathf.Clamp(newRight, 0, rightAtLeft - minSize.x);
+			float offsetMinY = _startOffsetMinY + localDelta.y;
+			offsetMinY = Mathf.Clamp(offsetMinY, -boundsHeight, targetTransform.offsetMax.y - minSize.y);
 
-			float newBottom = _beginBottom + localDelta.y;
-			float bottomAtTop = boundsHeight - targetTransform.GetTop();
+			float offsetMaxX = _startOffsetMaxX + localDelta.x;
+			offsetMaxX = Mathf.Clamp(offsetMaxX, targetTransform.offsetMin.x + minSize.x, boundsWidth);
 
-			targetTransform.SetRight(newRight);
-			targetTransform.SetBottom(newBottom);
+			targetTransform.offsetMin = new Vector2(targetTransform.offsetMin.x, offsetMinY);
+			targetTransform.offsetMax = new Vector2(offsetMaxX, targetTransform.offsetMax.y);
 		}
 	}
 }
