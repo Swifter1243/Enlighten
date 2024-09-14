@@ -2,6 +2,7 @@ Shader "Unlit/ResizeHandle"
 {
     Properties
     {
+        _MainTex("Texture", 2D) = "white" {}
         _Inset ("Inset", Float) = 1
         _Width ("Width", Float) = 1
         _Roundness ("Roundness", Float) = 1

@@ -3001,7 +3001,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7585728902296530039}
-  - {fileID: 6212059789019267698}
+  - {fileID: 427835809569818977}
   m_Father: {fileID: 4340745194609169415}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3530,7 +3530,7 @@ GameObject:
   - component: {fileID: 2163100066839179297}
   - component: {fileID: 2488193127607892103}
   m_Layer: 5
-  m_Name: MainEffects
+  m_Name: Main Effects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3548,13 +3548,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5116632599715520483}
-  m_Father: {fileID: 6039980971066359488}
-  m_RootOrder: 1
+  m_Father: {fileID: 427835809569818977}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -10.468996}
-  m_SizeDelta: {x: 0, y: -20.938}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0.36999512, y: -0.66799545}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2163100066839179297
 CanvasRenderer:
@@ -3999,6 +3999,41 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &4085482417788711198
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7401818157451534021}
+  m_Layer: 5
+  m_Name: Strip Generator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &7401818157451534021
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4085482417788711198}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 427835809569818977}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -1.4455, y: 0.16612}
+  m_SizeDelta: {x: 252.37, y: 210.07}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4159170486804782808
 GameObject:
   m_ObjectHideFlags: 0
@@ -5299,6 +5334,43 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!1 &6214918491547794253
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 427835809569818977}
+  m_Layer: 5
+  m_Name: Modes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &427835809569818977
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6214918491547794253}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 6212059789019267698}
+  - {fileID: 7401818157451534021}
+  m_Father: {fileID: 6039980971066359488}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0.000015258789, y: -10.469002}
+  m_SizeDelta: {x: -0.36999512, y: -20.270004}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6443981058608258716
 GameObject:
   m_ObjectHideFlags: 0
@@ -5464,7 +5536,7 @@ GameObject:
   - component: {fileID: 7303507090397726355}
   - component: {fileID: 5486402863849723021}
   m_Layer: 5
-  m_Name: Mode
+  m_Name: ModeDropdown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5806,7 +5878,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4389237360271868816}
   m_HandleRect: {fileID: 7297826521875200122}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
