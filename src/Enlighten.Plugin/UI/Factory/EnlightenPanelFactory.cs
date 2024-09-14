@@ -21,7 +21,7 @@ namespace Enlighten.src.Enlighten.Plugin.UI
 			prefabInstance.SetActive(false);
 
 			EnlightenPanel enlightenPanel = prefabInstance.AddComponent<EnlightenPanel>();
-			enlightenPanel.Hookup(canvas);
+			enlightenPanel.Initialize(canvas);
 			return enlightenPanel;
 		}
 	}

@@ -9,11 +9,11 @@ using UnityEngine;
 
 namespace Enlighten.src.Enlighten.Plugin.UI
 {
-	internal class EnlightenPanel : MonoBehaviour, IFunctionalUI
+	internal class EnlightenPanel : MonoBehaviour
 	{
 		private readonly Vector2 minSize = new Vector2(200, 200);
 
-		public void Hookup(RectTransform canvas)
+		public void Initialize(RectTransform canvas)
 		{
 			RectTransform rectTransform = GetComponent<RectTransform>();
 			Transform insideContent = transform.Find("InsideContent");

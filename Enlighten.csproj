@@ -78,7 +78,6 @@
     <Compile Include="src\Enlighten.Plugin\UI\EnlightenPanel.cs" />
     <Compile Include="src\Enlighten.Plugin\UI\Factory\EnlightenPanelFactory.cs" />
     <Compile Include="src\Enlighten.Plugin\EnlightenPlugin.cs" />
-    <Compile Include="src\Enlighten.Plugin\UI\Utility\IFunctionalUI.cs" />
     <Compile Include="src\Enlighten.Plugin\UI\MappingSceneUI.cs" />
     <Compile Include="src\Enlighten.Plugin\UI\EnlightenUI.cs" />
     <Compile Include="src\Enlighten.Plugin\UI\Factory\MappingSceneUIFactory.cs" />
