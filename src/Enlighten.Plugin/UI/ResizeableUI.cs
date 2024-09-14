@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -17,6 +18,7 @@ namespace Enlighten.src.Enlighten.Plugin.UI
 		private Vector2 _startCursorLocalPosition;
 		private float _startOffsetMinY;
 		private float _startOffsetMaxX;
+		public UnityEvent onResize = new UnityEvent();
 
 		public void Initialize(RectTransform targetTransform, RectTransform bounds, Vector2 minSize)
 		{
@@ -35,6 +37,8 @@ namespace Enlighten.src.Enlighten.Plugin.UI
 
 		public void OnDrag(PointerEventData eventData)
 		{
+			onResize.Invoke();
+
 			RectTransformUtility.ScreenPointToLocalPointInRectangle(bounds, eventData.position, eventData.pressEventCamera, out Vector2 localCursor);
 			Vector2 localDelta = localCursor - _startCursorLocalPosition;
 

@@ -24,6 +24,10 @@ namespace Enlighten.src.Enlighten.Plugin.UI
 			GameObject resizeHandle = transform.Find("ResizeHandle").gameObject;
 			ResizeableUI resizeable = resizeHandle.AddComponent<ResizeableUI>();
 			resizeable.Initialize(rectTransform, canvas, minSize);
+
+			GameObject outline = transform.Find("Outline").gameObject;
+			OutlineUpdater outlineUpdater = outline.AddComponent<OutlineUpdater>();
+			resizeable.onResize.AddListener(outlineUpdater.UpdateBorder);
 		}
 	}
 }
