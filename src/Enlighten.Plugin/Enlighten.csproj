@@ -69,13 +69,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\Enlighten.Plugin\src\Enlighten.cs" />
-    <Compile Include="src\Enlighten.Plugin\src\EnlightenPanel.cs" />
-    <Compile Include="src\Enlighten.Plugin\src\OptionButton.cs" />
-    <Compile Include="src\Enlighten.Plugin\src\OptionName.cs" />
-    <Compile Include="src\Enlighten.Plugin\src\OptionPanel.cs" />
-    <Compile Include="src\Enlighten.Plugin\src\SliderParameter.cs" />
-    <Compile Include="src\Enlighten.Plugin\src\UI.cs" />
+    <Compile Include="src\Enlighten.cs" />
+    <Compile Include="src\EnlightenPanel.cs" />
+    <Compile Include="src\OptionButton.cs" />
+    <Compile Include="src\OptionName.cs" />
+    <Compile Include="src\OptionPanel.cs" />
+    <Compile Include="src\SliderParameter.cs" />
+    <Compile Include="src\UI.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="enlighten_bundle" />
