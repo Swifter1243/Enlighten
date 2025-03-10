@@ -71,19 +71,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\Enlighten.Plugin\BundleResource.cs" />
-    <Compile Include="src\Enlighten.Plugin\UI\Graphics\ResizeHandleVisuals.cs" />
-    <Compile Include="src\Enlighten.Plugin\UI\Utility\GameObjectLinkedDropdown.cs" />
-    <Compile Include="src\Enlighten.Plugin\UI\Utility\DraggableUI.cs" />
-    <Compile Include="src\Enlighten.Plugin\UI\Graphics\OutlineUpdater.cs" />
-    <Compile Include="src\Enlighten.Plugin\UI\EnlightenPanel.cs" />
-    <Compile Include="src\Enlighten.Plugin\UI\Factory\EnlightenPanelFactory.cs" />
-    <Compile Include="src\Enlighten.Plugin\EnlightenPlugin.cs" />
-    <Compile Include="src\Enlighten.Plugin\UI\MappingSceneUI.cs" />
-    <Compile Include="src\Enlighten.Plugin\UI\EnlightenUI.cs" />
-    <Compile Include="src\Enlighten.Plugin\UI\Factory\MappingSceneUIFactory.cs" />
-    <Compile Include="src\Enlighten.Plugin\UI\Utility\RectTransformHelper.cs" />
-    <Compile Include="src\Enlighten.Plugin\UI\Utility\ResizeableUI.cs" />
+	  <Compile Include="src\BundleResource.cs" />
+	  <Compile Include="src\UI\Graphics\ResizeHandleVisuals.cs" />
+	  <Compile Include="src\UI\Utility\GameObjectLinkedDropdown.cs" />
+	  <Compile Include="src\UI\Utility\DraggableUI.cs" />
+	  <Compile Include="src\UI\Graphics\OutlineUpdater.cs" />
+	  <Compile Include="src\UI\EnlightenPanel.cs" />
+	  <Compile Include="src\UI\Factory\EnlightenPanelFactory.cs" />
+	  <Compile Include="src\EnlightenPlugin.cs" />
+	  <Compile Include="src\UI\MappingSceneUI.cs" />
+	  <Compile Include="src\UI\EnlightenUI.cs" />
+	  <Compile Include="src\UI\Factory\MappingSceneUIFactory.cs" />
+	  <Compile Include="src\UI\Utility\RectTransformHelper.cs" />
+	  <Compile Include="src\UI\Utility\ResizeableUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="enlighten_bundle" />
