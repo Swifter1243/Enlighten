@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 641148831
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: enlighten_bundle
+      Dependencies: {}
