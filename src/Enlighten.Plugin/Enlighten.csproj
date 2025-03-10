@@ -72,8 +72,6 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\BundleResource.cs" />
-    <Compile Include="src\BundleResource.cs" />
-    <Compile Include="src\EnlightenPlugin.cs" />
     <Compile Include="src\UI\Graphics\ResizeHandleVisuals.cs" />
     <Compile Include="src\UI\Utility\GameObjectLinkedDropdown.cs" />
     <Compile Include="src\UI\Utility\DraggableUI.cs" />
