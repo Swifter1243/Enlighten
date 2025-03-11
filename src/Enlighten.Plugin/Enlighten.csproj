@@ -73,6 +73,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\BundleResource.cs" />
     <Compile Include="src\Core\Enlighten.cs" />
+    <Compile Include="src\Core\Modes\Main Effects\MainEffectsMode.cs" />
+    <Compile Include="src\Core\Modes\EnlightenMode.cs" />
+    <Compile Include="src\Core\Modes\Modes.cs" />
+    <Compile Include="src\Core\Modes\Strip Generator\StripGeneratorMode.cs" />
     <Compile Include="src\UI\Graphics\ResizeHandleVisuals.cs" />
     <Compile Include="src\UI\Modes\MainEffectsUI.cs" />
     <Compile Include="src\UI\Modes\ModeUI.cs" />
