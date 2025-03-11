@@ -6,8 +6,8 @@ namespace Enlighten.Core
 {
 	public class Enlighten
 	{
-		private EventGridContainer m_eventContainer;
-		public Dictionary<Modes, EnlightenMode> m_modes;
+		private readonly EventGridContainer m_eventContainer;
+		public readonly Dictionary<Modes, EnlightenMode> m_modes;
 
 		public Enlighten(EventGridContainer eventContainer)
 		{
@@ -17,18 +17,13 @@ namespace Enlighten.Core
 
 		private static BaseEvent[] SelectedEvents => SelectionController.SelectedObjects.OfType<BaseEvent>().ToArray();
 
-		private static void Dialogue(string message)
-		{
-			PersistentUI.Instance.ShowDialogBox(message, null, PersistentUI.DialogBoxPresetType.Ok);
-		}
-
 		public void RunMode(EnlightenMode mode)
 		{
 			BaseEvent[] selectedEvents = SelectedEvents;
 
 			if (!selectedEvents.Any())
 			{
-				Dialogue("No events selected");
+				ChroMapperUtils.Dialogue("No events selected");
 				return;
 			}
 

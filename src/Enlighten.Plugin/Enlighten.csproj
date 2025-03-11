@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\BundleResource.cs" />
+    <Compile Include="src\ChroMapperUtils.cs" />
     <Compile Include="src\Core\Enlighten.cs" />
     <Compile Include="src\Core\Modes\Main Effects\MainEffectsMode.cs" />
     <Compile Include="src\Core\Modes\EnlightenMode.cs" />
