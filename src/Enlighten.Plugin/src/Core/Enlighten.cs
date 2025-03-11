@@ -28,7 +28,7 @@ namespace Enlighten.Core
 			}
 
 			ActionTracker actionTracker = new ActionTracker(m_eventContainer, selectedEvents);
-			IEnumerable<BeatmapAction> actions = mode.Execute(m_eventContainer, selectedEvents, actionTracker);
+			IEnumerable<BeatmapAction> actions = mode.Execute(selectedEvents, actionTracker);
 			ActionCollectionAction actionCollection = new ActionCollectionAction(actions, false, false, "Enlighten");
 			BeatmapActionContainer.AddAction(actionCollection);
 		}

@@ -74,6 +74,14 @@
     <Compile Include="src\BundleResource.cs" />
     <Compile Include="src\ChroMapperUtils.cs" />
     <Compile Include="src\Core\Enlighten.cs" />
+    <Compile Include="src\Core\Modes\Main Effects\Effect.cs" />
+    <Compile Include="src\Core\Modes\Main Effects\EffectName.cs" />
+    <Compile Include="src\Core\Modes\Main Effects\Effects\AlphaEffect.cs" />
+    <Compile Include="src\Core\Modes\Main Effects\Effects\BrightnessEffect.cs" />
+    <Compile Include="src\Core\Modes\Main Effects\Effects\FlutterEffect.cs" />
+    <Compile Include="src\Core\Modes\Main Effects\Effects\HueEffect.cs" />
+    <Compile Include="src\Core\Modes\Main Effects\Effects\PulseEffect.cs" />
+    <Compile Include="src\Core\Modes\Main Effects\Effects\SaturationEffect.cs" />
     <Compile Include="src\Core\Modes\Main Effects\MainEffectsMode.cs" />
     <Compile Include="src\Core\Modes\EnlightenMode.cs" />
     <Compile Include="src\Core\Modes\ActionTracker.cs" />
