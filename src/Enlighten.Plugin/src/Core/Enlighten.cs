@@ -15,7 +15,7 @@ namespace Enlighten.Core
 			m_modes = GetModes();
 		}
 
-		private static IEnumerable<BaseEvent> SelectedEvents => SelectionController.SelectedObjects.OfType<BaseEvent>();
+		private static BaseEvent[] SelectedEvents => SelectionController.SelectedObjects.OfType<BaseEvent>().ToArray();
 
 		private static void Dialogue(string message)
 		{
@@ -24,7 +24,7 @@ namespace Enlighten.Core
 
 		public void RunMode(EnlightenMode mode)
 		{
-			IEnumerable<BaseEvent> selectedEvents = SelectedEvents;
+			BaseEvent[] selectedEvents = SelectedEvents;
 
 			if (!selectedEvents.Any())
 			{
@@ -32,7 +32,8 @@ namespace Enlighten.Core
 				return;
 			}
 
-			IEnumerable<BeatmapAction> actions = mode.Execute(m_eventContainer);
+			ActionTracker actionTracker = new ActionTracker(m_eventContainer, selectedEvents);
+			IEnumerable<BeatmapAction> actions = mode.Execute(m_eventContainer, selectedEvents, actionTracker);
 			ActionCollectionAction actionCollection = new ActionCollectionAction(actions, false, false, "Enlighten");
 			BeatmapActionContainer.AddAction(actionCollection);
 		}
