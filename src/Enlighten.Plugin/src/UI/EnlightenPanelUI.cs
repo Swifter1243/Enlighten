@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Enlighten.Core;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -56,17 +57,18 @@ namespace Enlighten.UI
 
 		private IEnumerable<GameObject> GetModes(Transform modesParent)
 		{
-			yield return AddMode<MainEffectsUI>("Main Effects");
-			yield return AddMode<StripGeneratorUI>("Strip Generator");
+			yield return AddMode<MainEffectsUI>("Main Effects", Modes.MainEffects);
+			yield return AddMode<StripGeneratorUI>("Strip Generator", Modes.StripGenerator);
 
 			yield break;
 
-			GameObject AddMode<T>(string objectName) where T : ModeUI
+			GameObject AddMode<T>(string objectName, Modes mode) where T : ModeUI
 			{
-				GameObject mode = modesParent.Find(objectName).gameObject;
-				T component = mode.AddComponent<T>();
-				component.Initialize();
-				return mode;
+				GameObject go = modesParent.Find(objectName).gameObject;
+				T component = go.AddComponent<T>();
+				EnlightenMode enlightenMode = m_enlighten.m_modes[mode];
+				component.Initialize(enlightenMode);
+				return go;
 			}
 		}
 	}

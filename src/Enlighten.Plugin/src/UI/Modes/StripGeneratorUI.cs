@@ -2,9 +2,9 @@
 {
 	public class StripGeneratorUI : ModeUI
 	{
-		public override void Initialize()
+		protected override void InitializeInternal()
 		{
-			throw new System.NotImplementedException();
+			// TODO
 		}
 	}
 }
