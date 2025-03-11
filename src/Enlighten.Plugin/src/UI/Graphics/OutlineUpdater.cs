@@ -1,34 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace Enlighten.UI
 {
 	internal class OutlineUpdater : MonoBehaviour
 	{
-		private static readonly int TopRightLocal = Shader.PropertyToID("_TopRightCorner");
-		private RectTransform rectTransform;
-		private Material material;
+		private readonly static int s_topRightLocal = Shader.PropertyToID("_TopRightCorner");
+		private RectTransform m_rectTransform;
+		private Material m_material;
 
 		private void Awake()
 		{
-			rectTransform = GetComponent<RectTransform>();
-			material = GetComponent<RawImage>().material;
+			m_rectTransform = GetComponent<RectTransform>();
+			m_material = GetComponent<RawImage>().material;
 			UpdateBorder();
 		}
 
 		public void UpdateBorder()
 		{
-			material.SetVector(TopRightLocal, GetTopRightLocalPosition());
+			m_material.SetVector(s_topRightLocal, GetTopRightLocalPosition());
 		}
 
-		Vector2 GetTopRightLocalPosition()
+		private Vector2 GetTopRightLocalPosition()
 		{
-			Rect rect = rectTransform.rect;
+			Rect rect = m_rectTransform.rect;
 			return new Vector3(rect.width * 0.5f, rect.height * 0.5f);
 		}
 	}

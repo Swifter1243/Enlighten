@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Enlighten.UI
 {
 	internal class MappingSceneUIFactory
 	{
-		public EnlightenPanelFactory enlightenPanelFactory;
+		public readonly EnlightenPanelFactory m_enlightenPanelFactory;
 
 		public MappingSceneUIFactory(AssetBundle bundle)
 		{
-			enlightenPanelFactory = new EnlightenPanelFactory(bundle);
+			m_enlightenPanelFactory = new EnlightenPanelFactory(bundle);
 		}
 	}
 }

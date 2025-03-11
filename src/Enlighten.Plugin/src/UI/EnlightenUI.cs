@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
 namespace Enlighten.UI
 {
@@ -26,7 +20,7 @@ namespace Enlighten.UI
 
 		public void OnExtensionButtonPressed()
 		{
-			GameObject enlightenPanelObj = mappingSceneUI.enlightenPanel.gameObject;
+			GameObject enlightenPanelObj = mappingSceneUI.m_enlightenPanel.gameObject;
 			enlightenPanelObj.SetActive(!enlightenPanelObj.activeSelf);
 		}
 	}

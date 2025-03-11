@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +7,7 @@ namespace Enlighten.UI
 {
 	internal class EnlightenPanel : MonoBehaviour
 	{
-		private readonly Vector2 minSize = new Vector2(200, 200);
+		private readonly Vector2 m_minSize = new Vector2(200, 200);
 
 		public void Initialize(RectTransform canvas)
 		{
@@ -27,12 +24,12 @@ namespace Enlighten.UI
 			GameObject resizeHandle = transform.Find("ResizeHandle").gameObject;
 			resizeHandle.AddComponent<ResizeHandleVisuals>();
 			ResizeableUI resizeable = resizeHandle.AddComponent<ResizeableUI>();
-			resizeable.Initialize(rectTransform, canvas, minSize);
+			resizeable.Initialize(rectTransform, canvas, m_minSize);
 
 			// Add Outline Logic
 			GameObject outline = transform.Find("Outline").gameObject;
 			OutlineUpdater outlineUpdater = outline.AddComponent<OutlineUpdater>();
-			resizeable.onResize.AddListener(outlineUpdater.UpdateBorder);
+			resizeable.m_onResize.AddListener(outlineUpdater.UpdateBorder);
 
 			// Setup Mode Windows
 			Transform modesParent = insideContent.Find("Modes");

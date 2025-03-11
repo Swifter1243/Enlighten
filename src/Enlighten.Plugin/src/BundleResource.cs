@@ -1,41 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Enlighten
 {
 	internal class BundleResource
 	{
-		private System.IO.Stream resourceStream;
-		private AssetBundle bundle;
-		bool loaded = false;
+		private System.IO.Stream m_resourceStream;
+		private AssetBundle m_bundle;
+		private bool m_loaded = false;
 
 		public AssetBundle Load()
 		{
-			if (!loaded)
+			if (!m_loaded)
 			{
-				resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Enlighten.enlighten_bundle");
-				bundle = AssetBundle.LoadFromStream(resourceStream);
-				loaded = true;
+				m_resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Enlighten.enlighten_bundle");
+				m_bundle = AssetBundle.LoadFromStream(m_resourceStream);
+				m_loaded = true;
 			}
 
-			return bundle;
+			return m_bundle;
 		}
 
 		public void Dispose()
 		{
-			if (!loaded)
+			if (!m_loaded)
 			{
 				throw new Exception("The bundle isn't loaded, so it can't be disposed!");
 			}
 
-			bundle.UnloadAsync(false);
-			resourceStream.Dispose();
-			loaded = false;
+			m_bundle.UnloadAsync(false);
+			m_resourceStream.Dispose();
+			m_loaded = false;
 		}
 	}
 }

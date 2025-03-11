@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Enlighten.UI
 {
 	internal class EnlightenPanelFactory
 	{
-		private GameObject prefab;
+		private readonly GameObject m_prefab;
 
 		public EnlightenPanelFactory(AssetBundle bundle) {
-			prefab = bundle.LoadAsset<GameObject>("Assets/Prefabs/EnlightenPanel.prefab");
+			m_prefab = bundle.LoadAsset<GameObject>("Assets/Prefabs/EnlightenPanel.prefab");
 		}
 
 		public EnlightenPanel Create(RectTransform canvas)
 		{
-			GameObject prefabInstance = UnityEngine.Object.Instantiate(prefab, canvas);
+			GameObject prefabInstance = UnityEngine.Object.Instantiate(m_prefab, canvas);
 			prefabInstance.SetActive(false);
 
 			EnlightenPanel enlightenPanel = prefabInstance.AddComponent<EnlightenPanel>();

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
@@ -11,31 +6,31 @@ namespace Enlighten.UI
 {
 	internal class DraggableUI : MonoBehaviour, IDragHandler, IBeginDragHandler
 	{
-		private RectTransform targetTransform;
-		private RectTransform bounds;
-		private Vector2 _startingMousePosition;
-		private Vector2 _startingPosition;
-		public UnityEvent onDrag = new UnityEvent();
+		private RectTransform m_targetTransform;
+		private RectTransform m_bounds;
+		private Vector2 m_startingMousePosition;
+		private Vector2 m_startingPosition;
+		public UnityEvent m_onDrag = new UnityEvent();
 
 		public void Initialize(RectTransform targetTransform, RectTransform bounds)
 		{
-			this.targetTransform = targetTransform;
-			this.bounds = bounds;
+			this.m_targetTransform = targetTransform;
+			this.m_bounds = bounds;
 		}
 
 		public void OnBeginDrag(PointerEventData eventData)
 		{
-			_startingMousePosition = eventData.position;
-			_startingPosition = targetTransform.position;
+			m_startingMousePosition = eventData.position;
+			m_startingPosition = m_targetTransform.position;
 		}
 
 		public void OnDrag(PointerEventData eventData)
 		{
-			onDrag.Invoke();
+			m_onDrag.Invoke();
 
-			Vector2 mouseDelta = eventData.position - _startingMousePosition;
-			targetTransform.position = _startingPosition + mouseDelta;
-			targetTransform.ClampWithinBounds(bounds);
+			Vector2 mouseDelta = eventData.position - m_startingMousePosition;
+			m_targetTransform.position = m_startingPosition + mouseDelta;
+			m_targetTransform.ClampWithinBounds(m_bounds);
 		}
 	}
 }

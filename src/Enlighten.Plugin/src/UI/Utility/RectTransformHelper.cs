@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Enlighten.UI
 {
-	internal static class RectTransformHelper
+	static internal class RectTransformHelper
 	{
 		public static void ClampWithinBounds(this RectTransform target, RectTransform bounds)
 		{

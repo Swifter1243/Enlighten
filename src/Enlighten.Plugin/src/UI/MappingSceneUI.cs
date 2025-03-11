@@ -1,23 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 namespace Enlighten.UI
 {
 	internal class MappingSceneUI
 	{
-		public RectTransform sceneCanvas;
-		public EnlightenPanel enlightenPanel;
+		public readonly RectTransform m_sceneCanvas;
+		public readonly EnlightenPanel m_enlightenPanel;
 
 		public MappingSceneUI(MappingSceneUIFactory factory)
 		{
 			MapEditorUI mapEditorUI = UnityEngine.Object.FindObjectOfType<MapEditorUI>();
-			sceneCanvas = mapEditorUI.MainUIGroup[5].transform.GetComponent<RectTransform>();
-			enlightenPanel = factory.enlightenPanelFactory.Create(sceneCanvas);
+			m_sceneCanvas = mapEditorUI.MainUIGroup[5].transform.GetComponent<RectTransform>();
+			m_enlightenPanel = factory.m_enlightenPanelFactory.Create(m_sceneCanvas);
 		}
 	}
 }

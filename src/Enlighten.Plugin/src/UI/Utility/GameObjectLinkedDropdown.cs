@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,12 +7,12 @@ namespace Enlighten.UI
 {
 	internal class GameObjectLinkedDropdown
 	{
-		GameObject activeGameObject;
-		List<GameObject> children;
+		private GameObject m_activeGameObject;
+		private readonly List<GameObject> m_children;
 
 		public GameObjectLinkedDropdown(Dropdown dropdown, List<GameObject> children, string initialObjectName)
 		{
-			this.children = children;
+			this.m_children = children;
 			dropdown.ClearOptions();
 
 			foreach (GameObject child in children)
@@ -32,14 +29,14 @@ namespace Enlighten.UI
 				throw new Exception($"Couldn't find object '{initialObjectName}' in the provided list!");
 			}
 			dropdown.value = initialObjectIndex;
-			activeGameObject = children[initialObjectIndex];
-			activeGameObject.SetActive(true);
+			m_activeGameObject = children[initialObjectIndex];
+			m_activeGameObject.SetActive(true);
 		}
 
 		private void OnValueChanged(int newIndex) {
-			activeGameObject.SetActive(false);
-			activeGameObject = children[newIndex].gameObject;
-			activeGameObject.SetActive(true);
+			m_activeGameObject.SetActive(false);
+			m_activeGameObject = m_children[newIndex].gameObject;
+			m_activeGameObject.SetActive(true);
 		}
 	}
 }
