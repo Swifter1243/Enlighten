@@ -1,6 +1,4 @@
-﻿using Enlighten.src.Enlighten.Plugin.UI;
-using Enlighten.src.Enlighten.Plugin.UI.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Enlighten.src.Enlighten.Plugin.UI
+namespace Enlighten.UI
 {
 	internal class EnlightenPanel : MonoBehaviour
 	{

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Enlighten.src.Enlighten.Plugin.UI
+namespace Enlighten.UI
 {
 
 	internal class EnlightenUI

@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Enlighten.src.Enlighten.Plugin.UI.Graphics
+namespace Enlighten.UI
 {
 	internal class ResizeHandleVisuals : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
 	{

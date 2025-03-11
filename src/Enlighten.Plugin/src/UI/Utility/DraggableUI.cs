@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-namespace Enlighten.src.Enlighten.Plugin.UI
+namespace Enlighten.UI
 {
 	internal class DraggableUI : MonoBehaviour, IDragHandler, IBeginDragHandler
 	{

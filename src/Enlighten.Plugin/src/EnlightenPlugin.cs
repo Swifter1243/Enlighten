@@ -4,11 +4,11 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Enlighten.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine;
-using Enlighten.src.Enlighten.Plugin.UI;
 
-namespace Enlighten.src.Enlighten.Plugin
+namespace Enlighten
 {
 	[Plugin("Enlighten")]
 	public class EnlightenPlugin
