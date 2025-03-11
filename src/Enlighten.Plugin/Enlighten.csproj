@@ -73,6 +73,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\BundleResource.cs" />
     <Compile Include="src\UI\Graphics\ResizeHandleVisuals.cs" />
+    <Compile Include="src\UI\Modes\MainEffectsUI.cs" />
+    <Compile Include="src\UI\Modes\ModeUI.cs" />
+    <Compile Include="src\UI\Modes\StripGeneratorUI.cs" />
     <Compile Include="src\UI\Utility\GameObjectLinkedDropdown.cs" />
     <Compile Include="src\UI\Utility\DraggableUI.cs" />
     <Compile Include="src\UI\Graphics\OutlineUpdater.cs" />
@@ -88,7 +91,6 @@
   <ItemGroup>
     <EmbeddedResource Include="enlighten_bundle" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(TargetPath)" "$(ChroMapperDirectory)\Plugins" /Y</PostBuildEvent>

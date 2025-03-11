@@ -33,9 +33,25 @@ namespace Enlighten.UI
 
 			// Setup Mode Windows
 			Transform modesParent = insideContent.Find("Modes");
-			List<GameObject> modeGameObjects = modesParent.Cast<Transform>().Select(t => t.gameObject).ToList();
+			List<GameObject> modeGameObjects = GetModes(modesParent).ToList();
 			Dropdown modeDropdown = transform.Find("ModeDropdown").GetComponent<Dropdown>();
 			new GameObjectLinkedDropdown(modeDropdown, modeGameObjects, modeGameObjects[0]);
+		}
+
+		private IEnumerable<GameObject> GetModes(Transform modesParent)
+		{
+			yield return AddMode<MainEffectsUI>("Main Effects");
+			yield return AddMode<StripGeneratorUI>("Strip Generator");
+
+			yield break;
+
+			GameObject AddMode<T>(string objectName) where T : ModeUI
+			{
+				GameObject mode = modesParent.Find(objectName).gameObject;
+				T component = mode.AddComponent<T>();
+				component.Initialize();
+				return mode;
+			}
 		}
 	}
 }
