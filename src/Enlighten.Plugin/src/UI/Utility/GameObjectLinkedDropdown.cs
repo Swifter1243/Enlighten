@@ -10,9 +10,9 @@ namespace Enlighten.UI
 		private GameObject m_activeGameObject;
 		private readonly List<GameObject> m_children;
 
-		public GameObjectLinkedDropdown(Dropdown dropdown, List<GameObject> children, string initialObjectName)
+		public GameObjectLinkedDropdown(Dropdown dropdown, List<GameObject> children, GameObject initialObject)
 		{
-			this.m_children = children;
+			m_children = children;
 			dropdown.ClearOptions();
 
 			foreach (GameObject child in children)
@@ -23,14 +23,12 @@ namespace Enlighten.UI
 
 			dropdown.onValueChanged.AddListener(OnValueChanged);
 
-			int initialObjectIndex = children.FindIndex(o => o.name == initialObjectName);
+			int initialObjectIndex = children.IndexOf(initialObject);
 			if (initialObjectIndex == -1)
 			{
-				throw new Exception($"Couldn't find object '{initialObjectName}' in the provided list!");
+				throw new Exception($"Couldn't find object '{initialObject.name}' in the provided list!");
 			}
 			dropdown.value = initialObjectIndex;
-			m_activeGameObject = children[initialObjectIndex];
-			m_activeGameObject.SetActive(true);
 		}
 
 		private void OnValueChanged(int newIndex) {

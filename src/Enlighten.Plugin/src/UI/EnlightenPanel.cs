@@ -35,7 +35,7 @@ namespace Enlighten.UI
 			Transform modesParent = insideContent.Find("Modes");
 			List<GameObject> modeGameObjects = modesParent.Cast<Transform>().Select(t => t.gameObject).ToList();
 			Dropdown modeDropdown = transform.Find("ModeDropdown").GetComponent<Dropdown>();
-			new GameObjectLinkedDropdown(modeDropdown, modeGameObjects, "Main Effects");
+			new GameObjectLinkedDropdown(modeDropdown, modeGameObjects, modeGameObjects[0]);
 		}
 	}
 }
