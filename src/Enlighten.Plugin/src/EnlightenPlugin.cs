@@ -9,6 +9,7 @@ namespace Enlighten
 	{
 		private EnlightenUI m_enlightenUI;
 		private ExtensionButton m_extensionButton;
+		private Core.Enlighten m_enlighten;
 
 		[Init]
 		private void Init()
@@ -38,10 +39,19 @@ namespace Enlighten
 
 		private void SceneLoaded(Scene arg0, LoadSceneMode arg1)
 		{
-			if (arg0.buildIndex == 3) // Mapping Scene
+			switch (arg0.buildIndex)
 			{
-				m_enlightenUI.OnMappingSceneLoaded();
+			case 3:
+				OnMappingSceneLoaded();
+				break;
 			}
+		}
+
+		private void OnMappingSceneLoaded()
+		{
+			EventGridContainer events = Object.FindObjectOfType<EventGridContainer>();
+			m_enlighten = new Core.Enlighten(events);
+			m_enlightenUI.OnMappingSceneLoaded(m_enlighten);
 		}
 	}
 }

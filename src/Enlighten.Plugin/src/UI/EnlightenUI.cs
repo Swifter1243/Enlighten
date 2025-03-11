@@ -5,22 +5,22 @@ namespace Enlighten.UI
 
 	internal class EnlightenUI
 	{
-		private MappingSceneUIFactory mappingSceneUIFactory;
-		private MappingSceneUI mappingSceneUI;
+		private readonly MappingSceneUIFactory m_mappingSceneUIFactory;
+		private MappingSceneUI m_mappingSceneUI;
 
 		public EnlightenUI(AssetBundle bundle)
 		{
-			mappingSceneUIFactory = new MappingSceneUIFactory(bundle);
+			m_mappingSceneUIFactory = new MappingSceneUIFactory(bundle);
 		}
 
-		public void OnMappingSceneLoaded()
+		public void OnMappingSceneLoaded(Core.Enlighten enlighten)
 		{
-			mappingSceneUI = new MappingSceneUI(mappingSceneUIFactory);
+			m_mappingSceneUI = new MappingSceneUI(m_mappingSceneUIFactory, enlighten);
 		}
 
 		public void OnExtensionButtonPressed()
 		{
-			GameObject enlightenPanelObj = mappingSceneUI.m_enlightenPanel.gameObject;
+			GameObject enlightenPanelObj = m_mappingSceneUI.m_enlightenPanelUI.gameObject;
 			enlightenPanelObj.SetActive(!enlightenPanelObj.activeSelf);
 		}
 	}

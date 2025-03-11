@@ -10,14 +10,14 @@ namespace Enlighten.UI
 			m_prefab = bundle.LoadAsset<GameObject>("Assets/Prefabs/EnlightenPanel.prefab");
 		}
 
-		public EnlightenPanel Create(RectTransform canvas)
+		public EnlightenPanelUI Create(RectTransform canvas, Core.Enlighten enlighten)
 		{
 			GameObject prefabInstance = UnityEngine.Object.Instantiate(m_prefab, canvas);
 			prefabInstance.SetActive(false);
 
-			EnlightenPanel enlightenPanel = prefabInstance.AddComponent<EnlightenPanel>();
-			enlightenPanel.Initialize(canvas);
-			return enlightenPanel;
+			EnlightenPanelUI enlightenPanelUI = prefabInstance.AddComponent<EnlightenPanelUI>();
+			enlightenPanelUI.Initialize(canvas, enlighten);
+			return enlightenPanelUI;
 		}
 	}
 }

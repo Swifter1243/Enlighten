@@ -5,13 +5,15 @@ using UnityEngine.UI;
 
 namespace Enlighten.UI
 {
-	internal class EnlightenPanel : MonoBehaviour
+	internal class EnlightenPanelUI : MonoBehaviour
 	{
 		private readonly Vector2 m_minSize = new Vector2(200, 200);
 		private RectTransform m_rt;
+		private Core.Enlighten m_enlighten;
 
-		public void Initialize(RectTransform canvas)
+		public void Initialize(RectTransform canvas, Core.Enlighten enlighten)
 		{
+			m_enlighten = enlighten;
 			m_rt = GetComponent<RectTransform>();
 			Transform insideContent = transform.Find("InsideContent");
 

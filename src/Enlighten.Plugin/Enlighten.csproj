@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\BundleResource.cs" />
+    <Compile Include="src\Core\Enlighten.cs" />
     <Compile Include="src\UI\Graphics\ResizeHandleVisuals.cs" />
     <Compile Include="src\UI\Modes\MainEffectsUI.cs" />
     <Compile Include="src\UI\Modes\ModeUI.cs" />
@@ -79,7 +80,7 @@
     <Compile Include="src\UI\Utility\GameObjectLinkedDropdown.cs" />
     <Compile Include="src\UI\Utility\DraggableUI.cs" />
     <Compile Include="src\UI\Graphics\OutlineUpdater.cs" />
-    <Compile Include="src\UI\EnlightenPanel.cs" />
+    <Compile Include="src\UI\EnlightenPanelUI.cs" />
     <Compile Include="src\UI\Factory\EnlightenPanelFactory.cs" />
     <Compile Include="src\EnlightenPlugin.cs" />
     <Compile Include="src\UI\MappingSceneUI.cs" />
