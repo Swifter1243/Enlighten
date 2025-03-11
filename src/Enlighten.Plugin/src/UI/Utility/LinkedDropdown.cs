@@ -5,19 +5,20 @@ using UnityEngine.UI;
 
 namespace Enlighten.UI
 {
-	internal class GameObjectLinkedDropdown
+	internal class LinkedDropdown<T> where T : Component
 	{
-		private GameObject m_activeGameObject;
-		private readonly List<GameObject> m_children;
+		private T m_activeGameObject;
+		private readonly List<T> m_children;
+		public T ActiveObject => m_activeGameObject;
 
-		public GameObjectLinkedDropdown(Dropdown dropdown, List<GameObject> children, GameObject initialObject)
+		public LinkedDropdown(Dropdown dropdown, List<T> children, T initialObject)
 		{
 			m_children = children;
 			dropdown.ClearOptions();
 
-			foreach (GameObject child in children)
+			foreach (T child in children)
 			{
-				child.SetActive(false);
+				child.gameObject.SetActive(false);
 				dropdown.options.Add(new Dropdown.OptionData(child.name));
 			}
 
@@ -32,9 +33,9 @@ namespace Enlighten.UI
 		}
 
 		private void OnValueChanged(int newIndex) {
-			m_activeGameObject.SetActive(false);
-			m_activeGameObject = m_children[newIndex].gameObject;
-			m_activeGameObject.SetActive(true);
+			m_activeGameObject.gameObject.SetActive(false);
+			m_activeGameObject = m_children[newIndex];
+			m_activeGameObject.gameObject.SetActive(true);
 		}
 	}
 }

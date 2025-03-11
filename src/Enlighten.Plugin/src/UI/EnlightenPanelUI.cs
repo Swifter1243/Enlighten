@@ -11,6 +11,7 @@ namespace Enlighten.UI
 		private readonly Vector2 m_minSize = new Vector2(200, 200);
 		private RectTransform m_rt;
 		private Core.Enlighten m_enlighten;
+		private LinkedDropdown<ModeUI> m_modes;
 
 		public void Initialize(RectTransform canvas, Core.Enlighten enlighten)
 		{
@@ -50,25 +51,25 @@ namespace Enlighten.UI
 		private void SetupModes(Transform insideContent)
 		{
 			Transform modesParent = insideContent.Find("Modes");
-			List<GameObject> modeGameObjects = GetModes(modesParent).ToList();
+			List<ModeUI> modeGameObjects = GetModes(modesParent).ToList();
 			Dropdown modeDropdown = transform.Find("ModeDropdown").GetComponent<Dropdown>();
-			new GameObjectLinkedDropdown(modeDropdown, modeGameObjects, modeGameObjects[0]);
+			m_modes = new LinkedDropdown<ModeUI>(modeDropdown, modeGameObjects, modeGameObjects[0]);
 		}
 
-		private IEnumerable<GameObject> GetModes(Transform modesParent)
+		private IEnumerable<ModeUI> GetModes(Transform modesParent)
 		{
 			yield return AddMode<MainEffectsUI>("Main Effects", Modes.MainEffects);
 			yield return AddMode<StripGeneratorUI>("Strip Generator", Modes.StripGenerator);
 
 			yield break;
 
-			GameObject AddMode<T>(string objectName, Modes mode) where T : ModeUI
+			ModeUI AddMode<T>(string objectName, Modes mode) where T : ModeUI
 			{
 				GameObject go = modesParent.Find(objectName).gameObject;
 				T component = go.AddComponent<T>();
 				EnlightenMode enlightenMode = m_enlighten.m_modes[mode];
 				component.Initialize(enlightenMode);
-				return go;
+				return component;
 			}
 		}
 	}

@@ -81,7 +81,7 @@
     <Compile Include="src\UI\Modes\MainEffectsUI.cs" />
     <Compile Include="src\UI\Modes\ModeUI.cs" />
     <Compile Include="src\UI\Modes\StripGeneratorUI.cs" />
-    <Compile Include="src\UI\Utility\GameObjectLinkedDropdown.cs" />
+    <Compile Include="src\UI\Utility\LinkedDropdown.cs" />
     <Compile Include="src\UI\Utility\DraggableUI.cs" />
     <Compile Include="src\UI\Graphics\OutlineUpdater.cs" />
     <Compile Include="src\UI\EnlightenPanelUI.cs" />
