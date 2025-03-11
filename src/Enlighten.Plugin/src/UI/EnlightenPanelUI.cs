@@ -72,5 +72,10 @@ namespace Enlighten.UI
 				return component;
 			}
 		}
+
+		private void OnRun()
+		{
+			m_enlighten.RunMode(m_modes.ActiveObject.m_enlightenMode);
+		}
 	}
 }
