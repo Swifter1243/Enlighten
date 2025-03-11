@@ -8,30 +8,44 @@ namespace Enlighten.UI
 	internal class EnlightenPanel : MonoBehaviour
 	{
 		private readonly Vector2 m_minSize = new Vector2(200, 200);
+		private RectTransform m_rt;
 
 		public void Initialize(RectTransform canvas)
 		{
-			// Inside Content
-			RectTransform rectTransform = GetComponent<RectTransform>();
+			m_rt = GetComponent<RectTransform>();
 			Transform insideContent = transform.Find("InsideContent");
 
-			// Make Draggable
-			GameObject notch = insideContent.Find("Notch").gameObject;
-			DraggableUI draggable = notch.AddComponent<DraggableUI>();
-			draggable.Initialize(rectTransform, canvas);
+			ResizeableUI resizeable = SetupResizing(canvas);
+			SetupDragging(canvas, insideContent);
+			SetupOutline(resizeable);
+			SetupModes(insideContent);
+		}
 
-			// Make Resizeable
-			GameObject resizeHandle = transform.Find("ResizeHandle").gameObject;
-			resizeHandle.AddComponent<ResizeHandleVisuals>();
-			ResizeableUI resizeable = resizeHandle.AddComponent<ResizeableUI>();
-			resizeable.Initialize(rectTransform, canvas, m_minSize);
-
-			// Add Outline Logic
+		private void SetupOutline(ResizeableUI resizeable)
+		{
 			GameObject outline = transform.Find("Outline").gameObject;
 			OutlineUpdater outlineUpdater = outline.AddComponent<OutlineUpdater>();
 			resizeable.m_onResize.AddListener(outlineUpdater.UpdateBorder);
+		}
 
-			// Setup Mode Windows
+		private ResizeableUI SetupResizing(RectTransform canvas)
+		{
+			GameObject resizeHandle = transform.Find("ResizeHandle").gameObject;
+			resizeHandle.AddComponent<ResizeHandleVisuals>();
+			ResizeableUI resizeable = resizeHandle.AddComponent<ResizeableUI>();
+			resizeable.Initialize(m_rt, canvas, m_minSize);
+			return resizeable;
+		}
+
+		private void SetupDragging(RectTransform canvas, Transform insideContent)
+		{
+			GameObject notch = insideContent.Find("Notch").gameObject;
+			DraggableUI draggable = notch.AddComponent<DraggableUI>();
+			draggable.Initialize(m_rt, canvas);
+		}
+
+		private void SetupModes(Transform insideContent)
+		{
 			Transform modesParent = insideContent.Find("Modes");
 			List<GameObject> modeGameObjects = GetModes(modesParent).ToList();
 			Dropdown modeDropdown = transform.Find("ModeDropdown").GetComponent<Dropdown>();
