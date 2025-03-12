@@ -82,6 +82,7 @@
     <Compile Include="src\Core\Modes\Main Effects\Effects\HueEffect.cs" />
     <Compile Include="src\Core\Modes\Main Effects\Effects\PulseEffect.cs" />
     <Compile Include="src\Core\Modes\Main Effects\Effects\SaturationEffect.cs" />
+    <Compile Include="src\Core\Modes\Main Effects\Effects\SimpleColorEffect.cs" />
     <Compile Include="src\Core\Modes\Main Effects\MainEffectsMode.cs" />
     <Compile Include="src\Core\Modes\EnlightenMode.cs" />
     <Compile Include="src\Core\Modes\ActionTracker.cs" />

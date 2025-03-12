@@ -1,7 +1,22 @@
-﻿namespace Enlighten.Core
+﻿using System.Collections.Generic;
+using Beatmap.Base;
+using UnityEngine;
+namespace Enlighten.Core
 {
-	public class AlphaEffect : Effect
+	public class AlphaEffect : SimpleColorEffect
 	{
+		private readonly FloatParameter m_multiplier = new FloatParameter(1);
 
+		protected override IEnumerable<BaseParameter> GetParameters()
+		{
+			yield return m_multiplier;
+		}
+
+		protected override Color GetColor(float normalTime, Color color)
+		{
+			float multiplier = m_multiplier.Interpolate(normalTime);
+			color.a *= multiplier;
+			return color;
+		}
 	}
 }
