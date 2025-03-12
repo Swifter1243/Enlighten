@@ -4,7 +4,7 @@ namespace Enlighten.Core
 {
 	public class ActionTracker
 	{
-		private readonly List<BeatmapAction> m_actions = new List<BeatmapAction>();
+		private readonly List<BeatmapObjectModifiedAction> m_modifyActions = new List<BeatmapObjectModifiedAction>();
 		private readonly List<BaseObject> m_totalConflicting = new List<BaseObject>();
 		private readonly List<BaseObject> m_totalAdded = new List<BaseObject>();
 		private readonly EventGridContainer m_eventContainer;
@@ -20,7 +20,7 @@ namespace Enlighten.Core
 		{
 			obj.WriteCustom();
 			BeatmapObjectModifiedAction modifyAction = new BeatmapObjectModifiedAction(obj, obj, originalData, "Modified with Enlighten", true);
-			m_actions.Add(modifyAction);
+			m_modifyActions.Add(modifyAction);
 		}
 
 		public void Add(BaseObject obj)
@@ -32,15 +32,20 @@ namespace Enlighten.Core
 
 		public IEnumerable<BeatmapAction> Finish()
 		{
+			List<BeatmapAction> actions = new List<BeatmapAction>(m_modifyActions);
+
 			if (m_totalAdded.Count > 0)
 			{
-				m_actions.Add(new BeatmapObjectPlacementAction(m_totalAdded, m_totalConflicting, "Added with Enlighten"));
+				actions.Add(new BeatmapObjectPlacementAction(m_totalAdded, m_totalConflicting, "Added with Enlighten"));
 				m_eventContainer.DoPostObjectsSpawnedWorkflow();
 			}
 
-			m_eventContainer.RefreshEventsAppearance(m_selectedEvents);
+			if (m_modifyActions.Count > 0)
+			{
+				m_eventContainer.RefreshEventsAppearance(m_selectedEvents);
+			}
 
-			return m_actions;
+			return actions;
 		}
 	}
 }
