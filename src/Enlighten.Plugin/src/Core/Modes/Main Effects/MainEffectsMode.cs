@@ -18,7 +18,13 @@ namespace Enlighten.Core
 
 		public override IEnumerable<BeatmapAction> Execute(BaseEvent[] events, ActionTracker actionTracker)
 		{
-			m_effectsWithOrder.Aggregate(events, (current, effect) => effect.ProcessEvents(current, actionTracker));
+			foreach (Effect effect in m_effectsWithOrder)
+			{
+				if (!effect.m_isEnabled)
+					continue;
+
+				events = effect.ProcessEvents(events, actionTracker);
+			}
 
 			return actionTracker.Finish();
 		}
