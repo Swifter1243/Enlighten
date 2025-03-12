@@ -2,12 +2,12 @@
 namespace Enlighten.Core
 {
 	public abstract class BaseParameter {}
-	public abstract class TypedParameter<T> : BaseParameter
+	public abstract class GenericParameter<T> : BaseParameter
 	{
 		public readonly List<Keyframe> m_keyframes = new List<Keyframe>();
 		private readonly T m_defaultValue;
 
-		public TypedParameter(T defaultValue)
+		public GenericParameter(T defaultValue)
 		{
 			m_defaultValue = defaultValue;
 			ResetToDefault();

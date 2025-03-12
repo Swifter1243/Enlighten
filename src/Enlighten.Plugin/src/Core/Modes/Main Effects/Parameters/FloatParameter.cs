@@ -1,6 +1,6 @@
 ﻿namespace Enlighten.Core
 {
-	public class FloatParameter : TypedParameter<float>
+	public class FloatParameter : GenericParameter<float>
 	{
 		public FloatParameter(float defaultValue) : base(defaultValue)
 		{ }

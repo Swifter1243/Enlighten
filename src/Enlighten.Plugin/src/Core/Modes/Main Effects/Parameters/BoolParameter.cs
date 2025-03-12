@@ -1,6 +1,6 @@
 ﻿namespace Enlighten.Core
 {
-	public class BoolParameter : TypedParameter<bool>
+	public class BoolParameter : GenericParameter<bool>
 	{
 		public BoolParameter(bool defaultValue) : base(defaultValue)
 		{ }

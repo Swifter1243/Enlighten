@@ -88,7 +88,7 @@
     <Compile Include="src\Core\Modes\Main Effects\Parameters\BoolParameter.cs" />
     <Compile Include="src\Core\Modes\Main Effects\Parameters\FloatParameter.cs" />
     <Compile Include="src\Core\Modes\Main Effects\Parameters\RangeParameter.cs" />
-    <Compile Include="src\Core\Modes\Main Effects\Parameters\TypedParameter.cs" />
+    <Compile Include="src\Core\Modes\Main Effects\Parameters\GenericParameter.cs" />
     <Compile Include="src\Core\Modes\Modes.cs" />
     <Compile Include="src\Core\Modes\Strip Generator\StripGeneratorMode.cs" />
     <Compile Include="src\UI\Graphics\ResizeHandleVisuals.cs" />
