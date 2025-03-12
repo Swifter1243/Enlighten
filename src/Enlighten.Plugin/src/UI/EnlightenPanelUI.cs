@@ -69,7 +69,21 @@ namespace Enlighten.UI
 				ModeUI component = go.AddComponent<ModeUI>();
 				EnlightenMode enlightenMode = m_enlighten.m_modes[mode];
 				component.Initialize(enlightenMode);
+				MakeUI(go, enlightenMode);
 				return component;
+			}
+		}
+
+		private static void MakeUI(GameObject go, EnlightenMode enlightenMode)
+		{
+			switch (enlightenMode)
+			{
+			case MainEffectsMode mainEffectsMode:
+				go.AddComponent<MainEffectsUI>().Initialize(mainEffectsMode);
+				break;
+			case StripGeneratorMode stripGeneratorMode:
+				go.AddComponent<StripGeneratorUI>().Initialize(stripGeneratorMode);
+				break;
 			}
 		}
 
