@@ -12,9 +12,11 @@ namespace Enlighten.UI
 		private RectTransform m_rt;
 		private Core.Enlighten m_enlighten;
 		private LinkedDropdown<ModeUI> m_modes;
+		private BundleLoading.Assets m_assets;
 
-		public void Initialize(RectTransform canvas, Core.Enlighten enlighten)
+		public void Initialize(RectTransform canvas, Core.Enlighten enlighten, BundleLoading.Assets assets)
 		{
+			m_assets = assets;
 			m_enlighten = enlighten;
 			m_rt = GetComponent<RectTransform>();
 			Transform insideContent = transform.Find("InsideContent");
@@ -74,12 +76,12 @@ namespace Enlighten.UI
 			}
 		}
 
-		private static void MakeUI(GameObject go, EnlightenMode enlightenMode)
+		private void MakeUI(GameObject go, EnlightenMode enlightenMode)
 		{
 			switch (enlightenMode)
 			{
 			case MainEffectsMode mainEffectsMode:
-				go.AddComponent<MainEffectsUI>().Initialize(mainEffectsMode);
+				go.AddComponent<MainEffectsUI>().Initialize(mainEffectsMode, m_assets);
 				break;
 			case StripGeneratorMode stripGeneratorMode:
 				go.AddComponent<StripGeneratorUI>().Initialize(stripGeneratorMode);

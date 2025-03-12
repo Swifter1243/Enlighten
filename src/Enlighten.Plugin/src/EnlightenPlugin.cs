@@ -11,25 +11,25 @@ namespace Enlighten
 		private EnlightenUI m_enlightenUI;
 		private ExtensionButton m_extensionButton;
 		private Core.Enlighten m_enlighten;
+		private BundleLoading.Assets m_assets;
 
 		[Init]
 		private void Init()
 		{
 			SceneManager.sceneLoaded += SceneLoaded;
 
-			BundleLoading.Assets assets = BundleLoading.Load();
-
-			m_enlightenUI = new EnlightenUI(ref assets);
-			m_extensionButton = MakeExtensionButton(ref assets);
+			m_assets = BundleLoading.Load();
+			m_enlightenUI = new EnlightenUI(m_assets);
+			m_extensionButton = MakeExtensionButton();
 			m_extensionButton.Click += () => m_enlightenUI.OnExtensionButtonPressed();
 		}
 
-		private static ExtensionButton MakeExtensionButton(ref BundleLoading.Assets assets)
+		private ExtensionButton MakeExtensionButton()
 		{
 			ExtensionButton button = new ExtensionButton
 			{
 				Tooltip = "Enlighten",
-				Icon = assets.m_icon
+				Icon = m_assets.m_icon
 			};
 			ExtensionButtons.AddButton(button);
 			return button;

@@ -7,7 +7,7 @@ namespace Enlighten.UI
 	{
 		private readonly BundleLoading.Assets m_assets;
 
-		public EnlightenPanelFactory(ref BundleLoading.Assets assets) {
+		public EnlightenPanelFactory(BundleLoading.Assets assets) {
 			m_assets = assets;
 		}
 
@@ -17,7 +17,7 @@ namespace Enlighten.UI
 			prefabInstance.SetActive(false);
 
 			EnlightenPanelUI enlightenPanelUI = prefabInstance.AddComponent<EnlightenPanelUI>();
-			enlightenPanelUI.Initialize(canvas, enlighten);
+			enlightenPanelUI.Initialize(canvas, enlighten, m_assets);
 			return enlightenPanelUI;
 		}
 	}

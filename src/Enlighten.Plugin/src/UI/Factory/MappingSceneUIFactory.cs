@@ -6,9 +6,9 @@ namespace Enlighten.UI
 	{
 		public readonly EnlightenPanelFactory m_enlightenPanelFactory;
 
-		public MappingSceneUIFactory(ref BundleLoading.Assets assets)
+		public MappingSceneUIFactory(BundleLoading.Assets assets)
 		{
-			m_enlightenPanelFactory = new EnlightenPanelFactory(ref assets);
+			m_enlightenPanelFactory = new EnlightenPanelFactory(assets);
 		}
 	}
 }

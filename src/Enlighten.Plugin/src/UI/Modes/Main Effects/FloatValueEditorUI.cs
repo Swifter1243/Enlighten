@@ -8,7 +8,7 @@ namespace Enlighten.UI
         private GameObject m_pointPrefab;
         private FloatParameter m_floatParameter;
         
-        public void Initialize(ref BundleLoading.Assets assets)
+        public void Initialize(BundleLoading.Assets assets)
         {
             m_pointPrefab = assets.m_pointPrefab;
         }

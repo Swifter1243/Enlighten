@@ -8,9 +8,9 @@ namespace Enlighten.UI
 		private readonly MappingSceneUIFactory m_mappingSceneUIFactory;
 		private MappingSceneUI m_mappingSceneUI;
 
-		public EnlightenUI(ref BundleLoading.Assets assets)
+		public EnlightenUI(BundleLoading.Assets assets)
 		{
-			m_mappingSceneUIFactory = new MappingSceneUIFactory(ref assets);
+			m_mappingSceneUIFactory = new MappingSceneUIFactory(assets);
 		}
 
 		public void OnMappingSceneLoaded(Core.Enlighten enlighten)

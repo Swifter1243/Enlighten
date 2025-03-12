@@ -9,7 +9,7 @@ namespace Enlighten
 	{
 		private const string ENLIGHTEN_BUNDLE_PATH = "Enlighten.enlighten_bundle";
 		
-		public struct Assets
+		public class Assets
 		{
 			public GameObject m_enlightenPanelPrefab;
 			public GameObject m_pointPrefab;
