@@ -85,6 +85,7 @@
     <Compile Include="src\Core\Modes\Main Effects\MainEffectsMode.cs" />
     <Compile Include="src\Core\Modes\EnlightenMode.cs" />
     <Compile Include="src\Core\Modes\ActionTracker.cs" />
+    <Compile Include="src\Core\Modes\Main Effects\Parameters\FloatParameter.cs" />
     <Compile Include="src\Core\Modes\Main Effects\Parameters\TypedParameter.cs" />
     <Compile Include="src\Core\Modes\Modes.cs" />
     <Compile Include="src\Core\Modes\Strip Generator\StripGeneratorMode.cs" />
