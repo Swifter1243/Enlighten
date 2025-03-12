@@ -34,10 +34,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Main">
-      <HintPath>..\Chromapper\chromapper\ChroMapper_Data\Managed\Main.dll</HintPath>
+      <HintPath>$(ChroMapperDirectory)\ChroMapper_Data\Managed\Main.dll</HintPath>
     </Reference>
     <Reference Include="Plugins">
-      <HintPath>..\Chromapper\chromapper\ChroMapper_Data\Managed\Plugins.dll</HintPath>
+      <HintPath>$(ChroMapperDirectory)\ChroMapper_Data\Managed\Plugins.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
