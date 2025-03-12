@@ -1,0 +1,21 @@
+﻿using UnityEngine;
+namespace Enlighten.Core
+{
+	public class RangeParameter : FloatParameter
+	{
+		private readonly float m_minValue;
+		private readonly float m_maxValue;
+
+		public RangeParameter(float minValue, float maxValue, float defaultValue) : base(defaultValue)
+		{
+			m_minValue = minValue;
+			m_maxValue = maxValue;
+		}
+
+		protected override float InterpolatePoints(int left, int right, float normalTime)
+		{
+			float value = base.InterpolatePoints(left, right, normalTime);
+			return Mathf.Clamp(value, m_minValue, m_maxValue);
+		}
+	}
+}
