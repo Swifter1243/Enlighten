@@ -1,6 +1,7 @@
 ﻿using Enlighten.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Enlighten
 {
@@ -16,22 +17,19 @@ namespace Enlighten
 		{
 			SceneManager.sceneLoaded += SceneLoaded;
 
-			BundleResource bundleResource = new BundleResource();
-			AssetBundle bundle = bundleResource.Load();
+			BundleLoading.Assets assets = BundleLoading.Load();
 
-			m_enlightenUI = new EnlightenUI(bundle);
-			m_extensionButton = MakeExtensionButton(bundle);
+			m_enlightenUI = new EnlightenUI(ref assets);
+			m_extensionButton = MakeExtensionButton(ref assets);
 			m_extensionButton.Click += () => m_enlightenUI.OnExtensionButtonPressed();
-
-			bundleResource.Dispose();
 		}
 
-		private ExtensionButton MakeExtensionButton(AssetBundle bundle)
+		private static ExtensionButton MakeExtensionButton(ref BundleLoading.Assets assets)
 		{
 			ExtensionButton button = new ExtensionButton
 			{
 				Tooltip = "Enlighten",
-				Icon = bundle.LoadAsset<Sprite>("Assets/Images/icon.png")
+				Icon = assets.m_icon
 			};
 			ExtensionButtons.AddButton(button);
 			return button;

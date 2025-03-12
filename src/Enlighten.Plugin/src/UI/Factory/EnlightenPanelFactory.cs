@@ -1,18 +1,19 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace Enlighten.UI
 {
 	internal class EnlightenPanelFactory
 	{
-		private readonly GameObject m_prefab;
+		private readonly BundleLoading.Assets m_assets;
 
-		public EnlightenPanelFactory(AssetBundle bundle) {
-			m_prefab = bundle.LoadAsset<GameObject>("Assets/Prefabs/EnlightenPanel.prefab");
+		public EnlightenPanelFactory(ref BundleLoading.Assets assets) {
+			m_assets = assets;
 		}
 
 		public EnlightenPanelUI Create(RectTransform canvas, Core.Enlighten enlighten)
 		{
-			GameObject prefabInstance = UnityEngine.Object.Instantiate(m_prefab, canvas);
+			GameObject prefabInstance = Object.Instantiate(m_assets.m_enlightenPanelPrefab, canvas);
 			prefabInstance.SetActive(false);
 
 			EnlightenPanelUI enlightenPanelUI = prefabInstance.AddComponent<EnlightenPanelUI>();
