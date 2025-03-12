@@ -15,7 +15,7 @@ namespace Enlighten.Core
 			m_modes = GetModes();
 		}
 
-		private static BaseEvent[] SelectedEvents => SelectionController.SelectedObjects.OfType<BaseEvent>().ToArray();
+		private static BaseEvent[] SelectedEvents => SelectionController.SelectedObjects.OfType<BaseEvent>().OrderBy(x => x.JsonTime).ToArray();
 
 		public void RunMode(EnlightenMode mode)
 		{
