@@ -95,6 +95,7 @@
     <Compile Include="src\UI\Graphics\ResizeHandleVisuals.cs" />
     <Compile Include="src\UI\Modes\Main Effects\FloatValueEditorUI.cs" />
     <Compile Include="src\UI\Modes\Main Effects\MainEffectsUI.cs" />
+    <Compile Include="src\UI\Modes\Main Effects\OptionPanelUI.cs" />
     <Compile Include="src\UI\Modes\ModeUI.cs" />
     <Compile Include="src\UI\Modes\StripGeneratorUI.cs" />
     <Compile Include="src\UI\Utility\LinkedDropdown.cs" />
