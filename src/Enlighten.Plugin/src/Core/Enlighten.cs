@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Beatmap.Base;
-using Enlighten.Core.Strip_Generator;
 namespace Enlighten.Core
 {
 	public class Enlighten

@@ -1,10 +1,14 @@
-﻿namespace Enlighten.UI
+﻿using Enlighten.Core;
+using UnityEngine;
+namespace Enlighten.UI
 {
-	public class MainEffectsUI : ModeUI
+	public class MainEffectsUI : MonoBehaviour
 	{
-		protected override void InitializeInternal()
+		private MainEffectsMode m_mode;
+
+		public void Initialize(MainEffectsMode mode)
 		{
-			// TODO
+			m_mode = mode;
 		}
 	}
 }

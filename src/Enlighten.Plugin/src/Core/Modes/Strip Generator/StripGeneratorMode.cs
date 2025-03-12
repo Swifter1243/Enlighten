@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Beatmap.Base;
-namespace Enlighten.Core.Strip_Generator
+namespace Enlighten.Core
 {
 	public class StripGeneratorMode : EnlightenMode
 	{

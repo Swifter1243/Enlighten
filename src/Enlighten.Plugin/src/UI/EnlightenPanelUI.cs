@@ -58,15 +58,15 @@ namespace Enlighten.UI
 
 		private IEnumerable<ModeUI> GetModes(Transform modesParent)
 		{
-			yield return AddMode<MainEffectsUI>("Main Effects", Modes.MainEffects);
-			yield return AddMode<StripGeneratorUI>("Strip Generator", Modes.StripGenerator);
+			yield return AddMode("Main Effects", Modes.MainEffects);
+			yield return AddMode("Strip Generator", Modes.StripGenerator);
 
 			yield break;
 
-			ModeUI AddMode<T>(string objectName, Modes mode) where T : ModeUI
+			ModeUI AddMode(string objectName, Modes mode)
 			{
 				GameObject go = modesParent.Find(objectName).gameObject;
-				T component = go.AddComponent<T>();
+				ModeUI component = go.AddComponent<ModeUI>();
 				EnlightenMode enlightenMode = m_enlighten.m_modes[mode];
 				component.Initialize(enlightenMode);
 				return component;

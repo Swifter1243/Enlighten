@@ -1,10 +1,14 @@
-﻿namespace Enlighten.UI
+﻿using Enlighten.Core;
+using UnityEngine;
+namespace Enlighten.UI
 {
-	public class StripGeneratorUI : ModeUI
+	public class StripGeneratorUI : MonoBehaviour
 	{
-		protected override void InitializeInternal()
+		private StripGeneratorMode m_mode;
+
+		public void Initialize(StripGeneratorMode mode)
 		{
-			// TODO
+			m_mode = mode;
 		}
 	}
 }

@@ -1,15 +1,28 @@
-﻿using UnityEngine;
+﻿using Enlighten.Core;
+using UnityEngine;
 namespace Enlighten.UI
 {
-	public abstract class ModeUI : MonoBehaviour
+	public class ModeUI : MonoBehaviour
 	{
-		public Core.EnlightenMode m_enlightenMode;
+		public EnlightenMode m_enlightenMode;
 
-		protected abstract void InitializeInternal();
-		public void Initialize(Core.EnlightenMode enlightenMode)
+		public void Initialize(EnlightenMode enlightenMode)
 		{
 			m_enlightenMode = enlightenMode;
-			InitializeInternal();
+			MakeUI(enlightenMode);
+		}
+
+		private void MakeUI(EnlightenMode enlightenMode)
+		{
+			switch (enlightenMode)
+			{
+			case MainEffectsMode mainEffectsMode:
+				gameObject.AddComponent<MainEffectsUI>().Initialize(mainEffectsMode);
+				break;
+			case StripGeneratorMode stripGeneratorMode:
+				gameObject.AddComponent<StripGeneratorUI>().Initialize(stripGeneratorMode);
+				break;
+			}
 		}
 	}
 }
