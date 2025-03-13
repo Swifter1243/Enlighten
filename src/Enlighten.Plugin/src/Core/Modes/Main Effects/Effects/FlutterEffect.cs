@@ -10,6 +10,9 @@ namespace Enlighten.Core
 		private readonly FloatParameter m_multiplier = new FloatParameter(1, "Multiplier", "How much to multiply alternating events' brightness by.");
 		private readonly FloatParameter m_turbulence = new FloatParameter(0, "Turbulence", "How much to randomly vary alternating event's brightness.");
 
+		public FlutterEffect(string name, string description) : base(name, description)
+		{ }
+
 		protected override IEnumerable<BaseParameter> GetParameters()
 		{
 			yield return m_populate;

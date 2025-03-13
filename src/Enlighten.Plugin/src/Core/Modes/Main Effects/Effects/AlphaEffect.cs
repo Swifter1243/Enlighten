@@ -7,6 +7,9 @@ namespace Enlighten.Core
 	{
 		private readonly FloatParameter m_multiplier = new FloatParameter(1, "Multiplier", "The amount to multiply event's alpha channel in their color by.");
 
+		public AlphaEffect(string name, string description) : base(name, description)
+		{ }
+
 		protected override IEnumerable<BaseParameter> GetParameters()
 		{
 			yield return m_multiplier;

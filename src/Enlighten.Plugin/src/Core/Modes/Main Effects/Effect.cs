@@ -7,6 +7,15 @@ namespace Enlighten.Core
 {
 	public abstract class Effect
 	{
+		public readonly string m_name;
+		public readonly string m_description;
+
+		public Effect(string name, string description)
+		{
+			m_name = name;
+			m_description = description;
+		}
+
 		public bool m_isEnabled = false;
 		private List<BaseParameter> m_parameters;
 		public List<BaseParameter> Parameters => m_parameters ?? (m_parameters = GetParameters().ToList());
