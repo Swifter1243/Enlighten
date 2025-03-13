@@ -18,6 +18,7 @@ namespace Enlighten.UI
             m_slider.onValueChanged.AddListener(OnSliderValueChanged);
             m_inputField = transform.Find("InputField").GetComponent<InputField>();
             m_inputField.onValueChanged.AddListener(OnInputFieldValueChanged);
+            m_inputField.gameObject.AddComponent<DisableActionsField>();
         }
 
         private void OnSliderValueChanged(float value)

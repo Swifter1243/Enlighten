@@ -13,6 +13,7 @@ namespace Enlighten.UI
         {
             m_inputField = transform.Find("InputField").gameObject.GetComponent<InputField>();
             m_inputField.onValueChanged.AddListener(OnInputFieldValueChanged);
+            m_inputField.gameObject.AddComponent<DisableActionsField>();
         }
 
         public override void UpdateUI()
