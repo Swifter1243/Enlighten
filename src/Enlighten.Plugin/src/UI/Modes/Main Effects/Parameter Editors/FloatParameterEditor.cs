@@ -4,11 +4,7 @@ namespace Enlighten.UI
 {
 	internal class FloatParameterEditor : ChartParameterEditor<float>
 	{
-		protected override float ChartPositionYToValue(float y) => y;
-
-		protected override Vector2 HandleKeyframeMove(Vector2 chartPosition)
-		{
-			return chartPosition;
-		}
+		protected override float ChartYPositionToValue(float y) => y;
+		protected override float ValueToChartYPosition(float value) => value;
 	}
 }

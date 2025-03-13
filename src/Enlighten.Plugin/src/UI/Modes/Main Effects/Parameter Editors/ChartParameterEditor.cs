@@ -22,7 +22,7 @@ namespace Enlighten.UI
 		public void OpenParameter(GenericParameter<T> parameter)
 		{
 			m_parameter = parameter;
-			RedrawPoints();
+			RedrawCompletely();
 		}
 
 		private IEnumerable<ChartKeyframe<T>> GetKeyframes()
@@ -35,9 +35,29 @@ namespace Enlighten.UI
 				keyframe.onMoved += position => OnKeyframeMove(tempIndex, position);
 				yield return keyframe;
 			}
+			UpdateKeyframePositions();
 		}
 
-		private Vector2 WorldToChartPosition(Vector2 position)
+		private void UpdateKeyframePositions()
+		{
+			for (int i = 0; i < m_parameter.m_keyframes.Count; i++)
+			{
+				GenericParameter<T>.Keyframe data = m_parameter.m_keyframes[i];
+				ChartKeyframe<T> obj = m_keyframes[i];
+				float chartX = data.m_time;
+				float chartY = ValueToChartYPosition(data.m_value);
+				Vector2 screenPos = ChartToScreenPosition(new Vector2(chartX, chartY));
+				obj.transform.position = screenPos;
+			}
+		}
+
+		private Vector2 ScreenToChartPosition(Vector2 position)
+		{
+			// TODO
+			return Vector2.zero;
+		}
+
+		private Vector2 ChartToScreenPosition(Vector2 position)
 		{
 			// TODO
 			return Vector2.zero;
@@ -48,22 +68,21 @@ namespace Enlighten.UI
 			return new GenericParameter<T>.Keyframe
 			{
 				m_time = position.x,
-				m_value = ChartPositionYToValue(position.y)
+				m_value = ChartYPositionToValue(position.y)
 			};
 		}
 
-		protected abstract T ChartPositionYToValue(float y);
+		protected abstract T ChartYPositionToValue(float y);
+		protected abstract float ValueToChartYPosition(T value);
 
 		private void OnKeyframeMove(int index, Vector2 position)
 		{
-			Vector2 chartPosition = WorldToChartPosition(position);
-			chartPosition = HandleKeyframeMove(chartPosition);
+			// TODO: Clamp position to m_pointsParent
+			Vector2 chartPosition = ScreenToChartPosition(position);
 			GenericParameter<T>.Keyframe keyframe = ChartPositionToKeyframeValues(chartPosition);
 			m_parameter.m_keyframes[index] = keyframe;
 			m_onKeyframeChanged.Invoke(index);
 		}
-
-		protected abstract Vector2 HandleKeyframeMove(Vector2 chartPosition);
 
 		public void RedrawPoints()
 		{
