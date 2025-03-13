@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Enlighten.UI
 {
-    public class FloatParameterUI : ParameterUI<float, FloatParameter>
+    public class FloatParameterUI : GenericParameterUI<float, FloatParameter>
     {
         private InputField m_inputField;
 

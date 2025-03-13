@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Enlighten.UI
 {
-    public class BoolParameterUI : ParameterUI<bool, BoolParameter>
+    public class BoolParameterUI : GenericParameterUI<bool, BoolParameter>
     {
         private Toggle m_toggle;
 

@@ -9,11 +9,13 @@ namespace Enlighten.UI
 		private FloatValueEditorUI m_floatValueEditor;
 		private BundleLoading.Assets m_assets;
 		private readonly Dictionary<EffectName, OptionPanelUI> m_effectOptionPanels = new Dictionary<EffectName, OptionPanelUI>();
+		private ParameterEditorHandler m_parameterEditorHandler;
 
 		public void Initialize(MainEffectsMode mode, BundleLoading.Assets assets)
 		{
 			m_assets = assets;
 			m_mode = mode;
+			m_parameterEditorHandler = gameObject.AddComponent<ParameterEditorHandler>();
 
 			GameObject content = transform.Find("Content").gameObject;
 			GameObject leftContent = content.transform.Find("LeftContent").gameObject;
@@ -28,7 +30,7 @@ namespace Enlighten.UI
 				Effect effect = kvp.Value;
 
 				OptionPanelUI p = Instantiate(m_assets.m_mainEffectOptionPanel, effectOptionsParent).AddComponent<OptionPanelUI>();
-				p.Initialize(m_assets, effect);
+				p.Initialize(m_assets, effect, m_parameterEditorHandler);
 				m_effectOptionPanels[effectName] = p;
 			}
 		}

@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 namespace Enlighten.UI
 {
-	public abstract class ParameterUI<T, TP> : MonoBehaviour where TP : GenericParameter<T>
+	public abstract class BaseParameterUI : MonoBehaviour {}
+	public abstract class GenericParameterUI<T, TP> : BaseParameterUI where TP : GenericParameter<T>
 	{
 		private GenericParameter<T>.Keyframe m_selectedKeyframe;
 		protected T CurrentValue => m_selectedKeyframe.m_value;
-		public event Action onChange;
+		public event Action<GenericParameterUI<T, TP>> onUIValueChanged;
 
 		protected abstract void InitializeInternal(TP parameter);
 
@@ -40,7 +41,7 @@ namespace Enlighten.UI
 		protected void SetCurrentValue(T value)
 		{
 			m_selectedKeyframe.m_value = value;
-			onChange?.Invoke();
+			onUIValueChanged?.Invoke(this);
 		}
 	}
 }

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Enlighten.UI
 {
-    public class RangeParameterUI : ParameterUI<float, RangeParameter>
+    public class RangeParameterUI : GenericParameterUI<float, RangeParameter>
     {
         private InputField m_inputField;
         private Slider m_slider;
