@@ -48,8 +48,13 @@ namespace Enlighten.Core
 
 		public T Interpolate(float time)
 		{
-			if (m_keyframes.Count == 0)
+			switch (m_keyframes.Count)
+			{
+			case 0:
 				return default;
+			case 1:
+				return m_keyframes[0].m_value;
+			}
 
 			Keyframe lastKeyframe = m_keyframes[m_keyframes.Count - 1];
 			if (lastKeyframe.m_time < time)

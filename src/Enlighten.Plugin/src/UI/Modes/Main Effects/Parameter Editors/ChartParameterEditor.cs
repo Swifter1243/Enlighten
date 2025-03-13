@@ -9,6 +9,7 @@ namespace Enlighten.UI
 	internal abstract class ChartParameterEditor<T> : BaseParameterEditor
 	{
 		private RectTransform m_pointsParent;
+		private ChartCurveRenderer m_curveRenderer;
 		private BundleLoading.Assets m_assets;
 		private GenericParameter<T> m_parameter;
 		private ChartKeyframe[] m_keyframes;
@@ -19,7 +20,10 @@ namespace Enlighten.UI
 		public void Initialize(BundleLoading.Assets assets)
 		{
 			m_assets = assets;
-			m_pointsParent = transform.Find("Points").GetComponent<RectTransform>();
+
+			Transform graph = transform.Find("Graph");
+			m_pointsParent = graph.Find("Points").GetComponent<RectTransform>();
+			m_curveRenderer = graph.Find("Curves").gameObject.AddComponent<ChartCurveRenderer>();
 		}
 
 		public void OpenParameter(GenericParameter<T> parameter)
@@ -112,7 +116,56 @@ namespace Enlighten.UI
 
 		protected void RedrawCurves()
 		{
-			// TODO
+			m_curveRenderer.CalculateCurve(GetCurveLocalPoints());
+		}
+
+		private IEnumerable<Vector2> GetCurveLocalPoints()
+		{
+			List<GenericParameter<T>.Keyframe> keyframes = m_parameter.m_keyframes;
+
+			switch (keyframes.Count)
+			{
+			case 0:
+				yield break;
+			case 1:
+				yield return SampleTime(keyframes[0].m_time);
+				yield break;
+			}
+
+			if (keyframes[0].m_time > 0)
+				yield return SampleTime(0);
+
+			for (int i = 0; i < keyframes.Count; i++)
+			{
+				float a = keyframes[i].m_time;
+				yield return SampleTime(a);
+
+				if (i == keyframes.Count - 1)
+					continue;
+
+				float b = keyframes[i + 1].m_time;
+
+				const int RESOLUTION = 5;
+				for (int j = 1; j < RESOLUTION; j++)
+				{
+					float f = j / (float)RESOLUTION;
+					float t = Mathf.Lerp(a, b, f);
+					yield return SampleTime(t);
+				}
+			}
+
+			if (keyframes[keyframes.Count - 1].m_time < 1)
+				yield return SampleTime(1);
+
+			yield break;
+
+			Vector2 SampleTime(float t)
+			{
+				T value = m_parameter.Interpolate(t);
+				float y = ValueToChartYPosition(value);
+				Vector2 chartPosition = new Vector2(t, y);
+				return ChartToLocalPosition(chartPosition);
+			}
 		}
 	}
 }

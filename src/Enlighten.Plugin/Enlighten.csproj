@@ -64,6 +64,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(ChroMapperDirectory)\ChroMapper_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>$(ChroMapperDirectory)\ChroMapper_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(ChroMapperDirectory)\ChroMapper_Data\Managed\UnityEngine.UI.dll</HintPath>
@@ -99,6 +102,7 @@
     <Compile Include="src\UI\Modes\Main Effects\MainEffectsUI.cs" />
     <Compile Include="src\UI\Modes\Main Effects\OptionPanelUI.cs" />
     <Compile Include="src\UI\Modes\Main Effects\Parameter Editors\BaseParameterEditor.cs" />
+    <Compile Include="src\UI\Modes\Main Effects\Parameter Editors\ChartCurveRenderer.cs" />
     <Compile Include="src\UI\Modes\Main Effects\Parameter Editors\ChartKeyframe.cs" />
     <Compile Include="src\UI\Modes\Main Effects\Parameter Editors\ChartParameterEditor.cs" />
     <Compile Include="src\UI\Modes\Main Effects\Parameter Editors\FloatParameterEditor.cs" />
