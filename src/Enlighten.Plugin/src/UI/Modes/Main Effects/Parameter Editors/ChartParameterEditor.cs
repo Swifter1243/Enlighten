@@ -11,7 +11,7 @@ namespace Enlighten.UI
 		private RectTransform m_pointsParent;
 		private BundleLoading.Assets m_assets;
 		private GenericParameter<T> m_parameter;
-		private ChartKeyframe<T>[] m_keyframes;
+		private ChartKeyframe[] m_keyframes;
 
 		public void Initialize(BundleLoading.Assets assets)
 		{
@@ -25,11 +25,11 @@ namespace Enlighten.UI
 			RedrawCompletely();
 		}
 
-		private IEnumerable<ChartKeyframe<T>> GetKeyframes()
+		private IEnumerable<ChartKeyframe> GetKeyframes()
 		{
 			for (int i = 0; i < m_parameter.m_keyframes.Count; i++)
 			{
-				ChartKeyframe<T> keyframe = Instantiate(m_assets.m_pointPrefab, m_pointsParent).AddComponent<ChartKeyframe<T>>();
+				ChartKeyframe keyframe = Instantiate(m_assets.m_pointPrefab, m_pointsParent).AddComponent<ChartKeyframe>();
 				int tempIndex = i;
 				keyframe.onClicked += () => m_onKeyframeSelected.Invoke(tempIndex);
 				keyframe.onMoved += position => OnKeyframeMove(tempIndex, position);
@@ -42,7 +42,7 @@ namespace Enlighten.UI
 			for (int i = 0; i < m_parameter.m_keyframes.Count; i++)
 			{
 				GenericParameter<T>.Keyframe data = m_parameter.m_keyframes[i];
-				ChartKeyframe<T> obj = m_keyframes[i];
+				ChartKeyframe obj = m_keyframes[i];
 				float chartX = data.m_time;
 				float chartY = ValueToChartYPosition(data.m_value);
 				Vector2 screenPos = ChartToScreenPosition(new Vector2(chartX, chartY));
