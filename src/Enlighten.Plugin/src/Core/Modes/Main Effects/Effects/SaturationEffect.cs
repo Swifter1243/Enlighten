@@ -4,7 +4,7 @@ namespace Enlighten.Core
 {
 	public class SaturationEffect : SimpleColorEffect
 	{
-		private readonly FloatParameter m_offset = new FloatParameter(0);
+		private readonly FloatParameter m_offset = new FloatParameter(0, "Offset", "How much to offset events' color saturation by.");
 
 		protected override IEnumerable<BaseParameter> GetParameters()
 		{

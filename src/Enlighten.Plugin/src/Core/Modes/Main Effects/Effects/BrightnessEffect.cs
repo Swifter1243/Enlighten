@@ -4,7 +4,7 @@ namespace Enlighten.Core
 {
 	public class BrightnessEffect : SimpleColorEffect
 	{
-		private readonly FloatParameter m_multiplier = new FloatParameter(1);
+		private readonly FloatParameter m_multiplier = new FloatParameter(1, "Multiplier", "The amount to multiply events' brightness by.");
 
 		protected override IEnumerable<BaseParameter> GetParameters()
 		{

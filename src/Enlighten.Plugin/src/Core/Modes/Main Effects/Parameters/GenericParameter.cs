@@ -6,9 +6,13 @@ namespace Enlighten.Core
 	{
 		public readonly List<Keyframe> m_keyframes = new List<Keyframe>();
 		private readonly T m_defaultValue;
+		public string m_name;
+		public string m_description;
 
-		public GenericParameter(T defaultValue)
+		public GenericParameter(T defaultValue, string name, string description)
 		{
+			m_name = name;
+			m_description = description;
 			m_defaultValue = defaultValue;
 			ResetToDefault();
 		}

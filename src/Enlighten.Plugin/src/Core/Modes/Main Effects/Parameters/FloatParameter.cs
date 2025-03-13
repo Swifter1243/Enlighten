@@ -2,7 +2,7 @@
 {
 	public class FloatParameter : GenericParameter<float>
 	{
-		public FloatParameter(float defaultValue) : base(defaultValue)
+		public FloatParameter(float defaultValue, string name, string description) : base(defaultValue, name, description)
 		{ }
 
 		private float SplineInterpolation(int a, int b, float time)

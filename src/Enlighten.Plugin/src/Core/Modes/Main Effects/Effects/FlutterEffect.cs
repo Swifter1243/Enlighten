@@ -6,9 +6,9 @@ namespace Enlighten.Core
 {
 	public class FlutterEffect : Effect
 	{
-		private readonly BoolParameter m_populate = new BoolParameter(true);
-		private readonly FloatParameter m_multiplier = new FloatParameter(1);
-		private readonly FloatParameter m_turbulence = new FloatParameter(0);
+		private readonly BoolParameter m_populate = new BoolParameter(true, "Populate", "Whether to create alternating events.");
+		private readonly FloatParameter m_multiplier = new FloatParameter(1, "Multiplier", "How much to multiply alternating events' brightness by.");
+		private readonly FloatParameter m_turbulence = new FloatParameter(0, "Turbulence", "How much to randomly vary alternating event's brightness.");
 
 		protected override IEnumerable<BaseParameter> GetParameters()
 		{

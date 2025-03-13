@@ -5,8 +5,8 @@ namespace Enlighten.Core
 {
 	public class PulseEffect : Effect
 	{
-		private readonly FloatParameter m_intensity = new FloatParameter(1);
-		private readonly FloatParameter m_frequency = new FloatParameter(1);
+		private readonly FloatParameter m_intensity = new FloatParameter(1, "Intensity", "The contribution of pulsing to apply to events.");
+		private readonly FloatParameter m_frequency = new FloatParameter(1, "Frequency", "The speed of pulsing to apply to events.");
 
 		protected override IEnumerable<BaseParameter> GetParameters()
 		{
