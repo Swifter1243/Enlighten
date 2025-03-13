@@ -13,6 +13,9 @@ namespace Enlighten.UI
 		private GenericParameter<T> m_parameter;
 		private ChartKeyframe[] m_keyframes;
 
+		protected float m_chartLowBound = 0;
+		protected float m_chartHighBound = 1;
+
 		public void Initialize(BundleLoading.Assets assets)
 		{
 			m_assets = assets;
@@ -50,16 +53,22 @@ namespace Enlighten.UI
 			}
 		}
 
-		private Vector2 ScreenToChartPosition(Vector2 position)
+		private Vector2 ScreenToChartPosition(Vector2 screenPosition)
 		{
-			// TODO
-			return Vector2.zero;
+			Vector2 localPos = screenPosition - m_pointsParent.rect.min;
+			Vector2 chartPosition = localPos / m_pointsParent.rect.size;
+			chartPosition.y += m_chartLowBound;
+			chartPosition.y *= m_chartHighBound - m_chartLowBound;
+			return chartPosition;
 		}
 
-		private Vector2 ChartToScreenPosition(Vector2 position)
+		private Vector2 ChartToScreenPosition(Vector2 chartPosition)
 		{
-			// TODO
-			return Vector2.zero;
+			Vector2 localPos = chartPosition;
+			chartPosition.y /= m_chartHighBound - m_chartLowBound;
+			chartPosition.y -= m_chartLowBound;
+			localPos *= m_pointsParent.rect.size;
+			return localPos + m_pointsParent.rect.min;
 		}
 
 		private GenericParameter<T>.Keyframe ChartPositionToKeyframeValues(Vector2 position)
