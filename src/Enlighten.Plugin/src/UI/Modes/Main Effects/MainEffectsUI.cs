@@ -22,7 +22,7 @@ namespace Enlighten.UI
 			m_floatValueEditor.Initialize(m_assets);
 			
 			Transform effectOptionsParent = rightContent.transform.Find("EffectSettings").Find("Viewport").Find("Content");
-			OptionPanelUI optionPanel = m_assets.m_mainEffectOptionPanel.AddComponent<OptionPanelUI>();
+			OptionPanelUI optionPanel = m_assets.m_mainEffectOptionPanel;
 			foreach (KeyValuePair<EffectName, Effect> kvp in MainEffectsMode.s_effects)
 			{
 				EffectName effectName = kvp.Key;
