@@ -20,13 +20,13 @@ namespace Enlighten.UI
                 switch (effectParameter)
                 {
                 case RangeParameter rangeParameter:
-                    Instantiate(m_assets.m_rangeParameter, parametersParent);
+                    Instantiate(m_assets.m_rangeParameter, parametersParent).AddComponent<RangeParameterUI>();
                     break;
                 case FloatParameter floatParameter:
-                    Instantiate(m_assets.m_floatParameter, parametersParent);
+                    Instantiate(m_assets.m_floatParameter, parametersParent).AddComponent<FloatParameterUI>();
                     break;
                 case BoolParameter boolParameter:
-                    Instantiate(m_assets.m_boolParameter, parametersParent);
+                    Instantiate(m_assets.m_boolParameter, parametersParent).AddComponent<BoolParameterUI>();
                     break;
                 }
             }

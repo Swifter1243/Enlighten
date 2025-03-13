@@ -9,16 +9,16 @@ namespace Enlighten
 	internal static class BundleLoading
 	{
 		private const string ENLIGHTEN_BUNDLE_PATH = "Enlighten.enlighten_bundle";
-		
+
 		public class Assets
 		{
 			public GameObject m_enlightenPanelPrefab;
 			public GameObject m_pointPrefab;
 			public Sprite m_icon;
-			public OptionPanelUI m_mainEffectOptionPanel;
-			public BoolParameterUI m_boolParameter;
-			public FloatParameterUI m_floatParameter;
-			public RangeParameterUI m_rangeParameter;
+			public GameObject m_mainEffectOptionPanel;
+			public GameObject m_boolParameter;
+			public GameObject m_floatParameter;
+			public GameObject m_rangeParameter;
 		}
 
 		public static Assets Load()
@@ -28,13 +28,13 @@ namespace Enlighten
 			{
 				throw new NullReferenceException("Null resource stream when loading Enlighten bundle.");
 			}
-			
+
 			AssetBundle bundle = AssetBundle.LoadFromStream(resourceStream);
 			Assets assets = GetAssets(bundle);
 
 			bundle.UnloadAsync(false);
 			resourceStream.Dispose();
-			
+
 			return assets;
 		}
 
@@ -43,10 +43,10 @@ namespace Enlighten
 			m_enlightenPanelPrefab = bundle.LoadAsset<GameObject>("Assets/Prefabs/EnlightenPanel.prefab"),
 			m_pointPrefab = bundle.LoadAsset<GameObject>("Assets/Prefabs/Point.prefab"),
 			m_icon = bundle.LoadAsset<Sprite>("Assets/Images/icon.png"),
-			m_mainEffectOptionPanel = bundle.LoadAsset<GameObject>("Assets/Prefabs/MainEffects/EffectOptionPanel.prefab").AddComponent<OptionPanelUI>(),
-			m_boolParameter = bundle.LoadAsset<GameObject>("Assets/Prefabs/MainEffects/EffectParameters/BoolParameter.prefab").AddComponent<BoolParameterUI>(),
-			m_floatParameter = bundle.LoadAsset<GameObject>("Assets/Prefabs/MainEffects/EffectParameters/FloatParameter.prefab").AddComponent<FloatParameterUI>(),
-			m_rangeParameter = bundle.LoadAsset<GameObject>("Assets/Prefabs/MainEffects/EffectParameters/RangeParameter.prefab").AddComponent<RangeParameterUI>(),
+			m_mainEffectOptionPanel = bundle.LoadAsset<GameObject>("Assets/Prefabs/MainEffects/EffectOptionPanel.prefab"),
+			m_boolParameter = bundle.LoadAsset<GameObject>("Assets/Prefabs/MainEffects/EffectParameters/BoolParameter.prefab"),
+			m_floatParameter = bundle.LoadAsset<GameObject>("Assets/Prefabs/MainEffects/EffectParameters/FloatParameter.prefab"),
+			m_rangeParameter = bundle.LoadAsset<GameObject>("Assets/Prefabs/MainEffects/EffectParameters/RangeParameter.prefab"),
 		};
 	}
 }
