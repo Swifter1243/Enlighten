@@ -96,6 +96,7 @@ namespace Enlighten.UI
 			GenericParameter<T>.Keyframe keyframe = ChartPositionToKeyframeValues(chartPosition);
 			m_parameter.m_keyframes[index] = keyframe;
 			m_onKeyframeChanged.Invoke(index);
+			RedrawCurves();
 		}
 
 		public void RedrawKeyframes()
@@ -128,7 +129,10 @@ namespace Enlighten.UI
 			case 0:
 				yield break;
 			case 1:
-				yield return SampleTime(keyframes[0].m_time);
+				T value = keyframes[0].m_value;
+				float y = ValueToChartYPosition(value);
+				yield return ChartToLocalPosition(new Vector2(0, y));
+				yield return ChartToLocalPosition(new Vector2(1, y));
 				yield break;
 			}
 

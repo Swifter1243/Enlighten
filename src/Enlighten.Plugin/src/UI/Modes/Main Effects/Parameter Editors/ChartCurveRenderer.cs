@@ -22,15 +22,8 @@ namespace Enlighten.UI
 
 		private IEnumerable<Segment> CalculateSegments(Vector2[] points, float thickness, float overshoot)
 		{
-			switch (points.Length)
-			{
-			case 0:
+			if (points.Length == 0)
 				yield break;
-			case 1:
-				Vector2 point = points[0];
-				yield return FromDirection(Vector2.right, point);
-				yield break;
-			}
 
 			for (int i = 0; i < points.Length; i++)
 			{
@@ -40,12 +33,14 @@ namespace Enlighten.UI
 					Vector2 dir = CalculateDirection(point, points[i + 1]);
 					yield return FromDirection(dir, point + dir * -overshoot);
 					yield return FromDirection(dir, point);
+					continue;
 				}
 				if (i == points.Length - 1)
 				{
-					Vector2 dir = CalculateDirection(points[i + 1], point);
+					Vector2 dir = CalculateDirection(points[i - 1], point);
 					yield return FromDirection(dir, point);
 					yield return FromDirection(dir, point + dir * overshoot);
+					break;
 				}
 
 				Vector2 dirBack = CalculateDirection(points[i - 1], point);
