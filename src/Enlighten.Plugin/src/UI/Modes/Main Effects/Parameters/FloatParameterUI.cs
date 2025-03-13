@@ -2,8 +2,8 @@
 
 namespace Enlighten.UI
 {
-    public class FloatParameterUI : MonoBehaviour
+    public class FloatParameterUI : ParameterUI
     {
-        
+
     }
 }

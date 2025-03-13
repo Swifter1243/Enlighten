@@ -1,18 +1,24 @@
 ﻿using System.Collections.Generic;
 namespace Enlighten.Core
 {
-	public abstract class BaseParameter {}
+	public abstract class BaseParameter
+	{
+		public string m_name;
+		public string m_description;
+
+		public BaseParameter(string name, string description)
+		{
+			m_name = name;
+			m_description = description;
+		}
+	}
 	public abstract class GenericParameter<T> : BaseParameter
 	{
 		public readonly List<Keyframe> m_keyframes = new List<Keyframe>();
 		private readonly T m_defaultValue;
-		public string m_name;
-		public string m_description;
 
-		public GenericParameter(T defaultValue, string name, string description)
+		public GenericParameter(T defaultValue, string name, string description) : base(name, description)
 		{
-			m_name = name;
-			m_description = description;
 			m_defaultValue = defaultValue;
 			ResetToDefault();
 		}

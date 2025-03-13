@@ -17,16 +17,20 @@ namespace Enlighten.UI
 
             foreach (BaseParameter effectParameter in m_effect.Parameters)
             {
+                ParameterUI parameterUI;
                 switch (effectParameter)
                 {
                 case RangeParameter rangeParameter:
-                    Instantiate(m_assets.m_rangeParameter, parametersParent).AddComponent<RangeParameterUI>();
+                    parameterUI = Instantiate(m_assets.m_rangeParameter, parametersParent).AddComponent<RangeParameterUI>();
+                    parameterUI.Initialize(rangeParameter);
                     break;
                 case FloatParameter floatParameter:
-                    Instantiate(m_assets.m_floatParameter, parametersParent).AddComponent<FloatParameterUI>();
+                    parameterUI = Instantiate(m_assets.m_floatParameter, parametersParent).AddComponent<FloatParameterUI>();
+                    parameterUI.Initialize(floatParameter);
                     break;
                 case BoolParameter boolParameter:
-                    Instantiate(m_assets.m_boolParameter, parametersParent).AddComponent<BoolParameterUI>();
+                    parameterUI = Instantiate(m_assets.m_boolParameter, parametersParent).AddComponent<BoolParameterUI>();
+                    parameterUI.Initialize(boolParameter);
                     break;
                 }
             }

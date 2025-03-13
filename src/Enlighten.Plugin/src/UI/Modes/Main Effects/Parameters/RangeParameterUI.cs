@@ -2,8 +2,8 @@
 
 namespace Enlighten.UI
 {
-    public class RangeParameterUI : MonoBehaviour
+    public class RangeParameterUI : ParameterUI
     {
-        
+
     }
 }

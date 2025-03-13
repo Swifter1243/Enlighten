@@ -2,8 +2,8 @@
 
 namespace Enlighten.UI
 {
-    public class BoolParameterUI : MonoBehaviour
+    public class BoolParameterUI : ParameterUI
     {
-        
+
     }
 }
