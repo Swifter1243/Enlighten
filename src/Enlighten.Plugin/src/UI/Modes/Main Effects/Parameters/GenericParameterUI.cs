@@ -52,5 +52,10 @@ namespace Enlighten.UI
 			CurrentValue = value;
 			m_onUIChanged.Invoke();
 		}
+
+		public override void SortParameter()
+		{
+			m_parameter.SortKeyframes();
+		}
 	}
 }

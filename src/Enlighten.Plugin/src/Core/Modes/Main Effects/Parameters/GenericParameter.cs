@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 namespace Enlighten.Core
 {
 	public abstract class BaseParameter
@@ -15,6 +16,7 @@ namespace Enlighten.Core
 	public abstract class GenericParameter<T> : BaseParameter
 	{
 		public readonly List<Keyframe> m_keyframes = new List<Keyframe>();
+		private List<Keyframe> m_sortedKeyframes = new List<Keyframe>();
 		private readonly T m_defaultValue;
 
 		public GenericParameter(T defaultValue, string name, string description) : base(name, description)
@@ -26,7 +28,14 @@ namespace Enlighten.Core
 		public void ResetToDefault()
 		{
 			m_keyframes.Clear();
+			AddPoint(m_defaultValue, 0.25f);
 			AddPoint(m_defaultValue, 0.5f);
+			AddPoint(m_defaultValue, 0.75f);
+		}
+
+		public void SortKeyframes()
+		{
+			m_sortedKeyframes = m_keyframes.OrderBy(k => k.m_time).ToList();
 		}
 
 		public struct Keyframe
@@ -42,35 +51,28 @@ namespace Enlighten.Core
 				m_time = time,
 				m_value = value,
 			});
+			SortKeyframes();
 		}
 
 		protected abstract T InterpolatePoints(int left, int right, float normalTime);
 
 		public T Interpolate(float time)
 		{
-			switch (m_keyframes.Count)
-			{
-			case 0:
-				return default;
-			case 1:
-				return m_keyframes[0].m_value;
-			}
-
-			Keyframe lastKeyframe = m_keyframes[m_keyframes.Count - 1];
+			Keyframe lastKeyframe = m_sortedKeyframes[m_sortedKeyframes.Count - 1];
 			if (lastKeyframe.m_time < time)
 			{
 				return lastKeyframe.m_value;
 			}
 
-			Keyframe firstKeyframe = m_keyframes[0];
-			if (lastKeyframe.m_time > time)
+			Keyframe firstKeyframe = m_sortedKeyframes[0];
+			if (lastKeyframe.m_time >= time)
 			{
 				return firstKeyframe.m_value;
 			}
 
 			TimeIndexInfo indexInfo = SearchIndexAtTime(time);
-			Keyframe leftKeyframe = m_keyframes[indexInfo.m_left];
-			Keyframe rightKeyframe = m_keyframes[indexInfo.m_right];
+			Keyframe leftKeyframe = m_sortedKeyframes[indexInfo.m_left];
+			Keyframe rightKeyframe = m_sortedKeyframes[indexInfo.m_right];
 
 			float normalTime = 0;
 			float divisor = rightKeyframe.m_time - leftKeyframe.m_time;
@@ -91,12 +93,12 @@ namespace Enlighten.Core
 		private TimeIndexInfo SearchIndexAtTime(float time)
 		{
 			int left = 0;
-			int right = m_keyframes.Count;
+			int right = m_sortedKeyframes.Count;
 
 			while (left < right - 1)
 			{
 				int middle = (left + right) / 2;
-				float keyframeTime = m_keyframes[middle].m_time;
+				float keyframeTime = m_sortedKeyframes[middle].m_time;
 
 				if (keyframeTime < time)
 				{
