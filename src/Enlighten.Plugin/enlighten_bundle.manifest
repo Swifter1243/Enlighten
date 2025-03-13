@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2045818327
+CRC: 1662007412
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: dbc61478daaffb92be8ab717d1603fbb
+    Hash: d992af906f2d6ce59ef6c753a93cc1b6
   TypeTreeHash:
     serializedVersion: 2
-    Hash: abe742b06ec92a7d21714ebf62ff070d
+    Hash: 4cadcba077906c5a90ff689eccc600e4
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -20,11 +20,11 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
 - Class: 114
@@ -57,6 +57,8 @@ ClassTypes:
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
+- Assets/Prefabs/MainEffects/Point.prefab
+- Assets/Prefabs/MainEffects/EffectOptionPanel.prefab
 - Assets/Prefabs/EnlightenPanel.prefab
 - Assets/Images/icon.png
 Dependencies: []
