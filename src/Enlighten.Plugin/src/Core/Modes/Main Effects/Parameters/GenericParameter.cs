@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 namespace Enlighten.Core
 {
 	public abstract class BaseParameter
@@ -29,8 +30,9 @@ namespace Enlighten.Core
 		public void ResetToDefault()
 		{
 			m_keyframes.Clear();
-			AddPoint(m_defaultValue, 0.33f);
-			AddPoint(m_defaultValue, 0.66f);
+			AddPoint(m_defaultValue, 0.25f);
+			AddPoint(m_defaultValue, 0.5f);
+			AddPoint(m_defaultValue, 0.75f);
 		}
 
 		public void SortKeyframes()
@@ -58,6 +60,11 @@ namespace Enlighten.Core
 
 		public T Interpolate(float time)
 		{
+			if (m_sortedKeyframes.Length == 0)
+			{
+				return default;
+			}
+
 			Keyframe lastKeyframe = m_sortedKeyframes[m_sortedKeyframes.Length - 1];
 			if (lastKeyframe.m_time < time)
 			{
@@ -65,14 +72,14 @@ namespace Enlighten.Core
 			}
 
 			Keyframe firstKeyframe = m_sortedKeyframes[0];
-			if (lastKeyframe.m_time >= time)
+			if (firstKeyframe.m_time >= time)
 			{
 				return firstKeyframe.m_value;
 			}
 
-			TimeIndexInfo indexInfo = SearchIndexAtTime(time);
-			Keyframe leftKeyframe = m_sortedKeyframes[indexInfo.m_left];
-			Keyframe rightKeyframe = m_sortedKeyframes[indexInfo.m_right];
+			SearchIndexAtTime(time, out int leftIndex, out int rightIndex);
+			Keyframe leftKeyframe = m_sortedKeyframes[leftIndex];
+			Keyframe rightKeyframe = m_sortedKeyframes[rightIndex];
 
 			float normalTime = 0;
 			float divisor = rightKeyframe.m_time - leftKeyframe.m_time;
@@ -81,19 +88,13 @@ namespace Enlighten.Core
 				normalTime = (time - leftKeyframe.m_time) / divisor;
 			}
 
-			return InterpolatePoints(indexInfo.m_left, indexInfo.m_right, normalTime);
+			return InterpolatePoints(leftIndex, rightIndex, normalTime);
 		}
 
-		private struct TimeIndexInfo
+		private void SearchIndexAtTime(float time, out int left, out int right)
 		{
-			public int m_left;
-			public int m_right;
-		}
-
-		private TimeIndexInfo SearchIndexAtTime(float time)
-		{
-			int left = 0;
-			int right = m_sortedKeyframes.Length;
+			left = 0;
+			right = m_sortedKeyframes.Length;
 
 			while (left < right - 1)
 			{
@@ -109,12 +110,6 @@ namespace Enlighten.Core
 					right = middle;
 				}
 			}
-
-			return new TimeIndexInfo
-			{
-				m_left = left,
-				m_right = right
-			};
 		}
 	}
 }
