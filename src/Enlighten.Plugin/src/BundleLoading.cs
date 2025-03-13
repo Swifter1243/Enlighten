@@ -41,7 +41,7 @@ namespace Enlighten
 		private static Assets GetAssets(AssetBundle bundle) => new Assets
 		{
 			m_enlightenPanelPrefab = bundle.LoadAsset<GameObject>("Assets/Prefabs/EnlightenPanel.prefab"),
-			m_pointPrefab = bundle.LoadAsset<GameObject>("Assets/Prefabs/Point.prefab"),
+			m_pointPrefab = bundle.LoadAsset<GameObject>("Assets/Prefabs/MainEffects/Point.prefab"),
 			m_icon = bundle.LoadAsset<Sprite>("Assets/Images/icon.png"),
 			m_mainEffectOptionPanel = bundle.LoadAsset<GameObject>("Assets/Prefabs/MainEffects/EffectOptionPanel.prefab"),
 			m_boolParameter = bundle.LoadAsset<GameObject>("Assets/Prefabs/MainEffects/EffectParameters/BoolParameter.prefab"),
