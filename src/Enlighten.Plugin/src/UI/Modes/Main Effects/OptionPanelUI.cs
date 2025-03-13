@@ -12,6 +12,17 @@ namespace Enlighten.UI
         {
             m_assets = assets;
             m_effect = effect;
+            
+            GameObject go = new GameObject("OptionPanel");
+            
+            foreach (BaseParameter effectParameter in effect.Parameters)
+            {
+                switch (effectParameter)
+                {
+                case FloatParameter floatParameter:
+                        
+                }
+            }
         }
         
         

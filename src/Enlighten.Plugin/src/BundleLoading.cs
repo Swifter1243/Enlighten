@@ -16,6 +16,9 @@ namespace Enlighten
 			public GameObject m_pointPrefab;
 			public Sprite m_icon;
 			public OptionPanelUI m_mainEffectOptionPanel;
+			public BoolParameterUI m_boolParameter;
+			public FloatParameterUI m_floatParameter;
+			public RangeParameterUI m_rangeParameter;
 		}
 
 		public static Assets Load()
@@ -41,6 +44,9 @@ namespace Enlighten
 			m_pointPrefab = bundle.LoadAsset<GameObject>("Assets/Prefabs/Point.prefab"),
 			m_icon = bundle.LoadAsset<Sprite>("Assets/Images/icon.png"),
 			m_mainEffectOptionPanel = bundle.LoadAsset<GameObject>("Assets/Prefabs/MainEffects/EffectOptionPanel.prefab").AddComponent<OptionPanelUI>(),
+			m_boolParameter = bundle.LoadAsset<GameObject>("Assets/Prefabs/MainEffects/EffectParameters/BoolParameter.prefab").AddComponent<BoolParameterUI>(),
+			m_floatParameter = bundle.LoadAsset<GameObject>("Assets/Prefabs/MainEffects/EffectParameters/FloatParameter.prefab").AddComponent<FloatParameterUI>(),
+			m_rangeParameter = bundle.LoadAsset<GameObject>("Assets/Prefabs/MainEffects/EffectParameters/RangeParameter.prefab").AddComponent<RangeParameterUI>(),
 		};
 	}
 }
