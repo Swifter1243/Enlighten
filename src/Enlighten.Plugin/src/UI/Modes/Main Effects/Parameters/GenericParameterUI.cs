@@ -55,7 +55,7 @@ namespace Enlighten.UI
 			UpdateUI();
 		}
 
-		protected abstract void UpdateUI();
+		public abstract void UpdateUI();
 
 		protected void SetCurrentValue(T value)
 		{

@@ -15,7 +15,7 @@ namespace Enlighten.UI
             m_inputField.onValueChanged.AddListener(OnInputFieldValueChanged);
         }
 
-        protected override void UpdateUI()
+        public override void UpdateUI()
         {
             string text = CurrentValue.ToString(CultureInfo.InvariantCulture);
             m_inputField.SetTextWithoutNotify(text);

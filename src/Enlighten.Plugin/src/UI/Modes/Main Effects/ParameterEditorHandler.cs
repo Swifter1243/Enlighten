@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Enlighten.Core;
+using UnityEngine;
 namespace Enlighten.UI
 {
 	internal class ParameterEditorHandler : MonoBehaviour
@@ -14,6 +15,9 @@ namespace Enlighten.UI
 		public void SelectFloatParameter(FloatParameterUI floatParameterUI)
 		{
 			m_floatParameterEditor.OpenParameter(floatParameterUI.m_parameter);
+			floatParameterUI.onUIValueChanged += m_floatParameterEditor.RedrawCompletely;
+			m_floatParameterEditor.onKeyframeMoved += _ => floatParameterUI.UpdateUI();
+			m_floatParameterEditor.onKeyframeSelected += floatParameterUI.SetActiveKeyframeIndex;
 		}
 
 		public void SelectRangeParameter(RangeParameterUI rangeParameterUI)
