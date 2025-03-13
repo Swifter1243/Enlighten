@@ -10,7 +10,7 @@ namespace Enlighten.UI
 		private readonly Dictionary<EffectName, OptionPanelUI> m_effectOptionPanels = new Dictionary<EffectName, OptionPanelUI>();
 		private ParameterEditorHandler m_parameterEditorHandler;
 
-		public void Initialize(MainEffectsMode mode, BundleLoading.Assets assets)
+		public void Initialize(MainEffectsMode mode, BundleLoading.Assets assets, ResizeableUI resizeableUI)
 		{
 			m_assets = assets;
 			m_mode = mode;
@@ -20,7 +20,7 @@ namespace Enlighten.UI
 			Transform rightContent = content.transform.Find("RightContent");
 
 			m_parameterEditorHandler = gameObject.AddComponent<ParameterEditorHandler>();
-			m_parameterEditorHandler.Initialize(assets, rightContent);
+			m_parameterEditorHandler.Initialize(assets, rightContent, resizeableUI);
 
 			Transform effectOptionsParent = rightContent.transform.Find("EffectSettings").Find("Viewport").Find("Content");
 			foreach (KeyValuePair<EffectName, Effect> kvp in MainEffectsMode.s_effects)

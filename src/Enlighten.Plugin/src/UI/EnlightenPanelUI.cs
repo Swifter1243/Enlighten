@@ -13,6 +13,8 @@ namespace Enlighten.UI
 		private Core.Enlighten m_enlighten;
 		private LinkedDropdown<ModeUI> m_modes;
 		private BundleLoading.Assets m_assets;
+		private ResizeableUI m_resizeableUI;
+		private DraggableUI m_draggableUI;
 
 		public void Initialize(RectTransform canvas, Core.Enlighten enlighten, BundleLoading.Assets assets)
 		{
@@ -21,17 +23,17 @@ namespace Enlighten.UI
 			m_rt = GetComponent<RectTransform>();
 			Transform insideContent = transform.Find("InsideContent");
 
-			ResizeableUI resizeable = SetupResizing(canvas);
-			SetupDragging(canvas, insideContent);
-			SetupOutline(resizeable);
+			m_resizeableUI = SetupResizing(canvas);
+			m_draggableUI = SetupDragging(canvas, insideContent);
+			SetupOutline();
 			SetupModes(insideContent);
 		}
 
-		private void SetupOutline(ResizeableUI resizeable)
+		private void SetupOutline()
 		{
 			GameObject outline = transform.Find("Outline").gameObject;
 			OutlineUpdater outlineUpdater = outline.AddComponent<OutlineUpdater>();
-			resizeable.m_onResize.AddListener(outlineUpdater.UpdateBorder);
+			m_resizeableUI.m_onResize.AddListener(outlineUpdater.UpdateBorder);
 		}
 
 		private ResizeableUI SetupResizing(RectTransform canvas)
@@ -43,11 +45,12 @@ namespace Enlighten.UI
 			return resizeable;
 		}
 
-		private void SetupDragging(RectTransform canvas, Transform insideContent)
+		private DraggableUI SetupDragging(RectTransform canvas, Transform insideContent)
 		{
 			GameObject notch = insideContent.Find("Notch").gameObject;
 			DraggableUI draggable = notch.AddComponent<DraggableUI>();
 			draggable.Initialize(m_rt, canvas);
+			return draggable;
 		}
 
 		private void SetupModes(Transform insideContent)
@@ -81,7 +84,7 @@ namespace Enlighten.UI
 			switch (enlightenMode)
 			{
 			case MainEffectsMode mainEffectsMode:
-				go.AddComponent<MainEffectsUI>().Initialize(mainEffectsMode, m_assets);
+				go.AddComponent<MainEffectsUI>().Initialize(mainEffectsMode, m_assets, m_resizeableUI);
 				break;
 			case StripGeneratorMode stripGeneratorMode:
 				go.AddComponent<StripGeneratorUI>().Initialize(stripGeneratorMode);

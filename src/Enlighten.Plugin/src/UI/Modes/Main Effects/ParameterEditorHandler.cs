@@ -9,10 +9,11 @@ namespace Enlighten.UI
 
 		private FloatParameterEditor m_floatParameterEditor;
 
-		public void Initialize(BundleLoading.Assets assets, Transform rightContent)
+		public void Initialize(BundleLoading.Assets assets, Transform rightContent, ResizeableUI resizeableUI)
 		{
 			m_floatParameterEditor = rightContent.Find("FloatParameterEditor").gameObject.AddComponent<FloatParameterEditor>();
 			m_floatParameterEditor.Initialize(assets);
+			resizeableUI.m_onResize.AddListener(RedrawCurrentEditor);
 		}
 
 		public void SelectFloatParameter(FloatParameterUI floatParameterUI)
@@ -52,6 +53,9 @@ namespace Enlighten.UI
 		}
 		private void RedrawCurrentEditor()
 		{
+			if (m_currentParameterEditor == null)
+				return;
+
 			m_currentParameterEditor.RedrawCompletely();
 		}
 	}
