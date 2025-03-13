@@ -14,7 +14,7 @@ namespace Enlighten.UI
             m_toggle.onValueChanged.AddListener(SetCurrentValue);
         }
 
-        protected override void UpdateUI()
+        public override void UpdateUI()
         {
             m_toggle.SetIsOnWithoutNotify(CurrentValue);
         }

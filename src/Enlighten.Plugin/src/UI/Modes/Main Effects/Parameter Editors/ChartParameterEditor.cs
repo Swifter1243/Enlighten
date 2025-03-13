@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using Enlighten.Core;
 using UnityEngine;
+using UnityEngine.Events;
 namespace Enlighten.UI
 {
-	internal abstract class ChartParameterEditor<T> : MonoBehaviour
+	internal abstract class ChartParameterEditor<T> : BaseParameterEditor
 	{
 		private Transform m_pointsParent;
 		private BundleLoading.Assets m_assets;
 		private GenericParameter<T> m_parameter;
 		private ChartKeyframe<T>[] m_keyframes;
-
-		public event Action<int> onKeyframeMoved;
-		public event Action<int> onKeyframeSelected;
 
 		public void Initialize(BundleLoading.Assets assets)
 		{
@@ -33,7 +31,7 @@ namespace Enlighten.UI
 			{
 				ChartKeyframe<T> keyframe = Instantiate(m_assets.m_pointPrefab, m_pointsParent).AddComponent<ChartKeyframe<T>>();
 				int tempIndex = i;
-				keyframe.onClicked += () => onKeyframeSelected?.Invoke(tempIndex);
+				keyframe.onClicked += () => m_onKeyframeSelected.Invoke(tempIndex);
 				keyframe.onMoved += position => OnKeyframeMove(tempIndex, position);
 				yield return keyframe;
 			}
@@ -62,7 +60,7 @@ namespace Enlighten.UI
 			chartPosition = HandleKeyframeMove(chartPosition);
 			GenericParameter<T>.Keyframe keyframe = ChartPositionToKeyframeValues(chartPosition);
 			m_parameter.m_keyframes[index] = keyframe;
-			onKeyframeMoved?.Invoke(index);
+			m_onKeyframeChanged.Invoke(index);
 		}
 
 		protected abstract Vector2 HandleKeyframeMove(Vector2 chartPosition);
@@ -76,7 +74,7 @@ namespace Enlighten.UI
 			m_keyframes = GetKeyframes().ToArray();
 		}
 
-		public void RedrawCompletely()
+		public override void RedrawCompletely()
 		{
 			RedrawPoints();
 			RedrawCurves();

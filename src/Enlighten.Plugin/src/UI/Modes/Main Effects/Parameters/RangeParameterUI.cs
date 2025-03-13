@@ -33,7 +33,7 @@ namespace Enlighten.UI
             UpdateSlider();
         }
 
-        protected override void UpdateUI()
+        public override void UpdateUI()
         {
             UpdateInputField();
             UpdateSlider();

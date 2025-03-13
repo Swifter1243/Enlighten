@@ -1,14 +1,26 @@
 ﻿using System;
 using Enlighten.Core;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 namespace Enlighten.UI
 {
-	public abstract class BaseParameterUI : MonoBehaviour {}
+	public abstract class BaseParameterUI : MonoBehaviour
+	{
+		protected int m_selectedKeyframeIndex;
+
+		public abstract void UpdateUI();
+		public UnityEvent m_onUIChanged = new UnityEvent();
+
+		public void SetActiveKeyframeIndex(int index)
+		{
+			m_selectedKeyframeIndex = index;
+			UpdateUI();
+		}
+	}
 	public abstract class GenericParameterUI<T, TP> : BaseParameterUI where TP : GenericParameter<T>
 	{
 		public TP m_parameter;
-		private int m_selectedKeyframeIndex;
 
 		private GenericParameter<T>.Keyframe SelectedKeyframe
 		{
@@ -26,7 +38,6 @@ namespace Enlighten.UI
 				SelectedKeyframe = k;
 			}
 		}
-		public event Action onUIValueChanged;
 
 		protected abstract void InitializeInternal(TP parameter);
 
@@ -49,18 +60,10 @@ namespace Enlighten.UI
 			UpdateUI();
 		}
 
-		public void SetActiveKeyframeIndex(int index)
-		{
-			m_selectedKeyframeIndex = index;
-			UpdateUI();
-		}
-
-		public abstract void UpdateUI();
-
 		protected void SetCurrentValue(T value)
 		{
 			CurrentValue = value;
-			onUIValueChanged?.Invoke();
+			m_onUIChanged.Invoke();
 		}
 	}
 }
