@@ -83,7 +83,7 @@ namespace Enlighten.UI
 			m_onKeyframeChanged.Invoke(index);
 		}
 
-		public void RedrawPoints()
+		public void RedrawKeyframes()
 		{
 			foreach (Transform child in m_pointsParent)
 			{
@@ -95,7 +95,7 @@ namespace Enlighten.UI
 
 		public override void RedrawCompletely()
 		{
-			RedrawPoints();
+			RedrawKeyframes();
 			RedrawCurves();
 		}
 
