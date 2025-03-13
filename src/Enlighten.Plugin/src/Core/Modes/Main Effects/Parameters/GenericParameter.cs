@@ -26,7 +26,17 @@ namespace Enlighten.Core
 		public void ResetToDefault()
 		{
 			m_keyframes.Clear();
+			AddPoint(m_defaultValue, 0f);
+			AddPoint(m_defaultValue, 0.1f);
+			AddPoint(m_defaultValue, 0.2f);
+			AddPoint(m_defaultValue, 0.3f);
+			AddPoint(m_defaultValue, 0.4f);
 			AddPoint(m_defaultValue, 0.5f);
+			AddPoint(m_defaultValue, 0.6f);
+			AddPoint(m_defaultValue, 0.7f);
+			AddPoint(m_defaultValue, 0.8f);
+			AddPoint(m_defaultValue, 0.9f);
+			AddPoint(m_defaultValue, 1f);
 		}
 
 		public struct Keyframe

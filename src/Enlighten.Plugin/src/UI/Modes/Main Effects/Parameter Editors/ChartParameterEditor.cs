@@ -13,8 +13,8 @@ namespace Enlighten.UI
 		private GenericParameter<T> m_parameter;
 		private ChartKeyframe[] m_keyframes;
 
-		protected float m_chartLowBound = 0.2f;
-		protected float m_chartHighBound = 2f;
+		protected float m_chartLowBound = 0f;
+		protected float m_chartHighBound = 1f;
 
 		public void Initialize(BundleLoading.Assets assets)
 		{
@@ -48,27 +48,27 @@ namespace Enlighten.UI
 				ChartKeyframe obj = m_keyframes[i];
 				float chartX = data.m_time;
 				float chartY = ValueToChartYPosition(data.m_value);
-				Vector2 screenPos = ChartToScreenPosition(new Vector2(chartX, chartY));
-				obj.transform.position = screenPos;
+				Vector2 screenPos = ChartToLocalPosition(new Vector2(chartX, chartY));
+				obj.transform.localPosition = screenPos;
 			}
 		}
 
-		private Vector2 ScreenToChartPosition(Vector2 screenPosition)
+		private Vector2 LocalToChartPosition(Vector2 localPosition)
 		{
-			Vector2 localPos = screenPosition - m_pointsParent.GetBottomLeftWorld();
-			Vector2 chartPosition = localPos / m_pointsParent.GetWorldSize();
+			Vector2 chartPosition = localPosition - m_pointsParent.rect.min;
+			chartPosition /= m_pointsParent.rect.size;
 			chartPosition.y += m_chartLowBound;
 			chartPosition.y *= m_chartHighBound - m_chartLowBound;
 			return chartPosition;
 		}
 
-		private Vector2 ChartToScreenPosition(Vector2 chartPosition)
+		private Vector2 ChartToLocalPosition(Vector2 chartPosition)
 		{
-			Vector2 localPos = chartPosition;
-			localPos.y /= m_chartHighBound - m_chartLowBound;
-			localPos.y -= m_chartLowBound;
-			localPos *= m_pointsParent.GetWorldSize();
-			return m_pointsParent.GetBottomLeftWorld() + localPos;
+			Vector2 localPosition = chartPosition;
+			localPosition.y /= m_chartHighBound - m_chartLowBound;
+			localPosition.y -= m_chartLowBound;
+			localPosition *= m_pointsParent.rect.size;
+			return m_pointsParent.rect.min + localPosition;
 		}
 
 		private GenericParameter<T>.Keyframe ChartPositionToKeyframeValues(Vector2 position)
@@ -86,7 +86,7 @@ namespace Enlighten.UI
 		private void OnKeyframeMove(int index, Vector2 screenPosition)
 		{
 			screenPosition = m_pointsParent.ClampPointInside(screenPosition);
-			Vector2 chartPosition = ScreenToChartPosition(screenPosition);
+			Vector2 chartPosition = LocalToChartPosition(screenPosition);
 			GenericParameter<T>.Keyframe keyframe = ChartPositionToKeyframeValues(chartPosition);
 			m_parameter.m_keyframes[index] = keyframe;
 			m_onKeyframeChanged.Invoke(index);
