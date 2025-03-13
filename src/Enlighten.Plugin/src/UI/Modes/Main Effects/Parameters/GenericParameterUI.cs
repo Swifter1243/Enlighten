@@ -7,7 +7,7 @@ namespace Enlighten.UI
 	public abstract class BaseParameterUI : MonoBehaviour {}
 	public abstract class GenericParameterUI<T, TP> : BaseParameterUI where TP : GenericParameter<T>
 	{
-		private TP m_parameter;
+		public TP m_parameter;
 		private int m_selectedKeyframeIndex;
 
 		private GenericParameter<T>.Keyframe SelectedKeyframe
@@ -26,7 +26,7 @@ namespace Enlighten.UI
 				SelectedKeyframe = k;
 			}
 		}
-		public event Action<GenericParameterUI<T, TP>> onUIValueChanged;
+		public event Action onUIValueChanged;
 
 		protected abstract void InitializeInternal(TP parameter);
 
@@ -60,7 +60,7 @@ namespace Enlighten.UI
 		protected void SetCurrentValue(T value)
 		{
 			CurrentValue = value;
-			onUIValueChanged?.Invoke(this);
+			onUIValueChanged?.Invoke();
 		}
 	}
 }

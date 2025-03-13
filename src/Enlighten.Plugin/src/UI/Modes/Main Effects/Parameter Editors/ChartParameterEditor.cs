@@ -17,7 +17,7 @@ namespace Enlighten.UI
 			m_pointsParent = transform.Find("Points");
 		}
 
-		public void SelectParameter(GenericParameter<T> parameter)
+		public void OpenParameter(GenericParameter<T> parameter)
 		{
 			m_parameter = parameter;
 			m_keyframes = GetKeyframes().ToArray();

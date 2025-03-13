@@ -33,17 +33,20 @@ namespace Enlighten.UI
                 case RangeParameter rangeParameter:
                     RangeParameterUI rangeParameterUI = Instantiate(m_assets.m_rangeParameter, parametersParent).AddComponent<RangeParameterUI>();
                     rangeParameterUI.Initialize(rangeParameter);
-                    rangeParameterUI.onUIValueChanged += parameterEditorHandler.SelectParameter;
+                    // ReSharper disable once AccessToModifiedClosure
+                    rangeParameterUI.onUIValueChanged += () => parameterEditorHandler.SelectRangeParameter(rangeParameterUI);
                     break;
                 case FloatParameter floatParameter:
                     FloatParameterUI floatParameterUI = Instantiate(m_assets.m_floatParameter, parametersParent).AddComponent<FloatParameterUI>();
                     floatParameterUI.Initialize(floatParameter);
-                    floatParameterUI.onUIValueChanged += parameterEditorHandler.SelectParameter;
+                    // ReSharper disable once AccessToModifiedClosure
+                    floatParameterUI.onUIValueChanged += () => parameterEditorHandler.SelectFloatParameter(floatParameterUI);
                     break;
                 case BoolParameter boolParameter:
                     BoolParameterUI boolParameterUI = Instantiate(m_assets.m_boolParameter, parametersParent).AddComponent<BoolParameterUI>();
                     boolParameterUI.Initialize(boolParameter);
-                    boolParameterUI.onUIValueChanged += parameterEditorHandler.SelectParameter;
+                    // ReSharper disable once AccessToModifiedClosure
+                    boolParameterUI.onUIValueChanged += () => parameterEditorHandler.SelectBoolParameter(boolParameterUI);
                     break;
                 }
             }

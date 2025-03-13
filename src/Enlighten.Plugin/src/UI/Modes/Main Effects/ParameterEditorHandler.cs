@@ -11,13 +11,19 @@ namespace Enlighten.UI
 			m_floatParameterEditor.Initialize(assets);
 		}
 
-		public void SelectParameter(BaseParameterUI parameterUI)
+		public void SelectFloatParameter(FloatParameterUI floatParameterUI)
 		{
-			switch (parameterUI)
-			{
-			case FloatParameterUI floatParameterUI:
+			m_floatParameterEditor.OpenParameter(floatParameterUI.m_parameter);
+		}
 
-			}
+		public void SelectRangeParameter(RangeParameterUI rangeParameterUI)
+		{
+			// TODO
+		}
+
+		public void SelectBoolParameter(BoolParameterUI boolParameterUI)
+		{
+			// TODO
 		}
 	}
 }
