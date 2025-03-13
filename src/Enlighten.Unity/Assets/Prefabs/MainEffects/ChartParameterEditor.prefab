@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6352721291595391512}
   - component: {fileID: 760696558812033688}
   m_Layer: 5
-  m_Name: ValueEditorWindow
+  m_Name: ChartParameterEditor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
