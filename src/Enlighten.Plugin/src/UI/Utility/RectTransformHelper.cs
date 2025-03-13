@@ -4,13 +4,16 @@ namespace Enlighten.UI
 {
 	static internal class RectTransformHelper
 	{
-		public static Vector2 GetWorldSize(this RectTransform rectTransform)
-		{
-			Vector3[] corners = new Vector3[4];
-			rectTransform.GetWorldCorners(corners);
+		public static Vector2 GetBottomLeftWorld(this RectTransform rt) => rt.TransformPoint(rt.rect.min);
+		public static Vector2 GetTopRightWorld(this RectTransform rt) => rt.TransformPoint(rt.rect.max);
 
-			float width = Vector3.Distance(corners[0], corners[3]); // Bottom-left to bottom-right
-			float height = Vector3.Distance(corners[0], corners[1]); // Bottom-left to top-left
+		public static Vector2 GetWorldSize(this RectTransform rt)
+		{
+			Vector2 bottomLeft = rt.GetBottomLeftWorld();
+			Vector2 topRight = rt.GetTopRightWorld();
+
+			float width = Mathf.Abs(bottomLeft.x - topRight.x);
+			float height = Mathf.Abs(bottomLeft.y - topRight.y);
 
 			return new Vector2(width, height);
 		}
