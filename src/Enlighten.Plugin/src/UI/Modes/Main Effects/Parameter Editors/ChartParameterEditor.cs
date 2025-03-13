@@ -8,7 +8,7 @@ namespace Enlighten.UI
 {
 	internal abstract class ChartParameterEditor<T> : BaseParameterEditor
 	{
-		private Transform m_pointsParent;
+		private RectTransform m_pointsParent;
 		private BundleLoading.Assets m_assets;
 		private GenericParameter<T> m_parameter;
 		private ChartKeyframe<T>[] m_keyframes;
@@ -16,7 +16,7 @@ namespace Enlighten.UI
 		public void Initialize(BundleLoading.Assets assets)
 		{
 			m_assets = assets;
-			m_pointsParent = transform.Find("Points");
+			m_pointsParent = transform.Find("Points").GetComponent<RectTransform>();
 		}
 
 		public void OpenParameter(GenericParameter<T> parameter)
@@ -35,10 +35,9 @@ namespace Enlighten.UI
 				keyframe.onMoved += position => OnKeyframeMove(tempIndex, position);
 				yield return keyframe;
 			}
-			UpdateKeyframePositions();
 		}
 
-		private void UpdateKeyframePositions()
+		protected void UpdateKeyframePositions()
 		{
 			for (int i = 0; i < m_parameter.m_keyframes.Count; i++)
 			{
@@ -75,10 +74,10 @@ namespace Enlighten.UI
 		protected abstract T ChartYPositionToValue(float y);
 		protected abstract float ValueToChartYPosition(T value);
 
-		private void OnKeyframeMove(int index, Vector2 position)
+		private void OnKeyframeMove(int index, Vector2 screenPosition)
 		{
-			// TODO: Clamp position to m_pointsParent
-			Vector2 chartPosition = ScreenToChartPosition(position);
+			screenPosition = m_pointsParent.ClampPointInside(screenPosition);
+			Vector2 chartPosition = ScreenToChartPosition(screenPosition);
 			GenericParameter<T>.Keyframe keyframe = ChartPositionToKeyframeValues(chartPosition);
 			m_parameter.m_keyframes[index] = keyframe;
 			m_onKeyframeChanged.Invoke(index);
@@ -91,6 +90,7 @@ namespace Enlighten.UI
 				Destroy(child.gameObject);
 			}
 			m_keyframes = GetKeyframes().ToArray();
+			UpdateKeyframePositions();
 		}
 
 		public override void RedrawCompletely()

@@ -30,7 +30,7 @@ namespace Enlighten.UI
 
 			Vector2 mouseDelta = eventData.position - m_startingMousePosition;
 			m_targetTransform.position = m_startingPosition + mouseDelta;
-			m_targetTransform.ClampWithinBounds(m_bounds);
+			m_targetTransform.ClampRectWithinBounds(m_bounds);
 		}
 	}
 }

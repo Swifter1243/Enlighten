@@ -4,7 +4,14 @@ namespace Enlighten.UI
 {
 	static internal class RectTransformHelper
 	{
-		public static void ClampWithinBounds(this RectTransform target, RectTransform bounds)
+		public static Vector2 ClampPointInside(this RectTransform bounds, Vector2 point)
+		{
+			float x = Mathf.Clamp(point.x, bounds.rect.xMin, bounds.rect.xMax);
+			float y = Mathf.Clamp(point.y, bounds.rect.yMin, bounds.rect.yMax);
+			return new Vector2(x, y);
+		}
+
+		public static void ClampRectWithinBounds(this RectTransform target, RectTransform bounds)
 		{
 			// Get world corners of both the target and bounds RectTransforms
 			Vector3[] targetCorners = new Vector3[4];
