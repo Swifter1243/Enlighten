@@ -38,7 +38,7 @@ namespace Enlighten
 		{
 			m_enlightenPanelPrefab = bundle.LoadAsset<GameObject>("Assets/Prefabs/EnlightenPanel.prefab"),
 			m_pointPrefab = bundle.LoadAsset<GameObject>("Assets/Prefabs/Point.prefab"),
-			m_icon = bundle.LoadAsset<Sprite>("Assets/Sprites/icon.png"),
+			m_icon = bundle.LoadAsset<Sprite>("Assets/Images/icon.png"),
 			m_mainEffectOptionPanel = bundle.LoadAsset<GameObject>("Assets/Prefabs/MainEffects/EffectOptionPanel.prefab"),
 		};
 	}
