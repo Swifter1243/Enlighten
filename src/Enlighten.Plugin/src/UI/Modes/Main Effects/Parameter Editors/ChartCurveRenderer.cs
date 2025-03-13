@@ -91,8 +91,9 @@ namespace Enlighten.UI
 				vertex.position = a.m_bottom;
 				vh.AddVert(vertex);
 
-				vh.AddTriangle(0, 1, 2);
-				vh.AddTriangle(2, 3, 0);
+				int offset = i * 4;
+				vh.AddTriangle(0 + offset, 1 + offset, 2 + offset);
+				vh.AddTriangle(2 + offset, 3 + offset, 0 + offset);
 			}
 		}
 	}

@@ -28,9 +28,7 @@ namespace Enlighten.Core
 		public void ResetToDefault()
 		{
 			m_keyframes.Clear();
-			AddPoint(m_defaultValue, 0.25f);
 			AddPoint(m_defaultValue, 0.5f);
-			AddPoint(m_defaultValue, 0.75f);
 		}
 
 		public void SortKeyframes()
