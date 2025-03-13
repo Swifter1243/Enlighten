@@ -13,6 +13,7 @@ namespace Enlighten.UI
 		{
 			m_floatParameterEditor = rightContent.Find("FloatParameterEditor").gameObject.AddComponent<FloatParameterEditor>();
 			m_floatParameterEditor.Initialize(assets);
+			m_floatParameterEditor.gameObject.SetActive(false);
 			resizeableUI.m_onResize.AddListener(RedrawCurrentEditor);
 		}
 
@@ -21,10 +22,8 @@ namespace Enlighten.UI
 			if (floatParameterUI == m_currentParameterUI)
 				return;
 
-			m_currentParameterUI = floatParameterUI;
-			m_currentParameterEditor = m_floatParameterEditor;
 			m_floatParameterEditor.OpenParameter(floatParameterUI.m_parameter);
-			AddListeners();
+			SetupParameter(floatParameterUI, m_floatParameterEditor);
 		}
 
 		public void SelectRangeParameter(RangeParameterUI rangeParameterUI)
@@ -37,8 +36,18 @@ namespace Enlighten.UI
 			// TODO
 		}
 
-		private void AddListeners()
+		private void SetupParameter(BaseParameterUI parameterUI, BaseParameterEditor parameterEditor)
 		{
+			if (m_currentParameterEditor != null)
+			{
+				m_currentParameterEditor.gameObject.SetActive(false);
+				m_currentParameterEditor = null;
+			}
+
+			m_currentParameterUI = parameterUI;
+			m_currentParameterEditor = parameterEditor;
+			m_currentParameterEditor.gameObject.SetActive(true);
+
 			m_currentParameterUI.m_onUIChanged.AddListener(RedrawCurrentEditor);
 			m_currentParameterEditor.m_onKeyframeChanged.AddListener(UpdateCurrentParameterUI);
 			m_currentParameterEditor.m_onKeyframeSelected.AddListener(SetCurrentParameterUIKeyframeIndex);
