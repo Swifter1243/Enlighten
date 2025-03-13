@@ -103,6 +103,7 @@
     <Compile Include="src\UI\Modes\Main Effects\Parameter Editors\ChartParameterEditor.cs" />
     <Compile Include="src\UI\Modes\Main Effects\Parameter Editors\FloatParameterEditor.cs" />
     <Compile Include="src\UI\Modes\Main Effects\ParameterEditorHandler.cs" />
+    <Compile Include="src\UI\Modes\Main Effects\Parameters\BaseParameterUI.cs" />
     <Compile Include="src\UI\Modes\Main Effects\Parameters\BoolParameterUI.cs" />
     <Compile Include="src\UI\Modes\Main Effects\Parameters\FloatParameterUI.cs" />
     <Compile Include="src\UI\Modes\Main Effects\Parameters\GenericParameterUI.cs" />

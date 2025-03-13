@@ -17,6 +17,9 @@ namespace Enlighten.UI
 
 		public void SelectFloatParameter(FloatParameterUI floatParameterUI)
 		{
+			if (floatParameterUI == m_currentParameterUI)
+				return;
+
 			m_currentParameterUI = floatParameterUI;
 			m_currentParameterEditor = m_floatParameterEditor;
 			m_floatParameterEditor.OpenParameter(floatParameterUI.m_parameter);

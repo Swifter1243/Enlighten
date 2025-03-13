@@ -22,7 +22,7 @@ namespace Enlighten.UI
 		public void OpenParameter(GenericParameter<T> parameter)
 		{
 			m_parameter = parameter;
-			m_keyframes = GetKeyframes().ToArray();
+			RedrawPoints();
 		}
 
 		private IEnumerable<ChartKeyframe<T>> GetKeyframes()

@@ -31,27 +31,35 @@ namespace Enlighten.UI
                 switch (effectParameter)
                 {
                 case RangeParameter rangeParameter:
-                    RangeParameterUI rangeParameterUI = Instantiate(m_assets.m_rangeParameter, parametersParent).AddComponent<RangeParameterUI>();
-                    rangeParameterUI.Initialize(rangeParameter);
-                    // ReSharper disable once AccessToModifiedClosure
-                    rangeParameterUI.m_onUIChanged.AddListener(() => parameterEditorHandler.SelectRangeParameter(rangeParameterUI));
+                    SetupRangeParameter(parameterEditorHandler, parametersParent, rangeParameter);
                     break;
                 case FloatParameter floatParameter:
-                    FloatParameterUI floatParameterUI = Instantiate(m_assets.m_floatParameter, parametersParent).AddComponent<FloatParameterUI>();
-                    floatParameterUI.Initialize(floatParameter);
-                    // ReSharper disable once AccessToModifiedClosure
-                    floatParameterUI.m_onUIChanged.AddListener(() => parameterEditorHandler.SelectFloatParameter(floatParameterUI));
+                    SetupFloatParameter(parameterEditorHandler, parametersParent, floatParameter);
                     break;
                 case BoolParameter boolParameter:
-                    BoolParameterUI boolParameterUI = Instantiate(m_assets.m_boolParameter, parametersParent).AddComponent<BoolParameterUI>();
-                    boolParameterUI.Initialize(boolParameter);
-                    // ReSharper disable once AccessToModifiedClosure
-                    boolParameterUI.m_onUIChanged.AddListener(() => parameterEditorHandler.SelectBoolParameter(boolParameterUI));
+                    SetupBoolParameter(parameterEditorHandler, parametersParent, boolParameter);
                     break;
                 }
             }
         }
 
-
+        private void SetupRangeParameter(ParameterEditorHandler parameterEditorHandler, Transform parametersParent, RangeParameter rangeParameter)
+        {
+            RangeParameterUI parameterUI = Instantiate(m_assets.m_rangeParameter, parametersParent).AddComponent<RangeParameterUI>();
+            parameterUI.Initialize(rangeParameter);
+            parameterUI.m_onInteracted.AddListener(() => parameterEditorHandler.SelectRangeParameter(parameterUI));
+        }
+        private void SetupFloatParameter(ParameterEditorHandler parameterEditorHandler, Transform parametersParent, FloatParameter floatParameter)
+        {
+            FloatParameterUI parameterUI = Instantiate(m_assets.m_floatParameter, parametersParent).AddComponent<FloatParameterUI>();
+            parameterUI.Initialize(floatParameter);
+            parameterUI.m_onInteracted.AddListener(() => parameterEditorHandler.SelectFloatParameter(parameterUI));
+        }
+        private void SetupBoolParameter(ParameterEditorHandler parameterEditorHandler, Transform parametersParent, BoolParameter boolParameter)
+        {
+            BoolParameterUI parameterUI = Instantiate(m_assets.m_boolParameter, parametersParent).AddComponent<BoolParameterUI>();
+            parameterUI.Initialize(boolParameter);
+            parameterUI.m_onInteracted.AddListener(() => parameterEditorHandler.SelectBoolParameter(parameterUI));
+        }
     }
 }
