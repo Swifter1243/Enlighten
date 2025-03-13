@@ -1,5 +1,6 @@
 ﻿using Enlighten.Core;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Enlighten.UI
 {
@@ -13,6 +14,16 @@ namespace Enlighten.UI
             m_assets = assets;
             m_effect = effect;
 
+            Transform top = transform.Find("Top");
+            Text titleText = top.Find("Title").GetComponent<Text>();
+            titleText.text = effect.m_name;
+            ChroMapperUtils.AddTooltip(titleText.gameObject, effect.m_description);
+
+            InitializeParameters();
+        }
+
+        private void InitializeParameters()
+        {
             Transform parametersParent = transform.Find("Parameters");
 
             foreach (BaseParameter effectParameter in m_effect.Parameters)
