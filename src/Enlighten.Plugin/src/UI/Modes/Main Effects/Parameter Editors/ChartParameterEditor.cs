@@ -13,8 +13,8 @@ namespace Enlighten.UI
 		private GenericParameter<T> m_parameter;
 		private ChartKeyframe[] m_keyframes;
 
-		protected float m_chartLowBound = 0;
-		protected float m_chartHighBound = 1;
+		protected float m_chartLowBound = 0.2f;
+		protected float m_chartHighBound = 2f;
 
 		public void Initialize(BundleLoading.Assets assets)
 		{
@@ -53,10 +53,12 @@ namespace Enlighten.UI
 			}
 		}
 
+		private Vector2 BottomLeftCorner => m_pointsParent.TransformPoint(m_pointsParent.rect.min);
+
 		private Vector2 ScreenToChartPosition(Vector2 screenPosition)
 		{
-			Vector2 localPos = screenPosition - m_pointsParent.rect.min;
-			Vector2 chartPosition = localPos / m_pointsParent.rect.size;
+			Vector2 localPos = screenPosition - BottomLeftCorner;
+			Vector2 chartPosition = localPos / m_pointsParent.GetWorldSize();
 			chartPosition.y += m_chartLowBound;
 			chartPosition.y *= m_chartHighBound - m_chartLowBound;
 			return chartPosition;
@@ -65,10 +67,10 @@ namespace Enlighten.UI
 		private Vector2 ChartToScreenPosition(Vector2 chartPosition)
 		{
 			Vector2 localPos = chartPosition;
-			chartPosition.y /= m_chartHighBound - m_chartLowBound;
-			chartPosition.y -= m_chartLowBound;
-			localPos *= m_pointsParent.rect.size;
-			return localPos + m_pointsParent.rect.min;
+			localPos.y /= m_chartHighBound - m_chartLowBound;
+			localPos.y -= m_chartLowBound;
+			localPos *= m_pointsParent.GetWorldSize();
+			return BottomLeftCorner + localPos;
 		}
 
 		private GenericParameter<T>.Keyframe ChartPositionToKeyframeValues(Vector2 position)
