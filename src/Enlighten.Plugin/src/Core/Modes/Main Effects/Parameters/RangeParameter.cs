@@ -3,8 +3,8 @@ namespace Enlighten.Core
 {
 	public class RangeParameter : FloatParameter
 	{
-		private readonly float m_minValue;
-		private readonly float m_maxValue;
+		public readonly float m_minValue;
+		public readonly float m_maxValue;
 
 		public RangeParameter(float minValue, float maxValue, float defaultValue, string name, string description) : base(defaultValue, name, description)
 		{
