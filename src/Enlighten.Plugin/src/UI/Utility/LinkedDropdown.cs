@@ -30,6 +30,8 @@ namespace Enlighten.UI
 				throw new Exception($"Couldn't find object '{initialObject.name}' in the provided list!");
 			}
 			dropdown.value = initialObjectIndex;
+			m_activeGameObject = initialObject;
+			m_activeGameObject.gameObject.SetActive(true);
 		}
 
 		private void OnValueChanged(int newIndex) {
