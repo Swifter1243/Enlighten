@@ -122,9 +122,9 @@ namespace Enlighten.UI
 
 		private IEnumerable<Vector2> GetCurveLocalPoints()
 		{
-			List<GenericParameter<T>.Keyframe> keyframes = m_parameter.m_keyframes;
+			GenericParameter<T>.Keyframe[] keyframes = m_parameter.SortedKeyframes;
 
-			switch (keyframes.Count)
+			switch (keyframes.Length)
 			{
 			case 0:
 				yield break;
@@ -139,12 +139,12 @@ namespace Enlighten.UI
 			if (keyframes[0].m_time > 0)
 				yield return SampleTime(0);
 
-			for (int i = 0; i < keyframes.Count; i++)
+			for (int i = 0; i < keyframes.Length; i++)
 			{
 				float a = keyframes[i].m_time;
 				yield return SampleTime(a);
 
-				if (i == keyframes.Count - 1)
+				if (i == keyframes.Length - 1)
 					continue;
 
 				float b = keyframes[i + 1].m_time;
@@ -158,7 +158,7 @@ namespace Enlighten.UI
 				}
 			}
 
-			if (keyframes[keyframes.Count - 1].m_time < 1)
+			if (keyframes[keyframes.Length - 1].m_time < 1)
 				yield return SampleTime(1);
 
 			yield break;
