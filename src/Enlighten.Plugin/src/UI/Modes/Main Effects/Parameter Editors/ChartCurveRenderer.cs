@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Enlighten.UI
 {
-	public class ChartCurveRenderer : Graphic
+	public class ChartCurveRenderer : MaskableGraphic
 	{
 		private struct Segment
 		{
