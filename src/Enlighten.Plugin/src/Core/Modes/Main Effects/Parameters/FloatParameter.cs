@@ -8,10 +8,10 @@ namespace Enlighten.Core
 
 		private float SplineInterpolation(int a, int b, float time)
 		{
-			float p1 = m_keyframes[a].m_value;
-			float p2 = m_keyframes[b].m_value;
-			float p0 = a - 1 < 0 ? p1 : m_keyframes[a - 1].m_value;
-			float p3 = b + 1 > m_keyframes.Count - 1 ? p2 : m_keyframes[b + 1].m_value;
+			float p1 = SortedKeyframes[a].m_value;
+			float p2 = SortedKeyframes[b].m_value;
+			float p0 = a - 1 < 0 ? p1 : SortedKeyframes[a - 1].m_value;
+			float p3 = b + 1 > SortedKeyframes.Length - 1 ? p2 : SortedKeyframes[b + 1].m_value;
 
 			float tt = time * time;
 			float ttt = tt * time;
@@ -26,8 +26,8 @@ namespace Enlighten.Core
 
 		protected override float InterpolatePoints(int left, int right, float normalTime)
 		{
-			float p1 = m_keyframes[left].m_value;
-			float p2 = m_keyframes[right].m_value;
+			float p1 = SortedKeyframes[left].m_value;
+			float p2 = SortedKeyframes[right].m_value;
 			return Mathf.Lerp(p1, p2, normalTime);
 		}
 	}

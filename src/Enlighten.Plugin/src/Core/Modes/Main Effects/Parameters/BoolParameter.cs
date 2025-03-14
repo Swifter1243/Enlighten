@@ -7,7 +7,7 @@
 
 		protected override bool InterpolatePoints(int left, int right, float normalTime)
 		{
-			return m_keyframes[left].m_value;
+			return SortedKeyframes[left].m_value;
 		}
 	}
 }

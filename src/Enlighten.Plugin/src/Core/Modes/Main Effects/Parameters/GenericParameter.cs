@@ -16,7 +16,7 @@ namespace Enlighten.Core
 	}
 	public abstract class GenericParameter<T> : BaseParameter
 	{
-		protected readonly List<Keyframe> m_keyframes = new List<Keyframe>();
+		private readonly List<Keyframe> m_keyframes = new List<Keyframe>();
 		private Keyframe[] m_sortedKeyframes;
 		public Keyframe[] SortedKeyframes => m_sortedKeyframes;
 		private readonly T m_defaultValue;

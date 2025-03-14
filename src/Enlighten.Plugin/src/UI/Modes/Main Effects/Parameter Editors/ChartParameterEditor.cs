@@ -91,10 +91,11 @@ namespace Enlighten.UI
 		{
 			Vector2 localPosition = m_pointsParent.InverseTransformPoint(screenPosition);
 			localPosition = m_pointsParent.ClampPointInside(localPosition);
+
 			m_keyframes[index].transform.localPosition = localPosition;
 			Vector2 chartPosition = LocalToChartPosition(localPosition);
-			GenericParameter<T>.Keyframe keyframe = ChartPositionToKeyframeValues(chartPosition);
-			m_parameter[index] = keyframe;
+			m_parameter[index] = ChartPositionToKeyframeValues(chartPosition);
+
 			m_onKeyframeChanged.Invoke(index);
 			RedrawCurves();
 		}
