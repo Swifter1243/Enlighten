@@ -29,7 +29,6 @@ namespace Enlighten.UI
 		public void OpenParameter(GenericParameter<T> parameter)
 		{
 			m_parameter = parameter;
-			RedrawCompletely();
 		}
 
 		private IEnumerable<ChartKeyframe> GetKeyframes()

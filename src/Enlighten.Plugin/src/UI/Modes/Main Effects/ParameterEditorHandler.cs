@@ -1,5 +1,6 @@
 ﻿using Enlighten.Core;
 using UnityEngine;
+using UnityEngine.UI;
 namespace Enlighten.UI
 {
 	internal class ParameterEditorHandler : MonoBehaviour
@@ -9,12 +10,15 @@ namespace Enlighten.UI
 
 		private FloatParameterEditor m_floatParameterEditor;
 
+		private RectTransform m_editorParent;
+
 		public void Initialize(BundleLoading.Assets assets, Transform rightContent, ResizeableUI resizeableUI)
 		{
 			m_floatParameterEditor = rightContent.Find("FloatParameterEditor").gameObject.AddComponent<FloatParameterEditor>();
 			m_floatParameterEditor.Initialize(assets);
 			m_floatParameterEditor.gameObject.SetActive(false);
 			resizeableUI.m_onResize.AddListener(RedrawCurrentEditor);
+			m_editorParent = rightContent.GetComponent<RectTransform>();
 		}
 
 		public void SelectFloatParameter(FloatParameterUI floatParameterUI)
@@ -47,6 +51,8 @@ namespace Enlighten.UI
 			m_currentParameterUI = parameterUI;
 			m_currentParameterEditor = parameterEditor;
 			m_currentParameterEditor.gameObject.SetActive(true);
+			LayoutRebuilder.ForceRebuildLayoutImmediate(m_editorParent);
+			m_currentParameterEditor.RedrawCompletely();
 
 			m_currentParameterUI.m_onUIChanged.AddListener(RedrawCurrentEditor);
 			m_currentParameterEditor.m_onKeyframeChanged.AddListener(UpdateCurrentParameterUI);
