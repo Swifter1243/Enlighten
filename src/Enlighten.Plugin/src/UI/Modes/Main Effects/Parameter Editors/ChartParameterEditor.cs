@@ -135,15 +135,8 @@ namespace Enlighten.UI
 		{
 			GenericParameter<T>.Keyframe[] keyframes = m_parameter.SortedKeyframes;
 
-			switch (keyframes.Length)
+			if (keyframes.Length == 0)
 			{
-			case 0:
-				yield break;
-			case 1:
-				T value = keyframes[0].m_value;
-				float y = ValueToChartYPosition(value);
-				yield return ChartToLocalPosition(new Vector2(0, y));
-				yield return ChartToLocalPosition(new Vector2(1, y));
 				yield break;
 			}
 
@@ -152,19 +145,19 @@ namespace Enlighten.UI
 
 			for (int i = 0; i < keyframes.Length; i++)
 			{
-				float a = keyframes[i].m_time;
-				yield return SampleTime(a);
+				GenericParameter<T>.Keyframe a = keyframes[i];
+				yield return SamplePoint(a);
 
 				if (i == keyframes.Length - 1)
 					continue;
 
-				float b = keyframes[i + 1].m_time;
+				GenericParameter<T>.Keyframe b = keyframes[i + 1];
 
 				const int RESOLUTION = 10;
 				for (int j = 1; j < RESOLUTION; j++)
 				{
 					float f = j / (float)RESOLUTION;
-					float t = Mathf.Lerp(a, b, f);
+					float t = Mathf.Lerp(a.m_time, b.m_time, f);
 					yield return SampleTime(t);
 				}
 			}
@@ -179,6 +172,13 @@ namespace Enlighten.UI
 				T value = m_parameter.Interpolate(t);
 				float y = ValueToChartYPosition(value);
 				Vector2 chartPosition = new Vector2(t, y);
+				return ChartToLocalPosition(chartPosition);
+			}
+
+			Vector2 SamplePoint(GenericParameter<T>.Keyframe key)
+			{
+				float y = ValueToChartYPosition(key.m_value);
+				Vector2 chartPosition = new Vector2(key.m_time, y);
 				return ChartToLocalPosition(chartPosition);
 			}
 		}
