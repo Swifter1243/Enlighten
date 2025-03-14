@@ -14,9 +14,9 @@ namespace Enlighten.UI
 		}
 		private Segment[] m_segments;
 
-		public void CalculateCurve(IEnumerable<Vector2> points)
+		public void CalculateCurve(IEnumerable<Vector2> points, float thickness, float overshoot)
 		{
-			m_segments = CalculateSegments(points.ToArray(), 1, 300).ToArray();
+			m_segments = CalculateSegments(points.ToArray(), thickness, overshoot).ToArray();
 			SetVerticesDirty();
 		}
 

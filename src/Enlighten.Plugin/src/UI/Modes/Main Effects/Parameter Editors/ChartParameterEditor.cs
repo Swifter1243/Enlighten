@@ -118,27 +118,7 @@ namespace Enlighten.UI
 
 		protected void RedrawCurves()
 		{
-			m_curveRenderer.CalculateCurve(FullResolutionPoints());
-		}
-
-		private IEnumerable<Vector2> FullResolutionPoints()
-		{
-			GenericParameter<T>.Keyframe[] keyframes = m_parameter.SortedKeyframes;
-
-			const int ITERATIONS = 100;
-			for (int i = 0; i <= ITERATIONS; i++)
-			{
-				float t = i / (float)ITERATIONS;
-				yield return SampleTime(t);
-			}
-
-			Vector2 SampleTime(float t)
-			{
-				T value = m_parameter.Interpolate(t);
-				float y = ValueToChartYPosition(value);
-				Vector2 chartPosition = new Vector2(t, y);
-				return ChartToLocalPosition(chartPosition);
-			}
+			m_curveRenderer.CalculateCurve(GetCurveLocalPoints(), 1, m_pointsParent.rect.height);
 		}
 
 		private IEnumerable<Vector2> GetCurveLocalPoints()
@@ -170,7 +150,7 @@ namespace Enlighten.UI
 
 				float b = keyframes[i + 1].m_time;
 
-				const int RESOLUTION = 5;
+				const int RESOLUTION = 10;
 				for (int j = 1; j < RESOLUTION; j++)
 				{
 					float f = j / (float)RESOLUTION;
