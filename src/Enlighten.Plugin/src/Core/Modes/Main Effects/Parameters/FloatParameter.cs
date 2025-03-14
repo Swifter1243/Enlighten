@@ -1,4 +1,5 @@
-﻿namespace Enlighten.Core
+﻿using UnityEngine;
+namespace Enlighten.Core
 {
 	public class FloatParameter : GenericParameter<float>
 	{
@@ -25,7 +26,9 @@
 
 		protected override float InterpolatePoints(int left, int right, float normalTime)
 		{
-			return SplineInterpolation(left, right, normalTime);
+			float p1 = m_keyframes[left].m_value;
+			float p2 = m_keyframes[right].m_value;
+			return Mathf.Lerp(p1, p2, normalTime);
 		}
 	}
 }

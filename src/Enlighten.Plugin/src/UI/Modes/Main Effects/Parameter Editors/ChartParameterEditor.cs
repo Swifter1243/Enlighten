@@ -34,7 +34,7 @@ namespace Enlighten.UI
 
 		private IEnumerable<ChartKeyframe> GetKeyframes()
 		{
-			for (int i = 0; i < m_parameter.m_keyframes.Count; i++)
+			for (int i = 0; i < m_parameter.Count; i++)
 			{
 				ChartKeyframe keyframe = Instantiate(m_assets.m_pointPrefab, m_pointsParent).AddComponent<ChartKeyframe>();
 				int tempIndex = i;
@@ -46,9 +46,9 @@ namespace Enlighten.UI
 
 		protected void UpdateKeyframePositions()
 		{
-			for (int i = 0; i < m_parameter.m_keyframes.Count; i++)
+			for (int i = 0; i < m_parameter.Count; i++)
 			{
-				GenericParameter<T>.Keyframe data = m_parameter.m_keyframes[i];
+				GenericParameter<T>.Keyframe data = m_parameter[i];
 				ChartKeyframe obj = m_keyframes[i];
 				float chartX = data.m_time;
 				float chartY = ValueToChartYPosition(data.m_value);
@@ -94,7 +94,7 @@ namespace Enlighten.UI
 			m_keyframes[index].transform.localPosition = localPosition;
 			Vector2 chartPosition = LocalToChartPosition(localPosition);
 			GenericParameter<T>.Keyframe keyframe = ChartPositionToKeyframeValues(chartPosition);
-			m_parameter.m_keyframes[index] = keyframe;
+			m_parameter[index] = keyframe;
 			m_onKeyframeChanged.Invoke(index);
 			RedrawCurves();
 		}
@@ -117,7 +117,27 @@ namespace Enlighten.UI
 
 		protected void RedrawCurves()
 		{
-			m_curveRenderer.CalculateCurve(GetCurveLocalPoints());
+			m_curveRenderer.CalculateCurve(FullResolutionPoints());
+		}
+
+		private IEnumerable<Vector2> FullResolutionPoints()
+		{
+			GenericParameter<T>.Keyframe[] keyframes = m_parameter.SortedKeyframes;
+
+			const int ITERATIONS = 100;
+			for (int i = 0; i <= ITERATIONS; i++)
+			{
+				float t = i / (float)ITERATIONS;
+				yield return SampleTime(t);
+			}
+
+			Vector2 SampleTime(float t)
+			{
+				T value = m_parameter.Interpolate(t);
+				float y = ValueToChartYPosition(value);
+				Vector2 chartPosition = new Vector2(t, y);
+				return ChartToLocalPosition(chartPosition);
+			}
 		}
 
 		private IEnumerable<Vector2> GetCurveLocalPoints()

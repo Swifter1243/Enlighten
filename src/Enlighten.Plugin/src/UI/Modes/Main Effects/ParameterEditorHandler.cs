@@ -55,7 +55,6 @@ namespace Enlighten.UI
 		private void UpdateCurrentParameterUI(int _)
 		{
 			m_currentParameterUI.UpdateUI();
-			m_currentParameterUI.SortParameter();
 		}
 		private void SetCurrentParameterUIKeyframeIndex(int index)
 		{

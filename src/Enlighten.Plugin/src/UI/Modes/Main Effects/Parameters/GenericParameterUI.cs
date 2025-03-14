@@ -11,8 +11,8 @@ namespace Enlighten.UI
 
 		private GenericParameter<T>.Keyframe SelectedKeyframe
 		{
-			get => m_parameter.m_keyframes[m_selectedKeyframeIndex];
-			set => m_parameter.m_keyframes[m_selectedKeyframeIndex] = value;
+			get => m_parameter[m_selectedKeyframeIndex];
+			set => m_parameter[m_selectedKeyframeIndex] = value;
 		}
 
 		protected T CurrentValue
@@ -51,11 +51,6 @@ namespace Enlighten.UI
 		{
 			CurrentValue = value;
 			m_onUIChanged.Invoke();
-		}
-
-		public override void SortParameter()
-		{
-			m_parameter.SortKeyframes();
 		}
 	}
 }

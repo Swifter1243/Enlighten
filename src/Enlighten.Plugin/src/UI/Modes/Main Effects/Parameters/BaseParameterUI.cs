@@ -14,7 +14,6 @@ namespace Enlighten.UI
 		}
 
 		public abstract void UpdateUI();
-		public abstract void SortParameter();
 		public UnityEvent m_onUIChanged = new UnityEvent();
 		public UnityEvent m_onInteracted = new UnityEvent();
 

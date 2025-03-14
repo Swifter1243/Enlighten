@@ -16,7 +16,7 @@ namespace Enlighten.UI
 
 		public void CalculateCurve(IEnumerable<Vector2> points)
 		{
-			m_segments = CalculateSegments(points.ToArray(), 1, 10).ToArray();
+			m_segments = CalculateSegments(points.ToArray(), 1, 300).ToArray();
 			SetVerticesDirty();
 		}
 

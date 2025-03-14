@@ -16,7 +16,7 @@ namespace Enlighten.Core
 	}
 	public abstract class GenericParameter<T> : BaseParameter
 	{
-		public readonly List<Keyframe> m_keyframes = new List<Keyframe>();
+		protected readonly List<Keyframe> m_keyframes = new List<Keyframe>();
 		private Keyframe[] m_sortedKeyframes;
 		public Keyframe[] SortedKeyframes => m_sortedKeyframes;
 		private readonly T m_defaultValue;
@@ -30,9 +30,9 @@ namespace Enlighten.Core
 		public void ResetToDefault()
 		{
 			m_keyframes.Clear();
-			AddPoint(m_defaultValue, 0.25f);
-			AddPoint(m_defaultValue, 0.5f);
-			AddPoint(m_defaultValue, 0.75f);
+			Add(m_defaultValue, 0.25f);
+			Add(m_defaultValue, 0.5f);
+			Add(m_defaultValue, 0.75f);
 		}
 
 		public void SortKeyframes()
@@ -46,7 +46,7 @@ namespace Enlighten.Core
 			public float m_time;
 		}
 
-		public void AddPoint(T value, float time)
+		public void Add(T value, float time)
 		{
 			m_keyframes.Add(new Keyframe
 			{
@@ -55,6 +55,24 @@ namespace Enlighten.Core
 			});
 			SortKeyframes();
 		}
+
+		public void RemoveAt(int index)
+		{
+			m_keyframes.RemoveAt(index);
+			SortKeyframes();
+		}
+
+		public Keyframe this[int index]
+		{
+			get => m_keyframes[index];
+			set
+			{
+				m_keyframes[index] = value;
+				SortKeyframes();
+			}
+		}
+
+		public int Count => m_keyframes.Count;
 
 		protected abstract T InterpolatePoints(int left, int right, float normalTime);
 
