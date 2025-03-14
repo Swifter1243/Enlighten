@@ -1,18 +1,23 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Enlighten.Core;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 namespace Enlighten.UI
 {
-	internal abstract class ChartParameterEditor<T> : BaseParameterEditor
+	internal abstract class ChartParameterEditor<T> : BaseParameterEditor, IPointerDownHandler
 	{
 		private RectTransform m_pointsParent;
 		private ChartCurveRenderer m_curveRenderer;
 		private BundleLoading.Assets m_assets;
 		private GenericParameter<T> m_parameter;
 		private ChartKeyframe[] m_keyframes;
+
+		private const float DOUBLE_CLICK_DURATION = 0.5f;
+		private Coroutine m_clickedCoroutine;
 
 		protected float m_chartLowBound = 0f;
 		protected float m_chartHighBound = 1f;
@@ -74,7 +79,14 @@ namespace Enlighten.UI
 			return m_pointsParent.rect.min + localPosition;
 		}
 
-		private GenericParameter<T>.Keyframe ChartPositionToKeyframeValues(Vector2 position)
+		private Vector2 ScreenToLocalPosition(Vector2 screenPosition)
+		{
+			Vector2 localPosition = m_pointsParent.InverseTransformPoint(screenPosition);
+			localPosition = m_pointsParent.ClampPointInside(localPosition);
+			return localPosition;
+		}
+
+		private GenericParameter<T>.Keyframe ChartPositionToKeyframe(Vector2 position)
 		{
 			return new GenericParameter<T>.Keyframe
 			{
@@ -88,12 +100,11 @@ namespace Enlighten.UI
 
 		private void OnKeyframeMove(int index, Vector2 screenPosition)
 		{
-			Vector2 localPosition = m_pointsParent.InverseTransformPoint(screenPosition);
-			localPosition = m_pointsParent.ClampPointInside(localPosition);
+			Vector2 localPosition = ScreenToLocalPosition(screenPosition);
 
 			m_keyframes[index].transform.localPosition = localPosition;
 			Vector2 chartPosition = LocalToChartPosition(localPosition);
-			m_parameter[index] = ChartPositionToKeyframeValues(chartPosition);
+			m_parameter[index] = ChartPositionToKeyframe(chartPosition);
 
 			m_onKeyframeChanged.Invoke(index);
 			RedrawCurves();
@@ -170,6 +181,46 @@ namespace Enlighten.UI
 				Vector2 chartPosition = new Vector2(t, y);
 				return ChartToLocalPosition(chartPosition);
 			}
+		}
+
+		public void OnPointerDown(PointerEventData eventData)
+		{
+			HandleDoubleClickCheck(eventData);
+		}
+
+		private void HandleDoubleClickCheck(PointerEventData eventData)
+		{
+			if (m_clickedCoroutine != null)
+			{
+				StopCoroutine(m_clickedCoroutine);
+				AddKeyframe(eventData.position);
+				m_clickedCoroutine = null;
+			}
+
+			m_clickedCoroutine = StartCoroutine(ClickedTimer());
+		}
+
+		private IEnumerator ClickedTimer()
+		{
+			float timer = 0;
+
+			while (timer < DOUBLE_CLICK_DURATION)
+			{
+				timer += Time.deltaTime;
+				yield return null;
+			}
+
+			m_clickedCoroutine = null;
+		}
+
+		private void AddKeyframe(Vector2 screenPosition)
+		{
+			Vector2 localPosition = ScreenToLocalPosition(screenPosition);
+			Vector2 chartPosition = LocalToChartPosition(localPosition);
+			GenericParameter<T>.Keyframe keyframe = ChartPositionToKeyframe(chartPosition);
+			m_parameter.Add(keyframe);
+			RedrawCompletely();
+			m_onKeyframeSelected.Invoke(m_parameter.Count - 1);
 		}
 	}
 }

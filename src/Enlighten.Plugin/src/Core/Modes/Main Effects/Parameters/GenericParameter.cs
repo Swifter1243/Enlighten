@@ -30,9 +30,7 @@ namespace Enlighten.Core
 		public void ResetToDefault()
 		{
 			m_keyframes.Clear();
-			Add(m_defaultValue, 0.25f);
 			Add(m_defaultValue, 0.5f);
-			Add(m_defaultValue, 0.75f);
 		}
 
 		public void SortKeyframes()
@@ -48,11 +46,15 @@ namespace Enlighten.Core
 
 		public void Add(T value, float time)
 		{
-			m_keyframes.Add(new Keyframe
+			Add(new Keyframe
 			{
 				m_time = time,
 				m_value = value,
 			});
+		}
+		public void Add(Keyframe keyframe)
+		{
+			m_keyframes.Add(keyframe);
 			SortKeyframes();
 		}
 
