@@ -21,14 +21,12 @@ namespace Enlighten.Core
 			float q2 = (-3.0f * ttt) + (4.0f * tt) + time;
 			float q3 = ttt - tt;
 
-			return p0 * q0 + p1 * q1 + p2 * q2 + p3 * q3;
+			return 0.5f * (p0 * q0 + p1 * q1 + p2 * q2 + p3 * q3);
 		}
 
 		protected override float InterpolatePoints(int left, int right, float normalTime)
 		{
-			float p1 = SortedKeyframes[left].m_value;
-			float p2 = SortedKeyframes[right].m_value;
-			return Mathf.Lerp(p1, p2, normalTime);
+			return SplineInterpolation(left, right, normalTime);
 		}
 	}
 }
