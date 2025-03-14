@@ -75,25 +75,22 @@ namespace Enlighten.UI
 			if (m_segments == null || m_segments.Length == 0)
 				return;
 
-			for (int i = 0; i < m_segments.Length - 1; i++)
+			UIVertex vertex = UIVertex.simpleVert;
+
+			for (int i = 0; i < m_segments.Length; i++)
 			{
-				Segment a = m_segments[i];
-				Segment b = m_segments[i + 1];
-
-				UIVertex vertex = UIVertex.simpleVert;
-
-				vertex.position = a.m_top;
+				Segment segment = m_segments[i];
+				vertex.position = segment.m_top;
 				vh.AddVert(vertex);
-				vertex.position = b.m_top;
-				vh.AddVert(vertex);
-				vertex.position = b.m_bottom;
-				vh.AddVert(vertex);
-				vertex.position = a.m_bottom;
+				vertex.position = segment.m_bottom;
 				vh.AddVert(vertex);
 
-				int offset = i * 4;
-				vh.AddTriangle(0 + offset, 1 + offset, 2 + offset);
-				vh.AddTriangle(2 + offset, 3 + offset, 0 + offset);
+				if (i >= m_segments.Length - 1)
+					continue;
+
+				int o = i * 2;
+				vh.AddTriangle(0 + o, 2 + o, 1 + o);
+				vh.AddTriangle(2 + o, 3 + o, 1 + o);
 			}
 		}
 	}
