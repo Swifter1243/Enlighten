@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using System.Reflection;
@@ -13,12 +9,13 @@ namespace Enlighten.src.Enlighten.Plugin
     public class Enlighten
     {
         public EventGridContainer events;
+        public PlatformDescriptor PlatformDescriptor;
         public AssetBundle bundle;
         public UI ui;
 
         [Init]
         private void Init()
-		{
+        {
             var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Enlighten.enlighten_bundle");
             bundle = AssetBundle.LoadFromStream(stream);
 
@@ -33,6 +30,7 @@ namespace Enlighten.src.Enlighten.Plugin
             if (arg0.buildIndex == 3) // Mapping Scene
             {
                 events = UnityEngine.Object.FindObjectOfType<EventGridContainer>();
+                LoadInitialMap.PlatformLoadedEvent += (descriptor) => PlatformDescriptor = descriptor;
                 ui.OnLoad();
             }
         }
@@ -43,7 +41,7 @@ namespace Enlighten.src.Enlighten.Plugin
         }
 
         public static OptionName StringToOption(string option)
-		{
+        {
             return (OptionName)Enum.Parse(typeof(OptionName), option);
         }
     }

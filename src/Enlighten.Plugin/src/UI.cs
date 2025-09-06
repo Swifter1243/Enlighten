@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Reflection;
-
 using UnityEngine;
 using Beatmap.Base;
-using System.IO;
 using UnityEngine.UI;
 
 namespace Enlighten.src.Enlighten.Plugin
@@ -289,7 +284,15 @@ namespace Enlighten.src.Enlighten.Plugin
 
 				foreach (var e in events)
 				{
-					if (!(e.CustomColor is Color color)) continue;
+					if (!e.IsLightEvent()) continue;
+					var original = (BaseObject)e.Clone();
+					
+					if (!(e.CustomColor is Color color))
+					{
+						if (e.IsBlue) e.CustomColor = plugin.PlatformDescriptor.Colors.BlueColor;
+						else e.CustomColor = plugin.PlatformDescriptor.Colors.RedColor;
+						color = (Color)e.CustomColor;
+					}
 
 					var t = (e.JsonTime - minTime) / dist;
 					var tOriginal = t;
@@ -298,8 +301,6 @@ namespace Enlighten.src.Enlighten.Plugin
 					{
 						t = easing(t);
 					}
-
-					var original = (BaseObject)e.Clone();
 
 					foreach (var process in colorProcess)
 					{
@@ -325,7 +326,6 @@ namespace Enlighten.src.Enlighten.Plugin
 						var turbulence = GetParameterValue(flutterTurbulence, t);
 
 						var value = multiplier + UnityEngine.Random.Range(-turbulence, turbulence);
-
 						var eventCopy = (BaseObject)e.Clone();
 						var colorCopy = (Color)eventCopy.CustomColor;
 
